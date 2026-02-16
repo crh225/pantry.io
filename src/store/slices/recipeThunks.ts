@@ -12,13 +12,18 @@ export const fetchRecipeById = createAsyncThunk('recipe/fetchById', async (id: s
 interface MultiFilter { cuisine?: string; protein?: string; dietId?: string; }
 
 export const searchMultiFilter = createAsyncThunk('recipe/multiFilter', async (f: MultiFilter, { dispatch }) => {
-  let recipes = f.cuisine
-    ? await recipeApi.searchByArea(f.cuisine)
-    : f.protein ? await recipeApi.searchByCategory(f.protein) : [];
-  if (f.cuisine && f.protein) recipes = recipes.filter(r => r.category === f.protein);
+  let recipes;
+  if (f.cuisine && f.protein) {
+    const [byArea, byCat] = await Promise.all([recipeApi.searchByArea(f.cuisine), recipeApi.searchByCategory(f.protein)]);
+    const catIds = new Set(byCat.map(r => r.id));
+    recipes = byArea.filter(r => catIds.has(r.id));
+  } else if (f.cuisine) {
+    recipes = await recipeApi.searchByArea(f.cuisine);
+  } else if (f.protein) {
+    recipes = await recipeApi.searchByCategory(f.protein);
+  } else { return []; }
   if (recipes.length === 0) return recipes;
   const diet = f.dietId ? diets.find(d => d.id === f.dietId) : null;
-  // Return fast with thumbnails, hydrate in background
   const toHydrate = recipes.slice(0, 30);
   setTimeout(() => {
     toHydrate.forEach(r => {
