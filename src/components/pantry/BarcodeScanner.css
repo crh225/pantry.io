@@ -1,0 +1,61 @@
+.scanner-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.scanner-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+}
+
+.scanner-content h2 {
+  margin-bottom: 1rem;
+}
+
+.scanner-video {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 8px;
+  background: #000;
+  margin-bottom: 1rem;
+}
+
+.scanner-message {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1rem;
+  min-height: 24px;
+}
+
+.scanner-close {
+  padding: 0.75rem 2rem;
+  background-color: #e5e5e5;
+  color: #333;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.scanner-close:hover {
+  background-color: #d5d5d5;
+}
+
+@media (max-width: 768px) {
+  .scanner-content {
+    width: 95%;
+    padding: 1rem;
+  }
+}

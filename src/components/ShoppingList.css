@@ -1,0 +1,65 @@
+.shopping-list-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
+}
+
+.shopping-items {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.shopping-items li {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #333;
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+  background-color: #555;
+}
+
+.action-btn.secondary {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
+.action-btn.secondary:hover {
+  background-color: #d5d5d5;
+}
