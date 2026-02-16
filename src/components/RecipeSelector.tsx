@@ -6,32 +6,22 @@ import { cuisines } from '../data/cuisines';
 import { Recipe } from '../types';
 import './RecipeSelector.css';
 
-interface RecipeSelectorProps {
-  nightId: string;
-  onDone: () => void;
-}
+interface Props { nightId: string; onDone: () => void; }
 
-export const RecipeSelector: React.FC<RecipeSelectorProps> = ({ nightId, onDone }) => {
-  const { recipes, loading } = useAppSelector(state => state.recipe);
+export const RecipeSelector: React.FC<Props> = ({ nightId, onDone }) => {
+  const { recipes, loading } = useAppSelector(s => s.recipe);
   const [searchText, setSearchText] = useState('');
   const dispatch = useAppDispatch();
 
-  const handlePick = (recipe: Recipe) => {
-    dispatch(assignRecipe({ nightId, recipe }));
-    onDone();
-  };
+  const handlePick = (r: Recipe) => { dispatch(assignRecipe({ nightId, recipe: r })); onDone(); };
 
   return (
     <div className="recipe-selector">
       <button className="back-btn" onClick={onDone}>← Back to Planner</button>
       <h2>Pick a Recipe</h2>
       <div className="selector-search">
-        <input
-          value={searchText}
-          onChange={e => setSearchText(e.target.value)}
-          placeholder="Search by name..."
-          onKeyDown={e => e.key === 'Enter' && dispatch(searchRecipes(searchText))}
-        />
+        <input value={searchText} onChange={e => setSearchText(e.target.value)} placeholder="Search by name..."
+          onKeyDown={e => e.key === 'Enter' && dispatch(searchRecipes(searchText))} />
         <button onClick={() => dispatch(searchRecipes(searchText))}>Search</button>
       </div>
       <div className="quick-cuisines">
@@ -41,10 +31,9 @@ export const RecipeSelector: React.FC<RecipeSelectorProps> = ({ nightId, onDone 
       </div>
       {loading && <p className="selector-msg">Searching...</p>}
       <div className="selector-results">
-        {recipes.map(recipe => (
-          <div key={recipe.id} className="selector-card" onClick={() => handlePick(recipe)}>
-            <img src={recipe.thumbnail} alt={recipe.name} />
-            <p>{recipe.name}</p>
+        {recipes.map(r => (
+          <div key={r.id} className="selector-card" onClick={() => handlePick(r)}>
+            <img src={r.thumbnail} alt={r.name} /><p>{r.name}</p>
           </div>
         ))}
       </div>
