@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { kroger } from '../services/kroger';
+import { kroger, KrogerStore } from '../services/kroger';
 import { setSelected } from '../store/slices/recipeSlice';
 import { fetchRecipeById } from '../store/slices/recipeThunks';
 import { addToBag } from '../store/slices/mealPlanSlice';
@@ -16,7 +16,7 @@ import './MealPlannerPage.css';
 export const MealPlannerPage: React.FC = () => {
   const [selectingNight, setSelectingNight] = useState<string | null>(null);
   const [viewingRecipe, setViewingRecipe] = useState(false);
-  const [storeSet, setStoreSet] = useState(false);
+  const [selectedStore, setSelectedStore] = useState<KrogerStore | null>(() => kroger.getSelectedStore());
   const { nights, bag } = useAppSelector(s => s.mealPlan);
   const dispatch = useAppDispatch();
 
@@ -30,10 +30,9 @@ export const MealPlannerPage: React.FC = () => {
     const full = await recipeApi.getById(r.id);
     if (full) dispatch(addToBag(full.ingredients));
   };
-  const handleStoreSelect = (id: string) => {
-    const cfg = kroger.getConfig();
-    if (cfg) kroger.configure({ ...cfg, locationId: id });
-    setStoreSet(true);
+  const handleStoreSelect = (store: KrogerStore) => {
+    kroger.setStore(store);
+    setSelectedStore(store);
   };
 
   if (viewingRecipe) return <div className="meal-planner"><RecipeDetail onBack={() => setViewingRecipe(false)} /></div>;
@@ -42,7 +41,7 @@ export const MealPlannerPage: React.FC = () => {
     <div className="meal-planner">
       <div className="planner-header"><h1>Meal Planner</h1><p>Plan your meals, price them at Kroger, and go pick up</p></div>
       <MealNights nights={nights} onSelectNight={setSelectingNight} onViewRecipe={handleViewRecipe} onAddToBag={handleAddToBag} />
-      {kroger.isConfigured() && !storeSet && <KrogerStorePicker onSelect={handleStoreSelect} />}
+      {kroger.isConfigured() && <KrogerStorePicker onSelect={handleStoreSelect} selectedStore={selectedStore} />}
       <ShoppingBag bag={bag} />
     </div>
   );

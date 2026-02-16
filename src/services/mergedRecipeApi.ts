@@ -1,6 +1,7 @@
 import { Recipe } from '../types';
 import { recipeApi } from './recipeApi';
 import { dummyRecipeApi } from './dummyRecipeApi';
+import { spoonacularApi } from './spoonacularApi';
 
 const dedup = (recipes: Recipe[]): Recipe[] => {
   const seen = new Set<string>();
@@ -14,24 +15,32 @@ const dedup = (recipes: Recipe[]): Recipe[] => {
 
 export const mergedApi = {
   searchByArea: async (area: string): Promise<Recipe[]> => {
-    const [mealDb, dummy] = await Promise.all([
+    const [mealDb, dummy, spoon] = await Promise.all([
       recipeApi.searchByArea(area),
       dummyRecipeApi.getAll().then(all => all.filter(r => r.area.toLowerCase() === area.toLowerCase())),
+      spoonacularApi.searchByCuisine(area, 8).catch(() => []),
     ]);
-    return dedup([...mealDb, ...dummy]);
+    return dedup([...mealDb, ...dummy, ...spoon]);
   },
   searchByCategory: async (cat: string): Promise<Recipe[]> => {
-    const [mealDb, dummy] = await Promise.all([
+    const [mealDb, dummy, spoon] = await Promise.all([
       recipeApi.searchByCategory(cat),
       dummyRecipeApi.searchByTag(cat),
+      spoonacularApi.searchByCategory(cat.toLowerCase(), 8).catch(() => []),
     ]);
-    return dedup([...mealDb, ...dummy]);
+    return dedup([...mealDb, ...dummy, ...spoon]);
   },
   searchByName: async (q: string): Promise<Recipe[]> => {
-    const [mealDb, dummy] = await Promise.all([
+    const [mealDb, dummy, spoon] = await Promise.all([
       recipeApi.searchByName(q),
       dummyRecipeApi.searchByName(q),
+      spoonacularApi.searchByName(q, 8).catch(() => []),
     ]);
-    return dedup([...mealDb, ...dummy]);
+    return dedup([...mealDb, ...dummy, ...spoon]);
+  },
+  getById: async (id: string): Promise<Recipe | null> => {
+    if (id.startsWith('sp-')) return spoonacularApi.getById(id);
+    if (id.startsWith('dj-')) return dummyRecipeApi.getById(id);
+    return recipeApi.getById(id);
   },
 };

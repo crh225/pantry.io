@@ -5,6 +5,8 @@ export interface Recipe {
   instructions: string; thumbnail: string; ingredients: Ingredient[];
   caloriesPerServing?: number | null;
   prepTime?: number; cookTime?: number; rating?: number; reviewCount?: number; servings?: number;
+  readyInMinutes?: number; sourceUrl?: string;
+  usedIngredientCount?: number; missedIngredientCount?: number;
 }
 
 export interface PantryItem {

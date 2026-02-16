@@ -32,3 +32,62 @@
 .store-option:hover { border-color: #333; }
 .store-option strong { font-size: 0.9rem; }
 .store-option span { font-size: 0.8rem; color: #666; }
+
+.store-hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+.store-picker.selected {
+  background: white;
+}
+
+.selected-store {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.store-icon {
+  font-size: 1.5rem;
+}
+
+.store-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.store-info strong {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.store-info span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.change-store-btn {
+  padding: 0.4rem 0.75rem;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.change-store-btn:hover {
+  background: #eee;
+  color: #333;
+}
+
+.cancel-btn {
+  padding: 0.5rem 0.75rem;
+  background: #f5f5f5;
+  color: #666;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}

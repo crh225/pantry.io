@@ -10,14 +10,14 @@ import { hydrateRecipe, setRelated } from './recipeSlice';
 export const searchRecipes = createAsyncThunk('recipe/search', (q: string) => mergedApi.searchByName(q));
 export const searchByCategory = createAsyncThunk('recipe/searchByCategory', (c: string) => mergedApi.searchByCategory(c));
 export const searchByArea = createAsyncThunk('recipe/searchByArea', (a: string) => mergedApi.searchByArea(a));
-export const fetchRecipeById = createAsyncThunk('recipe/fetchById', (id: string) => recipeApi.getById(id));
+export const fetchRecipeById = createAsyncThunk('recipe/fetchById', (id: string) => mergedApi.getById(id));
 
 interface MultiFilter { cuisine?: string; protein?: string; dietId?: string; }
 
 const hydrateAll = (recipes: Recipe[], diet: ReturnType<typeof diets.find> | null, dispatch: any) => {
   recipes.slice(0, 30).forEach(r => {
     if (r.id.startsWith('dj-') || r.ingredients.length > 0) return;
-    recipeApi.getById(r.id).then(full => {
+    mergedApi.getById(r.id).then(full => {
       if (!full) return;
       if (diet && filterByDiet([full], diet).length === 0) return;
       dispatch(hydrateRecipe(full));
