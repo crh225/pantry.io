@@ -13,14 +13,14 @@ const MealPlannerPage = lazy(() => import('./components/MealPlannerPage').then(m
 
 function App() {
   const { page: currentPage, navigate: setCurrentPage } = useHashNav();
-  const imported = useImportPantry();
+  const { imported, dismiss } = useImportPantry();
   const tour = useTour(setCurrentPage as (p: any) => void);
 
   return (
     <div className="app">
       <Header onNavClick={setCurrentPage} currentPage={currentPage} />
       <main className="main-content">
-        {imported && <div className="import-toast">✅ Pantry items imported!</div>}
+        {imported && <div className="import-toast" onClick={dismiss}>✅ Pantry items imported! ×</div>}
         <Suspense fallback={<div className="loading">Loading...</div>}>
           {currentPage === 'recipes' && <RecipesPage />}
           {currentPage === 'pantry' && <PantryPage />}

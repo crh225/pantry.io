@@ -15,9 +15,10 @@ export const useImportPantry = () => {
     if (items.length === 0) return;
     items.forEach(i => dispatch(addItem({ name: i.name, quantity: i.quantity, location: i.location })));
     setImported(true);
-    // Clean URL
     window.history.replaceState({}, '', window.location.pathname);
+    setTimeout(() => setImported(false), 4000);
   }, [dispatch]);
 
-  return imported;
+  const dismiss = () => setImported(false);
+  return { imported, dismiss };
 };
