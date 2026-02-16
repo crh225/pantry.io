@@ -10,7 +10,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
   return (
     <header className="header">
       <div className="header-content">
-        <h1 className="logo">Pantry.io</h1>
+        <h1 className="logo" onClick={() => onNavClick('pantry')} style={{ cursor: 'pointer' }}>Pantry.io</h1>
         <nav className="nav">
           <button 
             className={`nav-btn ${currentPage === 'pantry' ? 'active' : ''}`}
