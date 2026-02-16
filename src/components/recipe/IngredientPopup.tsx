@@ -27,7 +27,6 @@ export const IngredientPopup: React.FC<Props> = ({ name }) => {
         {product?.size && <span className="popup-size">{product.size}</span>}
         {product?.aisle && <span className="popup-aisle">📍 {product.aisle}</span>}
         {loading && <span className="popup-loading">Looking up price...</span>}
-        {!kroger.isConfigured() && <span className="popup-note">Add Kroger store for pricing</span>}
       </div>
     </div>
   );
