@@ -1,59 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { searchRecipes, searchByCategory, searchByArea } from '../../store/slices/recipeThunks';
-import { CuisinePicker } from './CuisinePicker';
+import { SearchTabs } from './SearchTabs';
+import { CollapsedBar } from './CollapsedBar';
+import { SearchBody } from './SearchBody';
 import { sanitizeInput } from '../../utils/validation';
 import './RecipeSearch.css';
 
-type Tab = 'cuisine' | 'protein' | 'search';
-
 export const RecipeSearch: React.FC = () => {
-  const [tab, setTab] = useState<Tab>('cuisine');
+  const [tab, setTab] = useState<'cuisine' | 'protein' | 'search'>('cuisine');
+  const [collapsed, setCollapsed] = useState(false);
+  const [activeLabel, setActiveLabel] = useState('');
   const [searchText, setSearchText] = useState('');
   const dispatch = useAppDispatch();
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToResults = () => {
+    setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+  };
 
   const handleCuisineClick = (cuisine: string) => {
     dispatch(searchByArea(cuisine));
+    setActiveLabel(cuisine); setCollapsed(true); scrollToResults();
   };
-
   const handleCategoryClick = (category: string) => {
     dispatch(searchByCategory(category));
+    setActiveLabel(category); setCollapsed(true); scrollToResults();
   };
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchText.trim().length < 2) return;
     dispatch(searchRecipes(sanitizeInput(searchText)));
+    setCollapsed(true); setActiveLabel(searchText); scrollToResults();
   };
+  const handleExpand = () => { setCollapsed(false); setActiveLabel(''); };
 
   return (
     <div className="recipe-search">
-      <div className="search-tabs">
-        <button className={`tab ${tab === 'cuisine' ? 'active' : ''}`} onClick={() => setTab('cuisine')}>
-          🌍 By Cuisine
-        </button>
-        <button className={`tab ${tab === 'protein' ? 'active' : ''}`} onClick={() => setTab('protein')}>
-          🥩 By Protein
-        </button>
-        <button className={`tab ${tab === 'search' ? 'active' : ''}`} onClick={() => setTab('search')}>
-          🔍 Search
-        </button>
-      </div>
-      {tab === 'cuisine' && <CuisinePicker type="cuisine" onSelect={handleCuisineClick} />}
-      {tab === 'protein' && <CuisinePicker type="protein" onSelect={handleCategoryClick} />}
-      {tab === 'search' && (
-        <form className="text-search" onSubmit={handleSearch}>
-          <input
-            type="text"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search recipes by name..."
-            className="search-input"
-            maxLength={100}
-          />
-          <button type="submit" className="search-btn">Search</button>
-        </form>
+      <SearchTabs tab={tab} setTab={(t) => { setTab(t); setCollapsed(false); setActiveLabel(''); }} />
+      {collapsed ? (
+        <CollapsedBar label={activeLabel} onExpand={handleExpand} />
+      ) : (
+        <SearchBody tab={tab} searchText={searchText} setSearchText={setSearchText}
+          onCuisine={handleCuisineClick} onCategory={handleCategoryClick} onSearch={handleSearch} />
       )}
+      <div ref={resultsRef} />
     </div>
   );
 };
