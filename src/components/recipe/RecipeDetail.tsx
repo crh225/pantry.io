@@ -6,6 +6,7 @@ import { NightPicker } from './NightPicker';
 import { DetailTags } from './DetailTags';
 import { IngredientsSection } from './IngredientsSection';
 import { InstructionsSection } from './InstructionsSection';
+import { parseInstructions } from '../../utils/parseInstructions';
 import './RecipeDetail.css';
 
 export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
@@ -18,7 +19,7 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const pantryNames = useMemo(() => pantryItems.map(i => i.name.toLowerCase()), [pantryItems]);
   if (!selectedRecipe) return <div className="loading">Loading recipe...</div>;
 
-  const paragraphs = selectedRecipe.instructions.split('\n').filter(p => p.trim());
+  const paragraphs = parseInstructions(selectedRecipe.instructions);
   const handleAssign = (nightId: string) => {
     dispatch(assignRecipe({ nightId, recipe: selectedRecipe }));
     setShowPicker(false); setAdded(true);
