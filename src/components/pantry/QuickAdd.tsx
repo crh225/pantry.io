@@ -2,78 +2,45 @@ import React, { useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { addItem } from '../../store/slices/pantrySlice';
 import { commonPantryItems, commonFridgeItems, commonFreezerItems } from '../../data/commonItems';
+import { QuickAddSection } from './QuickAddSection';
 import './QuickAdd.css';
 
-interface QuickAddProps {
-  onClose: () => void;
-}
+interface Props { onClose: () => void; }
 
-export const QuickAdd: React.FC<QuickAddProps> = ({ onClose }) => {
+export const QuickAdd: React.FC<Props> = ({ onClose }) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const dispatch = useAppDispatch();
 
-  const toggleItem = (itemName: string) => {
-    const newSelected = new Set(selected);
-    if (newSelected.has(itemName)) {
-      newSelected.delete(itemName);
-    } else {
-      newSelected.add(itemName);
-    }
-    setSelected(newSelected);
+  const toggle = (name: string) => {
+    const s = new Set(selected);
+    s.has(name) ? s.delete(name) : s.add(name);
+    setSelected(s);
   };
 
-  const handleAddSelected = () => {
-    const allItems = [
+  const handleAdd = () => {
+    const all = [
       ...commonPantryItems.map(i => ({ ...i, location: 'pantry' as const })),
       ...commonFridgeItems.map(i => ({ ...i, location: 'fridge' as const })),
       ...commonFreezerItems.map(i => ({ ...i, location: 'freezer' as const })),
     ];
-
-    allItems
-      .filter(item => selected.has(item.name))
-      .forEach(item => {
-        dispatch(addItem({
-          name: item.name,
-          quantity: item.defaultQuantity,
-          location: item.location,
-        }));
-      });
-
+    all.filter(i => selected.has(i.name)).forEach(i =>
+      dispatch(addItem({ name: i.name, quantity: i.defaultQuantity, location: i.location }))
+    );
     onClose();
   };
-
-  const renderSection = (title: string, items: typeof commonPantryItems, location: string) => (
-    <div className="quick-add-section">
-      <h3>{title}</h3>
-      <div className="items-grid">
-        {items.map(item => (
-          <label key={item.name} className="item-checkbox">
-            <input
-              type="checkbox"
-              checked={selected.has(item.name)}
-              onChange={() => toggleItem(item.name)}
-            />
-            <span>{item.name}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className="quick-add-modal">
       <div className="quick-add-content">
         <div className="quick-add-header">
           <h2>Quick Add Common Items</h2>
-          <p>Select items you already have to quickly populate your pantry</p>
+          <p>Select items you already have</p>
         </div>
-        {renderSection('Pantry Items', commonPantryItems, 'pantry')}
-        {renderSection('Fridge Items', commonFridgeItems, 'fridge')}
-        {renderSection('Freezer Items', commonFreezerItems, 'freezer')}
+        <QuickAddSection title="Pantry" items={commonPantryItems} selected={selected} onToggle={toggle} />
+        <QuickAddSection title="Fridge" items={commonFridgeItems} selected={selected} onToggle={toggle} />
+        <QuickAddSection title="Freezer" items={commonFreezerItems} selected={selected} onToggle={toggle} />
         <div className="quick-add-actions">
-          <button onClick={handleAddSelected} className="add-btn">
-            Add Selected ({selected.size})
-          </button>
+          <button onClick={handleAdd} className="add-btn">Add Selected ({selected.size})</button>
           <button onClick={onClose} className="cancel-btn">Cancel</button>
         </div>
       </div>

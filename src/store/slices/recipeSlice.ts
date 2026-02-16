@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RecipeState } from '../../types';
+import { Recipe, RecipeState } from '../../types';
 import { searchRecipes, fetchRecipeById, searchByCategory, searchByArea, searchMultiFilter } from './recipeThunks';
 
 const initialState: RecipeState = {
@@ -17,6 +17,10 @@ const recipeSlice = createSlice({
   reducers: {
     setSearchQuery: (s, a: PayloadAction<string>) => { s.searchQuery = a.payload; },
     clearRecipes: (s) => { s.recipes = []; s.selectedRecipe = null; },
+    hydrateRecipe: (s, a: PayloadAction<Recipe>) => {
+      const idx = s.recipes.findIndex(r => r.id === a.payload.id);
+      if (idx >= 0) s.recipes[idx] = a.payload;
+    },
   },
   extraReducers: (b) => {
     b.addCase(searchRecipes.pending, pending).addCase(searchRecipes.fulfilled, done).addCase(searchRecipes.rejected, rejected)
@@ -27,5 +31,5 @@ const recipeSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, clearRecipes } = recipeSlice.actions;
+export const { setSearchQuery, clearRecipes, hydrateRecipe } = recipeSlice.actions;
 export default recipeSlice.reducer;
