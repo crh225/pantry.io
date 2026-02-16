@@ -151,11 +151,28 @@
 }
 
 @media (max-width: 768px) {
-  .items-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  .quick-add-modal {
+    padding: 1rem 0.5rem;
+    align-items: flex-start;
   }
-  
+
+  .quick-add-content {
+    padding: 1.5rem 1rem;
+    max-height: calc(100vh - 2rem);
+    margin-top: 1rem;
+  }
+
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
   .quick-add-actions {
     flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 360px) {
+  .items-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }

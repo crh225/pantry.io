@@ -1,13 +1,8 @@
-interface Env {
-  KROGER_CLIENT_ID: string;
-  KROGER_CLIENT_SECRET: string;
-}
-
 const BASE = 'https://api-ce.kroger.com';
 
-let cachedToken: { token: string; expires: number } | null = null;
+let cachedToken = null;
 
-async function getToken(env: Env): Promise<string> {
+async function getToken(env) {
   if (cachedToken && Date.now() < cachedToken.expires) return cachedToken.token;
   const creds = btoa(`${env.KROGER_CLIENT_ID}:${env.KROGER_CLIENT_SECRET}`);
   const res = await fetch(`${BASE}/v1/connect/oauth2/token`, {
@@ -19,12 +14,12 @@ async function getToken(env: Env): Promise<string> {
     body: 'grant_type=client_credentials&scope=product.compact',
   });
   if (!res.ok) throw new Error(`Auth failed: ${res.status}`);
-  const data = await res.json() as any;
+  const data = await res.json();
   cachedToken = { token: data.access_token, expires: Date.now() + (data.expires_in - 60) * 1000 };
   return cachedToken.token;
 }
 
-export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
+export async function onRequest({ request, env }) {
   const url = new URL(request.url);
   const apiPath = url.searchParams.get('path') || '';
   if (!apiPath) {
@@ -43,9 +38,9 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
       status: res.status,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (e: any) {
+  } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500, headers: { 'Content-Type': 'application/json' },
     });
   }
-};
+}

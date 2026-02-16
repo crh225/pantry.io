@@ -63,3 +63,25 @@
 .action-btn.secondary:hover {
   background-color: #d5d5d5;
 }
+
+@media (max-width: 768px) {
+  .shopping-list-modal {
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+    max-height: calc(100vh - 2rem);
+    margin-top: 1rem;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .action-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

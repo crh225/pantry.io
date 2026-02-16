@@ -5,7 +5,7 @@
   transition: background 0.15s;
 }
 .pantry-chip:hover { background: #eee; }
-.chip-name { font-weight: 500; white-space: nowrap; }
+.chip-name { font-weight: 500; white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
 .chip-qty { color: #999; font-size: 0.78rem; }
 .chip-remove {
   display: inline-flex; align-items: center; justify-content: center;
