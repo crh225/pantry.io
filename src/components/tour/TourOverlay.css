@@ -1,0 +1,30 @@
+.tour-backdrop {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  animation: tourFadeIn .25s ease;
+}
+@keyframes tourFadeIn { from { opacity: 0 } to { opacity: 1 } }
+.tour-card {
+  background: #fff; border-radius: 14px; padding: 32px 28px 24px;
+  max-width: 380px; width: 90%; text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+}
+.tour-card h2 { margin: 0 0 10px; font-size: 1.25rem; color: #111; }
+.tour-card p { margin: 0 0 24px; color: #555; font-size: .95rem; line-height: 1.5; }
+.tour-dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 18px; }
+.tour-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #ddd;
+}
+.tour-dot.active { background: #333; }
+.tour-actions { display: flex; justify-content: space-between; align-items: center; }
+.tour-skip {
+  background: none; border: none; color: #999; font-size: .85rem;
+  cursor: pointer; padding: 6px 0;
+}
+.tour-skip:hover { color: #333; }
+.tour-next {
+  background: #333; color: #fff; border: none; border-radius: 8px;
+  padding: 10px 22px; font-size: .9rem; cursor: pointer;
+}
+.tour-next:hover { background: #111; }

@@ -1,7 +1,9 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
+import { TourOverlay } from './components/tour/TourOverlay';
 import { useImportPantry } from './hooks/useImportPantry';
+import { useTour } from './hooks/useTour';
 import './App.css';
 
 const RecipesPage = lazy(() => import('./components/recipe/RecipesPage').then(m => ({ default: m.RecipesPage })));
@@ -13,6 +15,7 @@ type Page = 'recipes' | 'pantry' | 'planner';
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('pantry');
   const imported = useImportPantry();
+  const tour = useTour(setCurrentPage as (p: any) => void);
 
   return (
     <div className="app">
@@ -26,6 +29,7 @@ function App() {
         </Suspense>
       </main>
       <Footer />
+      {tour.active && tour.step && <TourOverlay step={tour.step} onNext={tour.next} onSkip={tour.skip} />}
     </div>
   );
 }
