@@ -25,6 +25,21 @@
   font-size: 0.95rem;
 }
 
+.store-prompt {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: #fff8e6;
+  border: 1px solid #ffe0a6;
+  border-radius: 8px;
+  color: #856404;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.store-prompt span {
+  margin-right: 0.25rem;
+}
+
 @media (max-width: 768px) {
   .meal-planner { padding: 1rem; }
 }
