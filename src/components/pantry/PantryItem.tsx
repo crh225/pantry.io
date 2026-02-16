@@ -8,13 +8,11 @@ interface Props {
 }
 
 export const PantryItem = memo<Props>(({ item, onRemove }) => (
-  <div className="pantry-item">
-    <div className="item-info">
-      <span className="item-name">{item.name}</span>
-      {item.quantity && <span className="item-quantity">{item.quantity}</span>}
-    </div>
-    <button className="remove-btn" onClick={() => onRemove(item.id)} aria-label="Remove">×</button>
-  </div>
+  <span className="pantry-chip">
+    <span className="chip-name">{item.name}</span>
+    {item.quantity && <span className="chip-qty">{item.quantity}</span>}
+    <button className="chip-remove" onClick={() => onRemove(item.id)} aria-label="Remove">×</button>
+  </span>
 ));
 
 PantryItem.displayName = 'PantryItem';
