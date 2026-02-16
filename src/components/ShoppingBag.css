@@ -64,6 +64,22 @@
 
 .remove-item:hover { color: #f00; }
 
+.bag-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.bag-item-name { flex: 1; }
+
+.bag-price {
+  font-size: 0.85rem;
+  color: #999;
+  font-weight: 500;
+  margin: 0 0.5rem;
+  white-space: nowrap;
+}
+
 @media (max-width: 768px) {
   .bag-items { columns: 1; }
 }
