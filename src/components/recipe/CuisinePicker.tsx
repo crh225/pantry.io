@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cuisines, categories } from '../../data/cuisines';
 import './CuisinePicker.css';
+
+declare const twemoji: { parse: (element: HTMLElement, options?: { folder: string; ext: string }) => void };
 
 interface CuisinePickerProps {
   type: 'cuisine' | 'protein';
@@ -23,9 +25,16 @@ const proteinEmojis: Record<string, string> = {
 export const CuisinePicker: React.FC<CuisinePickerProps> = ({ type, onSelect }) => {
   const items = type === 'cuisine' ? cuisines : categories;
   const emojis = type === 'cuisine' ? cuisineEmojis : proteinEmojis;
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (gridRef.current && typeof twemoji !== 'undefined') {
+      twemoji.parse(gridRef.current, { folder: 'svg', ext: '.svg' });
+    }
+  }, [items]);
 
   return (
-    <div className="cuisine-grid">
+    <div className="cuisine-grid" ref={gridRef}>
       {items.map(item => (
         <button key={item} className="cuisine-btn" onClick={() => onSelect(item)}>
           <span className="cuisine-emoji">{emojis[item] || '🍽️'}</span>

@@ -1,12 +1,15 @@
-const CLIENT_ID = 'pantry-io-bbcck99z';
-const CLIENT_SECRET = '5U6iqfC1Gu4lURPBdbrktNJ4vr0POmcy5VFcUvfG';
+interface Env {
+  KROGER_CLIENT_ID: string;
+  KROGER_CLIENT_SECRET: string;
+}
+
 const BASE = 'https://api-ce.kroger.com';
 
 let cachedToken: { token: string; expires: number } | null = null;
 
-async function getToken(): Promise<string> {
+async function getToken(env: Env): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expires) return cachedToken.token;
-  const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
+  const creds = btoa(`${env.KROGER_CLIENT_ID}:${env.KROGER_CLIENT_SECRET}`);
   const res = await fetch(`${BASE}/v1/connect/oauth2/token`, {
     method: 'POST',
     headers: {
@@ -21,7 +24,7 @@ async function getToken(): Promise<string> {
   return cachedToken.token;
 }
 
-export const onRequest: PagesFunction = async ({ request }) => {
+export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   const url = new URL(request.url);
   const apiPath = url.searchParams.get('path') || '';
   if (!apiPath) {
@@ -31,7 +34,7 @@ export const onRequest: PagesFunction = async ({ request }) => {
   }
 
   try {
-    const token = await getToken();
+    const token = await getToken(env);
     const res = await fetch(`${BASE}${apiPath}`, {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
