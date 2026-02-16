@@ -3,11 +3,13 @@ import './InstructionsSection.css';
 
 interface Props { paragraphs: string[]; }
 
+const isJunkStep = (t: string) => /^step\s*\d+$/i.test(t.trim());
+
 const cleanStep = (text: string) =>
   text.trim().replace(/^(STEP\s*\d+\s*[:.–-]\s*|\d+[.):\s]+\s*)/i, '').trim();
 
 export const InstructionsSection: React.FC<Props> = ({ paragraphs }) => {
-  const steps = paragraphs.map(cleanStep).filter(Boolean);
+  const steps = paragraphs.filter(p => !isJunkStep(p)).map(cleanStep).filter(Boolean);
   return (
     <section className="detail-section">
       <h2>Instructions</h2>
