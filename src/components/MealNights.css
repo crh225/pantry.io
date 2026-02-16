@@ -24,7 +24,11 @@
   width: 100%;
   border-radius: 6px;
   margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: opacity 0.15s;
 }
+
+.night-card img:hover { opacity: 0.85; }
 
 .night-recipe-name {
   font-weight: 600;
