@@ -32,4 +32,11 @@ export const dummyRecipeApi = {
     const d = await fetchJson(`${BASE}?limit=50`);
     return (d.recipes || []).map(transform);
   },
+  getById: async (id: string): Promise<Recipe | null> => {
+    const numericId = id.replace('dj-', '');
+    try {
+      const d = await fetchJson(`${BASE}/${numericId}`);
+      return d ? transform(d) : null;
+    } catch { return null; }
+  },
 };
