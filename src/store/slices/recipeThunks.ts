@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Recipe } from '../../types';
-import { recipeApi } from '../../services/recipeApi';
 import { dummyRecipeApi } from '../../services/dummyRecipeApi';
 import { mergedApi } from '../../services/mergedRecipeApi';
 import { filterByDiet } from '../../utils/dietFilter';
