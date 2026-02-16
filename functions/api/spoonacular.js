@@ -11,7 +11,7 @@ export async function onRequest({ request, env }) {
     });
   }
 
-  if (!env.SPOONACULAR_API_KEY) {
+  if (!env.SPOON_API_KEY) {
     return new Response(JSON.stringify({ error: 'API key not configured' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -21,7 +21,7 @@ export async function onRequest({ request, env }) {
   try {
     // Add API key to the path
     const separator = apiPath.includes('?') ? '&' : '?';
-    const fullUrl = `${BASE}${apiPath}${separator}apiKey=${env.SPOONACULAR_API_KEY}`;
+    const fullUrl = `${BASE}${apiPath}${separator}apiKey=${env.SPOON_API_KEY}`;
 
     const res = await fetch(fullUrl, {
       headers: { 'Accept': 'application/json' },

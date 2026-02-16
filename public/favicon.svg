@@ -1,8 +1,65 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" fill="#ffffff"/>
-  <path d="M30 20 L70 20 L70 80 L30 80 Z" fill="#667eea" stroke="#333" stroke-width="2"/>
-  <rect x="35" y="30" width="30" height="8" fill="#fff" opacity="0.3"/>
-  <rect x="35" y="45" width="30" height="8" fill="#fff" opacity="0.3"/>
-  <rect x="35" y="60" width="30" height="8" fill="#fff" opacity="0.3"/>
-  <circle cx="50" cy="50" r="3" fill="#fff"/>
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#faf6f0"/>
+
+  <!-- Cabinet body with gradient -->
+  <defs>
+    <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B6914"/>
+      <stop offset="50%" style="stop-color:#A67C00"/>
+      <stop offset="100%" style="stop-color:#8B6914"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Cabinet outer -->
+  <rect x="20" y="15" width="60" height="70" rx="4" fill="url(#woodGrad)" stroke="#5D4E37" stroke-width="2"/>
+
+  <!-- Inner panel -->
+  <rect x="26" y="21" width="48" height="58" rx="2" fill="#C4A962"/>
+
+  <!-- Shelves -->
+  <rect x="26" y="38" width="48" height="3" fill="#8B6914"/>
+  <rect x="26" y="55" width="48" height="3" fill="#8B6914"/>
+
+  <!-- Top shelf items -->
+  <!-- Green jar -->
+  <rect x="30" y="25" width="10" height="12" rx="2" fill="#4CAF50"/>
+  <rect x="32" y="22" width="6" height="3" fill="#81C784"/>
+
+  <!-- Orange jar -->
+  <rect x="44" y="27" width="9" height="10" rx="2" fill="#FF9800"/>
+  <rect x="46" y="24" width="5" height="3" fill="#FFB74D"/>
+
+  <!-- Blue can -->
+  <rect x="57" y="26" width="12" height="11" rx="1" fill="#2196F3"/>
+  <rect x="59" y="28" width="8" height="2" fill="#64B5F6"/>
+
+  <!-- Middle shelf items -->
+  <!-- Red bottle -->
+  <rect x="31" y="43" width="8" height="11" rx="2" fill="#C62828"/>
+  <rect x="33" y="41" width="4" height="4" fill="#8B0000"/>
+
+  <!-- Yellow box -->
+  <rect x="43" y="44" width="11" height="10" fill="#FFC107"/>
+  <rect x="45" y="46" width="7" height="3" fill="#FF8F00"/>
+
+  <!-- Purple jar -->
+  <rect x="58" y="44" width="10" height="10" rx="3" fill="#9C27B0"/>
+  <rect x="60" y="42" width="6" height="3" fill="#CE93D8"/>
+
+  <!-- Bottom shelf items -->
+  <!-- Gray canister -->
+  <rect x="29" y="60" width="14" height="14" rx="2" fill="#607D8B"/>
+  <rect x="31" y="62" width="10" height="3" fill="#90A4AE"/>
+
+  <!-- Olive bottle -->
+  <rect x="48" y="62" width="8" height="12" rx="2" fill="#827717"/>
+  <rect x="50" y="59" width="4" height="4" fill="#9E9D24"/>
+
+  <!-- Spice jar -->
+  <rect x="60" y="64" width="8" height="10" rx="2" fill="#D84315"/>
+  <rect x="62" y="62" width="4" height="3" fill="#8B4513"/>
+
+  <!-- Door handle -->
+  <circle cx="75" cy="50" r="3" fill="#5D4E37"/>
 </svg>

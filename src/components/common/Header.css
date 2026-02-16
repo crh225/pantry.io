@@ -142,6 +142,7 @@
 .store-modal .store-picker {
   border: none;
   border-radius: 12px;
+  padding-top: 2.5rem;
 }
 
 .store-modal-close {
