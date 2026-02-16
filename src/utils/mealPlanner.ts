@@ -1,27 +1,17 @@
 import { Recipe, PantryItem, MealSuggestion } from '../types';
+import { isIngredientAvailable } from './ingredientMatch';
 
 export const findMatchingRecipes = (
   recipes: Recipe[],
   pantryItems: PantryItem[]
 ): MealSuggestion[] => {
-  const pantryItemNames = pantryItems.map(item => 
-    item.name.toLowerCase().trim()
-  );
+  const pantryNames = pantryItems.map(i => i.name.toLowerCase().trim());
 
   return recipes.map(recipe => {
     const missingIngredients = recipe.ingredients
-      .filter(ingredient => {
-        const ingredientName = ingredient.name.toLowerCase().trim();
-        return !pantryItemNames.some(pantryItem => 
-          ingredientName.includes(pantryItem) || pantryItem.includes(ingredientName)
-        );
-      })
+      .filter(ing => !isIngredientAvailable(ing.name, pantryNames))
       .map(ing => ing.name);
-
-    return {
-      recipe,
-      missingIngredients,
-    };
+    return { recipe, missingIngredients };
   }).sort((a, b) => a.missingIngredients.length - b.missingIngredients.length);
 };
 

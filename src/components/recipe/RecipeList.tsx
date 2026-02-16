@@ -3,6 +3,7 @@ import { useAppSelector } from '../../store/hooks';
 import { Recipe } from '../../types';
 import { SortBar, SortMode } from './SortBar';
 import { calculateMatchPercentage } from '../../utils/mealPlanner';
+import { isIngredientAvailable } from '../../utils/ingredientMatch';
 import { RecipeGrid } from './RecipeGrid';
 import './RecipeList.css';
 
@@ -12,9 +13,7 @@ const useEnriched = (recipes: Recipe[], pantryItems: { name: string }[], sort: S
   const pantryNames = useMemo(() => pantryItems.map(i => i.name.toLowerCase()), [pantryItems]);
   return useMemo(() => {
     const arr = recipes.map(r => {
-      const missing = r.ingredients.filter(
-        ing => !pantryNames.some(p => ing.name.toLowerCase().includes(p) || p.includes(ing.name.toLowerCase()))
-      );
+      const missing = r.ingredients.filter(ing => !isIngredientAvailable(ing.name, pantryNames));
       const pct = r.ingredients.length > 0 ? calculateMatchPercentage(r.ingredients.length, missing.length) : 0;
       return { recipe: r, matchPct: pct, missingCount: missing.length };
     });

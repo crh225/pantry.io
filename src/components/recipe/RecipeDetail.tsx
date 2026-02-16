@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { assignRecipe } from '../../store/slices/mealPlanSlice';
+import { isIngredientAvailable } from '../../utils/ingredientMatch';
 import { NightPicker } from './NightPicker';
 import { DetailTags } from './DetailTags';
 import { IngredientsSection } from './IngredientsSection';
@@ -12,8 +13,7 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const { nights } = useAppSelector(s => s.mealPlan);
   const pantryItems = useAppSelector(s => s.pantry.items);
   const dispatch = useAppDispatch();
-  const [showPicker, setShowPicker] = useState(false);
-  const [added, setAdded] = useState(false);
+  const [showPicker, setShowPicker] = useState(false); const [added, setAdded] = useState(false);
 
   const pantryNames = useMemo(() => pantryItems.map(i => i.name.toLowerCase()), [pantryItems]);
   if (!selectedRecipe) return <div className="loading">Loading recipe...</div>;
@@ -26,7 +26,7 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   };
   const ingredients = selectedRecipe.ingredients.map(ing => ({
     ...ing,
-    inPantry: pantryNames.some(p => ing.name.toLowerCase().includes(p) || p.includes(ing.name.toLowerCase())),
+    inPantry: isIngredientAvailable(ing.name, pantryNames),
   }));
 
   return (
