@@ -30,6 +30,12 @@
   font-size: 2rem;
 }
 
+.cuisine-emoji img.emoji {
+  height: 2rem;
+  width: 2rem;
+  vertical-align: middle;
+}
+
 .cuisine-label {
   font-size: 0.9rem;
   font-weight: 600;
@@ -45,6 +51,11 @@
   
   .cuisine-emoji {
     font-size: 1.5rem;
+  }
+
+  .cuisine-emoji img.emoji {
+    height: 1.5rem;
+    width: 1.5rem;
   }
   
   .cuisine-label {
