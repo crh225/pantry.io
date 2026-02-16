@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { cuisines, categories } from '../../data/cuisines';
 import './CuisinePicker.css';
 
-declare const twemoji: { parse: (element: HTMLElement, options?: { folder: string; ext: string }) => void };
+declare const twemoji: { parse: (element: HTMLElement, options?: { folder: string; ext: string }) => void } | undefined;
 
 interface CuisinePickerProps {
   type: 'cuisine' | 'protein';
@@ -27,11 +27,24 @@ export const CuisinePicker: React.FC<CuisinePickerProps> = ({ type, onSelect }) 
   const emojis = type === 'cuisine' ? cuisineEmojis : proteinEmojis;
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (gridRef.current && typeof twemoji !== 'undefined') {
+  const parseEmojis = useCallback(() => {
+    if (gridRef.current && typeof twemoji !== 'undefined' && twemoji) {
       twemoji.parse(gridRef.current, { folder: 'svg', ext: '.svg' });
     }
-  }, [items]);
+  }, []);
+
+  useEffect(() => {
+    // Try immediately
+    parseEmojis();
+    // Also try after a short delay in case twemoji loads late
+    const timeout = setTimeout(parseEmojis, 100);
+    // And on window load as final fallback
+    window.addEventListener('load', parseEmojis);
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('load', parseEmojis);
+    };
+  }, [items, parseEmojis]);
 
   return (
     <div className="cuisine-grid" ref={gridRef}>
