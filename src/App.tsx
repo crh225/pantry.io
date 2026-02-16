@@ -1,6 +1,7 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
+import { useImportPantry } from './hooks/useImportPantry';
 import './App.css';
 
 const RecipesPage = lazy(() => import('./components/recipe/RecipesPage').then(m => ({ default: m.RecipesPage })));
@@ -11,26 +12,17 @@ type Page = 'recipes' | 'pantry' | 'planner';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('pantry');
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'recipes':
-        return <RecipesPage />;
-      case 'pantry':
-        return <PantryPage />;
-      case 'planner':
-        return <MealPlannerPage />;
-      default:
-        return <PantryPage />;
-    }
-  };
+  const imported = useImportPantry();
 
   return (
     <div className="app">
       <Header onNavClick={setCurrentPage} currentPage={currentPage} />
       <main className="main-content">
+        {imported && <div className="import-toast">✅ Pantry items imported!</div>}
         <Suspense fallback={<div className="loading">Loading...</div>}>
-          {renderPage()}
+          {currentPage === 'recipes' && <RecipesPage />}
+          {currentPage === 'pantry' && <PantryPage />}
+          {currentPage === 'planner' && <MealPlannerPage />}
         </Suspense>
       </main>
       <Footer />
