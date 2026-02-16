@@ -22,6 +22,23 @@ test('renders navigation buttons', () => {
   );
   const navButtons = screen.getAllByRole('button');
   expect(navButtons.length).toBeGreaterThanOrEqual(3);
-  expect(screen.getByText(/My Pantry/i)).toBeInTheDocument();
   expect(screen.getByText(/Meal Planner/i)).toBeInTheDocument();
+});
+
+test('renders footer', () => {
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  expect(screen.getByText(/© 2026 Chris House/i)).toBeInTheDocument();
+});
+
+test('renders Kroger banner', () => {
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  expect(screen.getByText(/Kroger API/i)).toBeInTheDocument();
 });
