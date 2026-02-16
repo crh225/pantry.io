@@ -1,0 +1,28 @@
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sort-label { font-size: 0.85rem; color: #999; }
+
+.sort-opt {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  color: #666;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sort-opt:hover { border-color: #333; color: #333; }
+.sort-opt.active { background: #333; color: white; border-color: #333; }
+
+@media (max-width: 768px) {
+  .sort-bar { padding: 0.5rem 1rem; }
+}
