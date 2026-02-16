@@ -71,6 +71,11 @@
   font-weight: 500;
 }
 
+.recipe-rating {
+  font-size: 0.8rem; color: #b8860b; font-weight: 600; cursor: pointer;
+}
+.recipe-rating:hover { text-decoration: underline; }
+
 .missing-text {
   font-size: 0.75rem;
   color: #999;

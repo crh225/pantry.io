@@ -23,7 +23,7 @@ export const RecipeCard = memo<Props>(({ recipe, onClick, matchPct, missingCount
           {recipe.category && <span className="recipe-tag">{recipe.category}</span>}
           {recipe.area && <span className="recipe-tag">{recipe.area}</span>}
           {cal && <span className="recipe-cal">{recipe.caloriesPerServing ? '' : '~'}{cal} cal</span>}
-          {recipe.rating && <span className="recipe-cal">★ {recipe.rating}</span>}
+          {recipe.rating && <span className="recipe-rating">★ {recipe.rating}{recipe.reviewCount ? ` (${recipe.reviewCount})` : ''}</span>}
         </div>
         {missingCount !== undefined && missingCount > 0 && <span className="missing-text">{missingCount} to buy</span>}
       </div>

@@ -19,7 +19,7 @@ export const DetailTags: React.FC<Props> = ({ recipe }) => {
       )}
       {recipe.servings && <span className="tag">🍽 {recipe.servings} servings</span>}
       {recipe.caloriesPerServing && <span className="tag">🔥 {recipe.caloriesPerServing} cal/serving</span>}
-      {recipe.rating && <span className="tag">★ {recipe.rating}</span>}
+      {recipe.rating && <span className="tag">★ {recipe.rating}{recipe.reviewCount ? ` (${recipe.reviewCount} reviews)` : ''}</span>}
     </div>
   );
 };

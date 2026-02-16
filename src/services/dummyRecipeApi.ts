@@ -13,7 +13,7 @@ const transform = (r: any): Recipe => ({
   caloriesPerServing: r.caloriesPerServing || null,
   prepTime: r.prepTimeMinutes,
   cookTime: r.cookTimeMinutes,
-  rating: r.rating,
+  rating: r.rating, reviewCount: r.reviewCount,
   servings: r.servings,
 });
 

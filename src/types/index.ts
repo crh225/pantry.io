@@ -4,7 +4,7 @@ export interface Recipe {
   id: string; name: string; category: string; area: string;
   instructions: string; thumbnail: string; ingredients: Ingredient[];
   caloriesPerServing?: number | null;
-  prepTime?: number; cookTime?: number; rating?: number; servings?: number;
+  prepTime?: number; cookTime?: number; rating?: number; reviewCount?: number; servings?: number;
 }
 
 export interface PantryItem {
