@@ -1,67 +1,88 @@
 .recipe-detail {
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
 }
 
 .back-btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   background-color: #f5f5f5;
   color: #333;
   border-radius: 4px;
-  margin-bottom: 2rem;
-  transition: background-color 0.2s;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
-.back-btn:hover {
-  background-color: #e5e5e5;
-}
+.back-btn:hover { background-color: #e5e5e5; }
 
-.detail-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.detail-image {
+.detail-hero img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
 }
 
-.detail-info h1 {
+.detail-body h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.detail-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.tag {
+  padding: 0.4rem 1rem;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.detail-section {
+  margin-bottom: 2.5rem;
+}
+
+.detail-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e5e5e5;
+}
+
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.ingredients-grid li {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #fafafa;
+  border-radius: 6px;
+}
+
+.ing-measure {
+  font-weight: 600;
+  color: #667eea;
+  white-space: nowrap;
+}
+
+.ing-name { color: #333; }
+
+.instructions-text p {
+  line-height: 1.8;
+  color: #444;
   margin-bottom: 1rem;
 }
 
-.detail-meta {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.detail-meta span {
-  padding: 0.5rem 1rem;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-}
-
-.ingredients-list {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 2rem;
-}
-
-.ingredients-list li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.instructions {
-  line-height: 1.6;
-  color: #666;
-}
-
 @media (max-width: 768px) {
-  .detail-content {
-    grid-template-columns: 1fr;
-  }
+  .recipe-detail { padding: 1rem; }
+  .detail-body h1 { font-size: 1.5rem; }
+  .ingredients-grid { grid-template-columns: 1fr; }
 }

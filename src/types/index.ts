@@ -37,3 +37,14 @@ export interface MealSuggestion {
   recipe: Recipe;
   missingIngredients: string[];
 }
+
+export interface MealNight {
+  id: string;
+  label: string;
+  recipe: Recipe | null;
+}
+
+export interface MealPlanState {
+  nights: MealNight[];
+  bag: Ingredient[];
+}

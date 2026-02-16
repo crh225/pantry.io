@@ -2,70 +2,29 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+.planner-header {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.meal-planner h1 {
-  margin-bottom: 0.5rem;
-}
+.planner-header h1 { margin-bottom: 0.5rem; }
 
-.meal-planner p {
+.planner-header p {
   color: #666;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
 }
 
-.meal-planner-empty {
+.kroger-note {
   text-align: center;
-  padding: 4rem 2rem;
-}
-
-.meal-planner-empty h2 {
-  margin-bottom: 1rem;
-}
-
-.planner-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.search-btn,
-.shopping-btn {
-  padding: 0.75rem 2rem;
-  background-color: #333;
-  color: white;
-  border-radius: 4px;
-  font-weight: 600;
-  transition: background-color 0.2s;
-}
-
-.search-btn:hover,
-.shopping-btn:hover {
-  background-color: #555;
-}
-
-.shopping-btn {
-  background-color: #4CAF50;
-}
-
-.shopping-btn:hover {
-  background-color: #45a049;
-}
-
-.suggestions-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  color: #666;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 768px) {
-  .suggestions-list {
-    grid-template-columns: 1fr;
-  }
-  
-  .planner-actions {
-    flex-direction: column;
-  }
+  .meal-planner { padding: 1rem; }
 }

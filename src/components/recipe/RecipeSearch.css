@@ -1,40 +1,47 @@
-.search-form {
-  padding: 2rem;
-  max-width: 800px;
+.recipe-search {
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.error-message {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #fee;
-  color: #c00;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+.search-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 2px solid #e5e5e5;
+  padding: 0 2rem;
 }
 
-.search-controls {
+.tab {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: -2px;
+}
+
+.tab:hover { color: #333; }
+
+.tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.text-search {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.search-select,
-.search-input {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.search-select {
-  flex: 0 0 150px;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .search-input {
   flex: 1;
-  min-width: 200px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 .search-btn {
@@ -43,19 +50,12 @@
   color: white;
   border-radius: 4px;
   font-weight: 600;
-  transition: background-color 0.2s;
 }
 
-.search-btn:hover {
-  background-color: #555;
-}
+.search-btn:hover { background-color: #555; }
 
 @media (max-width: 768px) {
-  .search-controls {
-    flex-direction: column;
-  }
-  
-  .search-select {
-    flex: 1;
-  }
+  .search-tabs { padding: 0 1rem; }
+  .tab { padding: 0.75rem 1rem; font-size: 0.9rem; }
+  .text-search { flex-direction: column; padding: 1rem; }
 }
