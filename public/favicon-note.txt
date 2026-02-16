@@ -1,0 +1,13 @@
+To create a proper favicon.ico file:
+
+Option 1 - Use an online tool:
+1. Go to https://favicon.io/favicon-generator/
+2. Use this emoji: 🏺 (amphora/jar for pantry)
+3. Download and replace favicon.ico
+
+Option 2 - Use the SVG:
+The favicon.svg file is already created with a pantry/jar design.
+Most modern browsers will use it automatically.
+
+Option 3 - Quick emoji favicon:
+The index.html now uses an SVG emoji-based favicon as fallback.

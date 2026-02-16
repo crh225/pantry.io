@@ -13,16 +13,16 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
         <h1 className="logo">Pantry.io</h1>
         <nav className="nav">
           <button 
-            className={`nav-btn ${currentPage === 'recipes' ? 'active' : ''}`}
-            onClick={() => onNavClick('recipes')}
-          >
-            Recipes
-          </button>
-          <button 
             className={`nav-btn ${currentPage === 'pantry' ? 'active' : ''}`}
             onClick={() => onNavClick('pantry')}
           >
             My Pantry
+          </button>
+          <button 
+            className={`nav-btn ${currentPage === 'recipes' ? 'active' : ''}`}
+            onClick={() => onNavClick('recipes')}
+          >
+            Recipes
           </button>
           <button 
             className={`nav-btn ${currentPage === 'planner' ? 'active' : ''}`}
@@ -31,6 +31,9 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
             Meal Planner
           </button>
         </nav>
+      </div>
+      <div className="coming-soon-banner">
+        🛒 Kroger API integration coming soon!
       </div>
     </header>
   );

@@ -1,5 +1,6 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { Header } from './components/common/Header';
+import { Footer } from './components/common/Footer';
 import './App.css';
 
 const RecipesPage = lazy(() => import('./components/recipe/RecipesPage').then(m => ({ default: m.RecipesPage })));
@@ -9,7 +10,7 @@ const MealPlannerPage = lazy(() => import('./components/MealPlannerPage').then(m
 type Page = 'recipes' | 'pantry' | 'planner';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('recipes');
+  const [currentPage, setCurrentPage] = useState<Page>('pantry');
 
   const renderPage = () => {
     switch (currentPage) {
@@ -20,7 +21,7 @@ function App() {
       case 'planner':
         return <MealPlannerPage />;
       default:
-        return <RecipesPage />;
+        return <PantryPage />;
     }
   };
 
@@ -32,6 +33,7 @@ function App() {
           {renderPage()}
         </Suspense>
       </main>
+      <Footer />
     </div>
   );
 }
