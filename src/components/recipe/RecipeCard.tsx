@@ -10,7 +10,8 @@ interface Props {
 }
 
 export const RecipeCard = memo<Props>(({ recipe, onClick, matchPct, missingCount }) => {
-  const cal = recipe.ingredients.length > 0 ? estimateCalories(recipe.ingredients) : null;
+  const cal = recipe.caloriesPerServing
+    || (recipe.ingredients.length > 0 ? estimateCalories(recipe.ingredients) : null);
 
   return (
     <div className="recipe-card" onClick={onClick}>
@@ -23,7 +24,8 @@ export const RecipeCard = memo<Props>(({ recipe, onClick, matchPct, missingCount
         <div className="recipe-meta">
           {recipe.category && <span className="recipe-tag">{recipe.category}</span>}
           {recipe.area && <span className="recipe-tag">{recipe.area}</span>}
-          {cal && <span className="recipe-cal">~{cal} cal</span>}
+          {cal && <span className="recipe-cal">{recipe.caloriesPerServing ? '' : '~'}{cal} cal</span>}
+          {recipe.rating && <span className="recipe-cal">★ {recipe.rating}</span>}
         </div>
         {missingCount !== undefined && missingCount > 0 && (
           <span className="missing-text">{missingCount} to buy</span>

@@ -3,11 +3,11 @@ import { Recipe, RecipeState } from '../../types';
 import { searchRecipes, fetchRecipeById, searchByCategory, searchByArea, searchMultiFilter } from './recipeThunks';
 
 const initialState: RecipeState = {
-  recipes: [], selectedRecipe: null, loading: false,
+  recipes: [], related: [], selectedRecipe: null, loading: false,
   error: null, searchQuery: '', searchCategory: '',
 };
 
-const pending = (s: RecipeState) => { s.loading = true; s.error = null; };
+const pending = (s: RecipeState) => { s.loading = true; s.error = null; s.related = []; };
 const rejected = (s: RecipeState, a: any) => { s.loading = false; s.error = a.error.message || 'Failed'; };
 const done = (s: RecipeState, a: PayloadAction<any>) => { s.loading = false; s.recipes = a.payload; };
 
@@ -16,11 +16,15 @@ const recipeSlice = createSlice({
   initialState,
   reducers: {
     setSearchQuery: (s, a: PayloadAction<string>) => { s.searchQuery = a.payload; },
-    clearRecipes: (s) => { s.recipes = []; s.selectedRecipe = null; },
+    clearRecipes: (s) => { s.recipes = []; s.related = []; s.selectedRecipe = null; },
     hydrateRecipe: (s, a: PayloadAction<Recipe>) => {
       const idx = s.recipes.findIndex(r => r.id === a.payload.id);
       if (idx >= 0) s.recipes[idx] = a.payload;
+      const ri = s.related.findIndex(r => r.id === a.payload.id);
+      if (ri >= 0) s.related[ri] = a.payload;
     },
+    setRelated: (s, a: PayloadAction<Recipe[]>) => { s.related = a.payload; },
+    setSelected: (s, a: PayloadAction<Recipe | null>) => { s.selectedRecipe = a.payload; },
   },
   extraReducers: (b) => {
     b.addCase(searchRecipes.pending, pending).addCase(searchRecipes.fulfilled, done).addCase(searchRecipes.rejected, rejected)
@@ -31,5 +35,5 @@ const recipeSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, clearRecipes, hydrateRecipe } = recipeSlice.actions;
+export const { setSearchQuery, clearRecipes, hydrateRecipe, setRelated, setSelected } = recipeSlice.actions;
 export default recipeSlice.reducer;

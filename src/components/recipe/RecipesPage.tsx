@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchRecipeById } from '../../store/slices/recipeThunks';
+import { setSelected } from '../../store/slices/recipeSlice';
 import { RecipeSearch } from './RecipeSearch';
 import { RecipeList } from './RecipeList';
 import { RecipeDetail } from './RecipeDetail';
 
 export const RecipesPage: React.FC = () => {
-  const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const allRecipes = useAppSelector(s => [...s.recipe.recipes, ...s.recipe.related]);
 
-  const handleRecipeClick = (recipeId: string) => {
-    setSelectedRecipeId(recipeId);
-    dispatch(fetchRecipeById(recipeId));
-  };
-
-  const handleBackClick = () => {
-    setSelectedRecipeId(null);
+  const handleClick = (id: string) => {
+    setSelectedId(id);
+    if (id.startsWith('dj-')) {
+      // DummyJSON recipe already in store — set as selected directly
+      const found = allRecipes.find(r => r.id === id) || null;
+      dispatch(setSelected(found));
+    } else {
+      dispatch(fetchRecipeById(id));
+    }
   };
 
   return (
     <div>
-      {selectedRecipeId ? (
-        <RecipeDetail onBack={handleBackClick} />
+      {selectedId ? (
+        <RecipeDetail onBack={() => setSelectedId(null)} />
       ) : (
-        <>
-          <RecipeSearch />
-          <RecipeList onRecipeClick={handleRecipeClick} />
-        </>
+        <><RecipeSearch /><RecipeList onRecipeClick={handleClick} /></>
       )}
     </div>
   );
