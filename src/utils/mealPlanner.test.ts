@@ -31,7 +31,7 @@ describe('mealPlanner utilities', () => {
       ingredients: [
         { name: 'Chicken', measure: '1 lb' },
         { name: 'Salt', measure: '1 tsp' },
-        { name: 'Pepper', measure: '1 tsp' },
+        { name: 'Paprika', measure: '1 tsp' },
       ],
     };
 
@@ -42,7 +42,7 @@ describe('mealPlanner utilities', () => {
 
     it('should find missing ingredients', () => {
       const result = findMatchingRecipes([mockRecipe], mockPantry);
-      expect(result[0].missingIngredients).toContain('Pepper');
+      expect(result[0].missingIngredients).toContain('Paprika');
       expect(result[0].missingIngredients.length).toBe(1);
     });
 
