@@ -12,20 +12,17 @@ export const RecipeSearch: React.FC = () => {
   const [searchText, setSearchText] = useState('');
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
-
   const scroll = () => setTimeout(() => ref.current?.scrollIntoView({ behavior: 'smooth' }), 100);
 
-  const applyFilters = useCallback((c: string | null, p: string | null, d: string | null) => {
-    if (!c && !p) return;
+  const apply = useCallback((c: string | null, p: string | null, d: string | null) => {
+    if (!c && !p && !d) return;
     dispatch(searchMultiFilter({ cuisine: c || undefined, protein: p || undefined, dietId: d || undefined }));
     scroll();
   }, [dispatch]);
 
-  const toggle = (cur: string | null, val: string, set: (v: string | null) => void, c: string | null, p: string | null, d: string | null) => {
-    const next = cur === val ? null : val;
-    set(next);
-    if (next !== null || c || p) applyFilters(c, p, d);
-  };
+  const onCuisine = (v: string) => { const next = cuisine === v ? null : v; setCuisine(next); apply(next, protein, dietId); };
+  const onProtein = (v: string) => { const next = protein === v ? null : v; setProtein(next); apply(cuisine, next, dietId); };
+  const onDiet = (v: string) => { const next = dietId === v ? null : v; setDietId(next); apply(cuisine, protein, next); };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,9 +38,7 @@ export const RecipeSearch: React.FC = () => {
         <button type="submit" className="search-btn">🔍</button>
       </form>
       <FilterChips cuisine={cuisine} protein={protein} dietId={dietId}
-        onCuisine={v => toggle(cuisine, v, setCuisine, v === cuisine ? null : v, protein, dietId)}
-        onProtein={v => toggle(protein, v, setProtein, cuisine, v === protein ? null : v, dietId)}
-        onDiet={v => toggle(dietId, v, setDietId, cuisine, protein, v === dietId ? null : v)} />
+        onCuisine={onCuisine} onProtein={onProtein} onDiet={onDiet} />
       <div ref={ref} />
     </div>
   );
