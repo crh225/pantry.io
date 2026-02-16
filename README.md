@@ -4,18 +4,32 @@ A modern web application that helps you find recipes based on what you already h
 
 ## Features
 
-✨ **Recipe Search** - Search thousands of free recipes by name, category, or cuisine
-🏺 **Pantry Management** - Track items in your pantry, fridge, and freezer
-🎯 **Smart Meal Planning** - Get recipe suggestions based on your available ingredients
-📋 **Shopping List Generation** - Automatically create shopping lists for missing ingredients
-📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
-⚡ **Performance Optimized** - Lazy loading, code splitting, and memoization
+### ✨ Recipe Search
+Search thousands of free recipes by name, category, or cuisine
+
+### 🏺 Pantry Management
+Track items in your pantry, fridge, and freezer
+
+### 🎯 Smart Meal Planning
+Get recipe suggestions based on your available ingredients
+
+### 📋 Shopping List Generation
+Automatically create shopping lists for missing ingredients
+
+### 📷 Barcode Scanner
+Scan product barcodes to instantly add items to your pantry
+
+### 📱 Responsive Design
+Works seamlessly on desktop and mobile devices
+
+### ⚡ Performance Optimized
+Lazy loading, code splitting, and memoization
 
 ## Tech Stack
 
 - **Frontend**: React 18 with TypeScript
 - **State Management**: Redux Toolkit
-- **API**: TheMealDB (free recipe API)
+- **API**: TheMealDB (free recipe API) + Open Food Facts (product database)
 - **Styling**: CSS3 with responsive design
 - **Testing**: Jest & React Testing Library
 - **Build**: Create React App
@@ -32,7 +46,7 @@ A modern web application that helps you find recipes based on what you already h
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/pantry.io.git
+git clone https://github.com/crh225/pantry.io.git
 
 # Navigate to project directory
 cd pantry.io
@@ -133,5 +147,6 @@ This project is licensed under the MIT License.
 ## Acknowledgments
 
 - Recipe data provided by [TheMealDB](https://www.themealdb.com/)
+- Product data from [Open Food Facts](https://world.openfoodfacts.org/)
 - Built with Create React App
 - Icons and emojis from native emoji sets
