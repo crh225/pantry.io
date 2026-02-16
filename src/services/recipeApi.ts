@@ -1,50 +1,43 @@
 import { Recipe, Ingredient } from '../types';
 
-const BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
-
-export const recipeApi = {
-  searchByName: async (query: string): Promise<Recipe[]> => {
-    const response = await fetch(`${BASE_URL}/search.php?s=${query}`);
-    const data = await response.json();
-    return data.meals ? data.meals.map(transformMeal) : [];
-  },
-
-  searchByCategory: async (category: string): Promise<Recipe[]> => {
-    const response = await fetch(`${BASE_URL}/filter.php?c=${category}`);
-    const data = await response.json();
-    return data.meals ? data.meals.map(transformMeal) : [];
-  },
-
-  searchByArea: async (area: string): Promise<Recipe[]> => {
-    const response = await fetch(`${BASE_URL}/filter.php?a=${area}`);
-    const data = await response.json();
-    return data.meals ? data.meals.map(transformMeal) : [];
-  },
-
-  getById: async (id: string): Promise<Recipe | null> => {
-    const response = await fetch(`${BASE_URL}/lookup.php?i=${id}`);
-    const data = await response.json();
-    return data.meals ? transformMeal(data.meals[0]) : null;
-  },
-};
+const BASE = 'https://www.themealdb.com/api/json/v1/1';
 
 const transformMeal = (meal: any): Recipe => {
   const ingredients: Ingredient[] = [];
   for (let i = 1; i <= 20; i++) {
-    const ingredient = meal[`strIngredient${i}`];
-    const measure = meal[`strMeasure${i}`];
-    if (ingredient && ingredient.trim()) {
-      ingredients.push({ name: ingredient, measure: measure || '' });
-    }
+    const ing = meal[`strIngredient${i}`];
+    const msr = meal[`strMeasure${i}`];
+    if (ing?.trim()) ingredients.push({ name: ing, measure: msr || '' });
   }
-
   return {
-    id: meal.idMeal,
-    name: meal.strMeal,
-    category: meal.strCategory || '',
-    area: meal.strArea || '',
+    id: meal.idMeal, name: meal.strMeal,
+    category: meal.strCategory || '', area: meal.strArea || '',
     instructions: meal.strInstructions || '',
-    thumbnail: meal.strMealThumb || '',
-    ingredients,
+    thumbnail: meal.strMealThumb || '', ingredients,
   };
+};
+
+const fetchJson = async (url: string) => (await fetch(url)).json();
+
+export const recipeApi = {
+  searchByName: async (q: string): Promise<Recipe[]> => {
+    const d = await fetchJson(`${BASE}/search.php?s=${q}`);
+    return d.meals ? d.meals.map(transformMeal) : [];
+  },
+  searchByCategory: async (c: string): Promise<Recipe[]> => {
+    const d = await fetchJson(`${BASE}/filter.php?c=${c}`);
+    return d.meals ? d.meals.map(transformMeal) : [];
+  },
+  searchByArea: async (a: string): Promise<Recipe[]> => {
+    const d = await fetchJson(`${BASE}/filter.php?a=${a}`);
+    return d.meals ? d.meals.map(transformMeal) : [];
+  },
+  getById: async (id: string): Promise<Recipe | null> => {
+    const d = await fetchJson(`${BASE}/lookup.php?i=${id}`);
+    return d.meals ? transformMeal(d.meals[0]) : null;
+  },
+  hydrateMany: async (ids: string[]): Promise<Recipe[]> => {
+    const results = await Promise.all(ids.map(id => recipeApi.getById(id)));
+    return results.filter((r): r is Recipe => r !== null);
+  },
 };

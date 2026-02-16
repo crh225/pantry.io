@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RecipeState } from '../../types';
-import { searchRecipes, fetchRecipeById, searchByCategory, searchByArea } from './recipeThunks';
+import { searchRecipes, fetchRecipeById, searchByCategory, searchByArea, searchMultiFilter } from './recipeThunks';
 
 const initialState: RecipeState = {
   recipes: [], selectedRecipe: null, loading: false,
@@ -18,18 +18,12 @@ const recipeSlice = createSlice({
     setSearchQuery: (s, a: PayloadAction<string>) => { s.searchQuery = a.payload; },
     clearRecipes: (s) => { s.recipes = []; s.selectedRecipe = null; },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(searchRecipes.pending, pending)
-      .addCase(searchRecipes.fulfilled, done)
-      .addCase(searchRecipes.rejected, rejected)
-      .addCase(searchByCategory.pending, pending)
-      .addCase(searchByCategory.fulfilled, done)
-      .addCase(searchByCategory.rejected, rejected)
-      .addCase(searchByArea.pending, pending)
-      .addCase(searchByArea.fulfilled, done)
-      .addCase(searchByArea.rejected, rejected)
-      .addCase(fetchRecipeById.fulfilled, (s, a) => { s.selectedRecipe = a.payload; });
+  extraReducers: (b) => {
+    b.addCase(searchRecipes.pending, pending).addCase(searchRecipes.fulfilled, done).addCase(searchRecipes.rejected, rejected)
+     .addCase(searchByCategory.pending, pending).addCase(searchByCategory.fulfilled, done).addCase(searchByCategory.rejected, rejected)
+     .addCase(searchByArea.pending, pending).addCase(searchByArea.fulfilled, done).addCase(searchByArea.rejected, rejected)
+     .addCase(searchMultiFilter.pending, pending).addCase(searchMultiFilter.fulfilled, done).addCase(searchMultiFilter.rejected, rejected)
+     .addCase(fetchRecipeById.fulfilled, (s, a) => { s.selectedRecipe = a.payload; });
   },
 });
 
