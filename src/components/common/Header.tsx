@@ -32,9 +32,6 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
           </button>
         </nav>
       </div>
-      <div className="coming-soon-banner">
-        🛒 Kroger API integration coming soon!
-      </div>
     </header>
   );
 };
