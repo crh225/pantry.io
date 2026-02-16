@@ -17,10 +17,10 @@ export const searchMultiFilter = createAsyncThunk('recipe/multiFilter', async (f
   if (f.cuisine && f.protein) {
     recipes = recipes.filter(r => r.category === f.protein);
   }
-  if (!f.dietId || recipes.length === 0) return recipes;
-  const diet = diets.find(d => d.id === f.dietId);
-  if (!diet) return recipes;
+  if (recipes.length === 0) return recipes;
+  // Always hydrate so we get ingredients for pantry matching + calories
   const ids = recipes.slice(0, 30).map(r => r.id);
   const hydrated = await recipeApi.hydrateMany(ids);
-  return filterByDiet(hydrated, diet);
+  const diet = f.dietId ? diets.find(d => d.id === f.dietId) : null;
+  return diet ? filterByDiet(hydrated, diet) : hydrated;
 });
