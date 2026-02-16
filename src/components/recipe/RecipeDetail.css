@@ -112,12 +112,6 @@
 
 .ing-name { color: #333; }
 
-.instructions-text p {
-  line-height: 1.8;
-  color: #444;
-  margin-bottom: 1rem;
-}
-
 @media (max-width: 768px) {
   .recipe-detail { padding: 1rem; }
   .detail-body h1 { font-size: 1.5rem; }
