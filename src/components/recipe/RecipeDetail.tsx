@@ -1,53 +1,49 @@
-import React from 'react';
-import { useAppSelector } from '../../store/hooks';
+import React, { useState, useMemo } from 'react';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { assignRecipe } from '../../store/slices/mealPlanSlice';
+import { NightPicker } from './NightPicker';
+import { DetailTags } from './DetailTags';
+import { IngredientsSection } from './IngredientsSection';
+import { InstructionsSection } from './InstructionsSection';
 import './RecipeDetail.css';
 
-interface RecipeDetailProps {
-  onBack: () => void;
-}
+export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { selectedRecipe } = useAppSelector(s => s.recipe);
+  const { nights } = useAppSelector(s => s.mealPlan);
+  const pantryItems = useAppSelector(s => s.pantry.items);
+  const dispatch = useAppDispatch();
+  const [showPicker, setShowPicker] = useState(false);
+  const [added, setAdded] = useState(false);
 
-export const RecipeDetail: React.FC<RecipeDetailProps> = ({ onBack }) => {
-  const { selectedRecipe } = useAppSelector(state => state.recipe);
+  const pantryNames = useMemo(() => pantryItems.map(i => i.name.toLowerCase()), [pantryItems]);
+  if (!selectedRecipe) return <div className="loading">Loading recipe...</div>;
 
-  if (!selectedRecipe) {
-    return <div className="loading">Loading recipe...</div>;
-  }
-
-  const paragraphs = selectedRecipe.instructions
-    .split('\n')
-    .filter(p => p.trim());
+  const paragraphs = selectedRecipe.instructions.split('\n').filter(p => p.trim());
+  const handleAssign = (nightId: string) => {
+    dispatch(assignRecipe({ nightId, recipe: selectedRecipe }));
+    setShowPicker(false); setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
+  const ingredients = selectedRecipe.ingredients.map(ing => ({
+    ...ing,
+    inPantry: pantryNames.some(p => ing.name.toLowerCase().includes(p) || p.includes(ing.name.toLowerCase())),
+  }));
 
   return (
     <div className="recipe-detail">
       <button className="back-btn" onClick={onBack}>← Back</button>
-      <div className="detail-hero">
-        <img src={selectedRecipe.thumbnail} alt={selectedRecipe.name} />
-      </div>
+      <div className="detail-hero"><img src={selectedRecipe.thumbnail} alt={selectedRecipe.name} /></div>
       <div className="detail-body">
-        <h1>{selectedRecipe.name}</h1>
-        <div className="detail-tags">
-          {selectedRecipe.category && <span className="tag">{selectedRecipe.category}</span>}
-          {selectedRecipe.area && <span className="tag">{selectedRecipe.area}</span>}
+        <div className="detail-title-row">
+          <h1>{selectedRecipe.name}</h1>
+          <button className="add-night-btn" onClick={() => setShowPicker(!showPicker)}>
+            {added ? '✓ Added!' : '+ Add to Meal'}
+          </button>
         </div>
-        <section className="detail-section">
-          <h2>Ingredients</h2>
-          <ul className="ingredients-grid">
-            {selectedRecipe.ingredients.map((ing, i) => (
-              <li key={i}>
-                <span className="ing-measure">{ing.measure}</span>
-                <span className="ing-name">{ing.name}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className="detail-section">
-          <h2>Instructions</h2>
-          <div className="instructions-text">
-            {paragraphs.map((p, i) => (
-              <p key={i}>{p.trim()}</p>
-            ))}
-          </div>
-        </section>
+        {showPicker && <NightPicker nights={nights} onPick={handleAssign} />}
+        <DetailTags recipe={selectedRecipe} />
+        <IngredientsSection ingredients={ingredients} />
+        <InstructionsSection paragraphs={paragraphs} />
       </div>
     </div>
   );

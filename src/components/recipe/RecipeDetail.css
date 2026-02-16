@@ -21,9 +21,46 @@
   margin-bottom: 1.5rem;
 }
 
+.detail-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
 .detail-body h1 {
   font-size: 2rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
+}
+
+.add-night-btn {
+  padding: 0.6rem 1.2rem;
+  background: #333;
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.add-night-btn:hover {
+  background: #555;
+}
+
+.in-pantry {
+  opacity: 0.6;
+}
+
+.need-to-buy .ing-name {
+  font-weight: 600;
+}
+
+.ing-status {
+  font-size: 0.85rem;
+  width: 1.2rem;
+  flex-shrink: 0;
 }
 
 .detail-tags {

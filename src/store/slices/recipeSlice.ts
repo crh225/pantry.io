@@ -1,42 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RecipeState } from '../../types';
-import { searchRecipes, fetchRecipeById } from './recipeThunks';
+import { searchRecipes, fetchRecipeById, searchByCategory, searchByArea } from './recipeThunks';
 
 const initialState: RecipeState = {
-  recipes: [],
-  selectedRecipe: null,
-  loading: false,
-  error: null,
-  searchQuery: '',
-  searchCategory: '',
+  recipes: [], selectedRecipe: null, loading: false,
+  error: null, searchQuery: '', searchCategory: '',
 };
+
+const pending = (s: RecipeState) => { s.loading = true; s.error = null; };
+const rejected = (s: RecipeState, a: any) => { s.loading = false; s.error = a.error.message || 'Failed'; };
+const done = (s: RecipeState, a: PayloadAction<any>) => { s.loading = false; s.recipes = a.payload; };
 
 const recipeSlice = createSlice({
   name: 'recipe',
   initialState,
   reducers: {
-    setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload;
-    },
-    clearRecipes: (state) => {
-      state.recipes = [];
-      state.selectedRecipe = null;
-    },
+    setSearchQuery: (s, a: PayloadAction<string>) => { s.searchQuery = a.payload; },
+    clearRecipes: (s) => { s.recipes = []; s.selectedRecipe = null; },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(searchRecipes.pending, (state) => { state.loading = true; })
-      .addCase(searchRecipes.fulfilled, (state, action) => {
-        state.loading = false;
-        state.recipes = action.payload;
-      })
-      .addCase(searchRecipes.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to search recipes';
-      })
-      .addCase(fetchRecipeById.fulfilled, (state, action) => {
-        state.selectedRecipe = action.payload;
-      });
+      .addCase(searchRecipes.pending, pending)
+      .addCase(searchRecipes.fulfilled, done)
+      .addCase(searchRecipes.rejected, rejected)
+      .addCase(searchByCategory.pending, pending)
+      .addCase(searchByCategory.fulfilled, done)
+      .addCase(searchByCategory.rejected, rejected)
+      .addCase(searchByArea.pending, pending)
+      .addCase(searchByArea.fulfilled, done)
+      .addCase(searchByArea.rejected, rejected)
+      .addCase(fetchRecipeById.fulfilled, (s, a) => { s.selectedRecipe = a.payload; });
   },
 });
 

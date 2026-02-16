@@ -42,3 +42,37 @@
   background-color: #f5f5f5;
   border-radius: 4px;
 }
+
+.recipe-match {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.match-bar-bg {
+  display: block;
+  height: 4px;
+  background: #e5e5e5;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.match-bar-fill {
+  display: block;
+  height: 100%;
+  background: #333;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.match-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.missing-text {
+  font-size: 0.75rem;
+  color: #999;
+}
