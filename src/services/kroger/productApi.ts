@@ -1,7 +1,7 @@
 import { KrogerConfig, KrogerProduct } from './types';
 import { getToken } from './auth';
 
-const BASE = 'https://api.kroger.com/v1';
+const BASE = 'https://api-ce.kroger.com/v1';
 
 const transformProduct = (item: any): KrogerProduct => ({
   productId: item.productId,

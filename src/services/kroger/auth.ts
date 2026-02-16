@@ -6,7 +6,7 @@ export const getToken = async (config: KrogerConfig): Promise<string> => {
   if (cachedToken && Date.now() < cachedToken.expires) return cachedToken.token;
 
   const creds = btoa(`${config.clientId}:${config.clientSecret}`);
-  const res = await fetch('https://api.kroger.com/v1/connect/oauth2/token', {
+  const res = await fetch('https://api-ce.kroger.com/v1/connect/oauth2/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

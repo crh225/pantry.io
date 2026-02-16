@@ -1,7 +1,7 @@
 import { KrogerConfig, KrogerStore } from './types';
 import { getToken } from './auth';
 
-const BASE = 'https://api.kroger.com/v1';
+const BASE = 'https://api-ce.kroger.com/v1';
 
 export const krogerLocationApi = {
   searchByZip: async (zip: string, config: KrogerConfig): Promise<KrogerStore[]> => {
