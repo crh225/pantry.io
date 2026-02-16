@@ -10,9 +10,9 @@
   border-radius: 4px; flex-shrink: 0;
 }
 
-.ing-text { flex: 1; display: flex; flex-direction: column; }
-.ing-text .ing-name { font-size: 0.9rem; font-weight: 500; color: #333; }
-.ing-text .ing-measure { font-size: 0.8rem; color: #999; }
+.ing-text { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.ing-text .ing-name { font-size: 0.9rem; font-weight: 500; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ing-text .ing-measure { font-size: 0.8rem; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ing-status { font-size: 0.85rem; flex-shrink: 0; }
 
 .ing-popup {

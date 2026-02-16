@@ -1,6 +1,10 @@
 const JUNK = /^step\s*\d+[.:]?\s*$/i;
 const NUM_PREFIX = /^(\d+[.):\s]+|STEP\s*\d+\s*[:.–-]\s*)/i;
-const clean = (s: string) => s.replace(NUM_PREFIX, '').trim();
+
+/** Strip HTML tags from text */
+const stripHtml = (s: string) => s.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+
+const clean = (s: string) => stripHtml(s).replace(NUM_PREFIX, '').trim();
 
 /** Split a single long block into sentences at logical break points */
 function splitBlock(text: string): string[] {
