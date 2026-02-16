@@ -1,5 +1,0 @@
-name = "pantry"
-compatibility_date = "2024-01-01"
-
-# Cloudflare Pages deployment
-pages_build_output_dir = "./build"
