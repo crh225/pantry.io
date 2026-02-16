@@ -29,6 +29,18 @@
   right: 8px;
 }
 
+.time-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
 .recipe-info { padding: 1rem; }
 
 .recipe-name {
