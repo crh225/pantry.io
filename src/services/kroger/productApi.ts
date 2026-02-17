@@ -16,8 +16,8 @@ const transformProduct = (item: any): KrogerProduct => ({
   size: item.items?.[0]?.size || '',
 });
 
-/** Extract the main ingredient keyword (e.g., "onion" from "1 large white onion, diced") */
-const extractKeyword = (term: string): string => {
+/** Extract the main ingredient keyword(s) from the search term */
+const extractKeywords = (term: string): string[] => {
   // Remove measurements, numbers, and common modifiers
   const cleaned = term
     .toLowerCase()
@@ -26,31 +26,35 @@ const extractKeyword = (term: string): string => {
     .replace(/[,()]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
-  // Take just the last meaningful word (usually the ingredient)
-  const words = cleaned.split(' ').filter(w => w.length > 2);
-  return words[words.length - 1] || term;
+
+  // Split into individual keywords and filter out short words
+  return cleaned.split(' ').filter(w => w.length > 2);
 };
 
 /** Score how well a product matches the search term */
-const scoreMatch = (product: KrogerProduct, term: string): number => {
+const scoreMatch = (product: KrogerProduct, keywords: string[]): number => {
   const desc = product.description.toLowerCase();
-  const keyword = extractKeyword(term).toLowerCase();
-  if (desc.includes(keyword)) {
-    // Exact match
-    if (desc === keyword || desc === `${keyword}s`) return 100;
-    // Partial match
-    return 80;
+  let score = 0;
+
+  for (const keyword of keywords) {
+    if (desc.includes(keyword)) {
+      // Exact match
+      if (desc === keyword || desc === `${keyword}s`) score += 50;
+      // Partial match
+      else score += 20;
+    }
   }
-  // No match
-  return 0;
+
+  return score;
 };
 
 export const krogerProductApi = {
   search: async (term: string, config: KrogerConfig): Promise<KrogerProduct[]> => {
-    const path = `/v1/products?filter.term=${encodeURIComponent(term)}&filter.limit=10`;
+    const keywords = extractKeywords(term);
+    const path = `/v1/products?filter.term=${encodeURIComponent(keywords.join(' '))}&filter.limit=10`;
     const data = await krogerFetch(path);
     const products = (data?.data || []).map(transformProduct);
-    // Sort by relevance to the ingredient keyword
-    return products.sort((a, b) => scoreMatch(b, term) - scoreMatch(a, term)).slice(0, 5);
+    // Sort by relevance to the search keywords
+    return products.sort((a, b) => scoreMatch(b, keywords) - scoreMatch(a, keywords)).slice(0, 5);
   },
 };
