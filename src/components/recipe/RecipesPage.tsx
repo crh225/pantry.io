@@ -1,13 +1,10 @@
-import React, { useState, lazy, Suspense } from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setSelected } from '../../store/slices/recipeSlice';
+import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchRecipeById } from '../../store/slices/recipeThunks';
-import { IngredientFilter } from './IngredientFilter';
-import { RecipeDetail } from './RecipeDetail';
+import { setSelected } from '../../store/slices/recipeSlice';
+import { RecipeSearch } from './RecipeSearch';
 import { RecipeList } from './RecipeList';
-import './RecipesPage.css';
-
-const RecipeCard = lazy(() => import('./RecipeCard').then(m => ({ default: m.RecipeCard })));
+import { RecipeDetail } from './RecipeDetail';
 
 export const RecipesPage: React.FC = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -25,14 +22,11 @@ export const RecipesPage: React.FC = () => {
   };
 
   return (
-    <div className="recipes-page">
-      <IngredientFilter ingredients={allRecipes.flatMap(r => r.ingredients)} onFilter={() => {}} />
+    <div>
       {selectedId ? (
         <RecipeDetail onBack={() => setSelectedId(null)} />
       ) : (
-        <Suspense fallback={<div className="loading">Loading...</div>}>
-          <RecipeList onRecipeClick={handleClick} />
-        </Suspense>
+        <><RecipeSearch /><RecipeList onRecipeClick={handleClick} /></>
       )}
     </div>
   );
