@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaSearch } from 'react-icons/fa';
 import './PantrySearch.css';
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 export const PantrySearch: React.FC<Props> = ({ value, onChange }) => {
   return (
     <div className="pantry-search">
-      <FaSearch className="search-icon" />
+      <span className="search-icon">🔍</span>
       <input
         type="text"
         placeholder="Search your pantry"

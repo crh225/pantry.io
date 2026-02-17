@@ -55,6 +55,6 @@ export const krogerProductApi = {
     const data = await krogerFetch(path);
     const products = (data?.data || []).map(transformProduct);
     // Sort by relevance to the search keywords
-    return products.sort((a, b) => scoreMatch(b, keywords) - scoreMatch(a, keywords)).slice(0, 5);
+    return products.sort((a: KrogerProduct, b: KrogerProduct) => scoreMatch(b, keywords) - scoreMatch(a, keywords)).slice(0, 5);
   },
 };
