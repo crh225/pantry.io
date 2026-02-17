@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PantryItem as PantryItemType } from '../../types';
 import { PantryItem } from './PantryItem';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import './PantrySection.css';
 
 interface Props {
@@ -18,7 +18,7 @@ export const PantrySection: React.FC<Props> = ({ label, items, onRemove }) => {
       <button className="section-header" onClick={() => setCollapsed(!collapsed)}>
         <span className="section-label">{label}</span>
         <span className="section-count">{items.length}</span>
-        <span className="section-chevron">{collapsed ? <FaChevronDown /> : <FaChevronUp />}</span>
+        <span className="section-chevron">{collapsed ? <IoChevronDownOutline /> : <IoChevronUpOutline />}</span>
       </button>
       {!collapsed && (
         <div className="section-items">
