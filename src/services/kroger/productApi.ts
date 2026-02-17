@@ -32,23 +32,25 @@ const extractKeyword = (term: string): string => {
 };
 
 /** Score how well a product matches the search term */
-const scoreMatch = (product: KrogerProduct, keyword: string): number => {
+const scoreMatch = (product: KrogerProduct, term: string): number => {
   const desc = product.description.toLowerCase();
-  const kw = keyword.toLowerCase();
-  if (desc.startsWith(kw)) return 100;
-  if (desc.includes(` ${kw} `) || desc.includes(` ${kw}s `)) return 80;
-  if (desc.includes(kw)) return 50;
+  const keyword = extractKeyword(term).toLowerCase();
+  if (desc.includes(keyword)) {
+    // Exact match
+    if (desc === keyword || desc === `${keyword}s`) return 100;
+    // Partial match
+    return 80;
+  }
+  // No match
   return 0;
 };
 
 export const krogerProductApi = {
   search: async (term: string, config: KrogerConfig): Promise<KrogerProduct[]> => {
-    const keyword = extractKeyword(term);
-    const locParam = config.locationId ? `&filter.locationId=${config.locationId}` : '';
-    const path = `/v1/products?filter.term=${encodeURIComponent(keyword)}&filter.limit=10${locParam}`;
+    const path = `/v1/products?filter.term=${encodeURIComponent(term)}&filter.limit=10`;
     const data = await krogerFetch(path);
     const products = (data?.data || []).map(transformProduct);
     // Sort by relevance to the ingredient keyword
-    return products.sort((a: KrogerProduct, b: KrogerProduct) => scoreMatch(b, keyword) - scoreMatch(a, keyword)).slice(0, 5);
+    return products.sort((a, b) => scoreMatch(b, term) - scoreMatch(a, term)).slice(0, 5);
   },
 };
