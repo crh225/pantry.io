@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { useAppDispatch } from '../store/hooks';
 import { removeFromBag, clearBag } from '../store/slices/mealPlanSlice';
+import { kroger } from '../services/kroger';
 import { Ingredient } from '../types';
 import { useKrogerPrices } from '../hooks/useKrogerPrices';
 import './ShoppingBag.css';
 
-interface Props { bag: Ingredient[]; }
+interface Props { bag: Ingredient[]; onCheckout?: () => void; }
 
 // Phrases that indicate prep instructions, not the ingredient itself
 const PREP_SUFFIXES = /,?\s+(chopped|minced|diced|sliced|grated|crushed|peeled|deveined|julienned|shredded|melted|softened|cubed|halved|quartered|divided|to taste|for garnish|for serving|as needed|optional|finely|coarsely|freshly|thinly).*$/i;
@@ -39,7 +40,7 @@ const dedup = (bag: Ingredient[]): Ingredient[] => {
   return Array.from(map.values());
 };
 
-export const ShoppingBag: React.FC<Props> = ({ bag }) => {
+export const ShoppingBag: React.FC<Props> = ({ bag, onCheckout }) => {
   const dispatch = useAppDispatch();
   const unique = useMemo(() => dedup(bag), [bag]);
   const { priced, total, available } = useKrogerPrices(unique);
@@ -67,6 +68,12 @@ export const ShoppingBag: React.FC<Props> = ({ bag }) => {
           </li>
         ))}
       </ul>
+      {kroger.isConfigured() && kroger.isLoggedIn() && onCheckout && (
+        <button onClick={onCheckout} className="kroger-cart-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{verticalAlign:'middle',marginRight:4}}><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Send to Kroger Cart
+        </button>
+      )}
       <div className="bag-footer">
         <button onClick={handleExport} className="copy-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{verticalAlign:'middle',marginRight:3}}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
         <button onClick={() => dispatch(clearBag())} className="clear-btn">Clear</button>

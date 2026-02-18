@@ -7,6 +7,7 @@ import { addToBag } from '../store/slices/mealPlanSlice';
 import { recipeApi } from '../services/recipeApi';
 import { MealNights } from './MealNights';
 import { ShoppingBag } from './ShoppingBag';
+import { CartCheckout } from './CartCheckout';
 import { RecipeSelector } from './RecipeSelector';
 import { RecipeDetail } from './recipe/RecipeDetail';
 import { Recipe } from '../types';
@@ -15,6 +16,7 @@ import './MealPlannerPage.css';
 export const MealPlannerPage: React.FC = () => {
   const [selectingNight, setSelectingNight] = useState<string | null>(null);
   const [viewingRecipe, setViewingRecipe] = useState(false);
+  const [checkingOut, setCheckingOut] = useState(false);
   const { nights, bag } = useAppSelector(s => s.mealPlan);
   const dispatch = useAppDispatch();
   const hasStore = kroger.getSelectedStore() !== null;
@@ -32,6 +34,7 @@ export const MealPlannerPage: React.FC = () => {
 
   if (viewingRecipe) return <div className="meal-planner"><RecipeDetail onBack={() => setViewingRecipe(false)} /></div>;
   if (selectingNight) return <div className="meal-planner"><RecipeSelector nightId={selectingNight} onDone={() => setSelectingNight(null)} /></div>;
+  if (checkingOut) return <div className="meal-planner"><CartCheckout bag={bag} onBack={() => setCheckingOut(false)} /></div>;
   return (
     <div className="meal-planner">
       <div className="planner-header"><h1>Meal Planner</h1><p>Plan your meals, price them at Kroger, and go pick up</p></div>
@@ -47,7 +50,7 @@ export const MealPlannerPage: React.FC = () => {
         </div>
         {bag.length > 0 && (
           <div className="planner-sidebar">
-            <ShoppingBag bag={bag} />
+            <ShoppingBag bag={bag} onCheckout={() => setCheckingOut(true)} />
           </div>
         )}
       </div>
