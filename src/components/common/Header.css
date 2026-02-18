@@ -105,11 +105,13 @@
 }
 
 .store-badge-icon {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .store-badge-name {
-  max-width: 120px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -175,7 +177,7 @@
   }
 
   .store-badge-name {
-    max-width: 80px;
+    max-width: 140px;
   }
 
   .header-content {

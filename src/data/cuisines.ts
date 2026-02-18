@@ -3,7 +3,7 @@ export const cuisines = [
   'Croatian', 'Dutch', 'Egyptian', 'Filipino',
   'French', 'Greek', 'Indian', 'Irish',
   'Italian', 'Jamaican', 'Japanese', 'Kenyan',
-  'Malaysian', 'Mexican', 'Moroccan', 'Polish',
+  'Korean', 'Malaysian', 'Mexican', 'Moroccan', 'Polish',
   'Portuguese', 'Russian', 'Spanish', 'Thai',
   'Tunisian', 'Turkish', 'Vietnamese',
 ];

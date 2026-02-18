@@ -17,7 +17,7 @@
 
 .ing-popup {
   position: absolute; left: 0; right: 0; top: 100%;
-  z-index: 10; background: white; border: 1px solid #e5e5e5;
+  z-index: 100; background: white; border: 1px solid #e5e5e5;
   border-radius: 8px; padding: 0.75rem; margin-top: 0.25rem;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   display: flex; gap: 0.75rem; align-items: flex-start;

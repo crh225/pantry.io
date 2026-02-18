@@ -1,9 +1,12 @@
 .app {
   min-height: 100vh;
   background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content {
+  flex: 1;
   padding-bottom: 2rem;
 }
 
