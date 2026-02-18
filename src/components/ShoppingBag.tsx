@@ -7,11 +7,34 @@ import './ShoppingBag.css';
 
 interface Props { bag: Ingredient[]; }
 
+// Phrases that indicate prep instructions, not the ingredient itself
+const PREP_SUFFIXES = /,?\s+(chopped|minced|diced|sliced|grated|crushed|peeled|deveined|julienned|shredded|melted|softened|cubed|halved|quartered|divided|to taste|for garnish|for serving|as needed|optional|finely|coarsely|freshly|thinly).*$/i;
+const PREP_PREFIXES = /^(fresh|freshly|dried|ground|large|small|medium|extra|thick|thin|boneless|skinless)\s+/i;
+const COMPOUND_SEASONING = /^salt\s+and\s+pepper/i;
+
+// Items that are basically free/universal — skip them in the shopping bag
+const SKIP_ITEMS = new Set([
+  'salt', 'pepper', 'black pepper', 'white pepper', 'water', 'ice',
+  'cooking spray', 'salt and pepper', 'salt and pepper to taste',
+  'kosher salt', 'sea salt',
+]);
+
+const cleanName = (name: string): string => {
+  let n = name.trim();
+  if (COMPOUND_SEASONING.test(n)) return '';  // filter out entirely
+  n = n.replace(PREP_SUFFIXES, '');
+  n = n.replace(PREP_PREFIXES, '');
+  return n.trim();
+};
+
 const dedup = (bag: Ingredient[]): Ingredient[] => {
   const map = new Map<string, Ingredient>();
   bag.forEach(i => {
-    const key = i.name.toLowerCase();
-    if (!map.has(key)) map.set(key, i);
+    const cleaned = cleanName(i.name);
+    if (!cleaned) return;
+    const key = cleaned.toLowerCase();
+    if (SKIP_ITEMS.has(key)) return;
+    if (!map.has(key)) map.set(key, { ...i, name: cleaned });
   });
   return Array.from(map.values());
 };
