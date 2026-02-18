@@ -1,0 +1,103 @@
+.product-alternatives {
+  margin-top: 0.5rem;
+  padding-left: 2.5rem;
+}
+
+.alternatives-toggle {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alternatives-toggle:hover {
+  color: #333;
+}
+
+.alternatives-list {
+  margin-top: 0.5rem;
+  border-left: 2px solid #e5e5e5;
+  padding-left: 0.75rem;
+}
+
+.alternatives-loading,
+.alternatives-empty {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.alternatives-error {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  color: #dc3545;
+}
+
+.alternative-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.alternative-item:hover {
+  background: #f0f0f0;
+  border-color: #ccc;
+}
+
+.alt-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: white;
+  flex-shrink: 0;
+}
+
+.alt-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.alt-description {
+  font-size: 0.85rem;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.alt-size {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.alt-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.alt-promo {
+  font-size: 0.75rem;
+  color: #22c55e;
+}

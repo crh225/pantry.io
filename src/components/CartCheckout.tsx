@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Ingredient } from '../types';
-import { useKrogerPrices } from '../hooks/useKrogerPrices';
-import { kroger } from '../services/kroger';
+import { useKrogerPrices, PricedItem } from '../hooks/useKrogerPrices';
+import { kroger, KrogerProduct } from '../services/kroger';
+import { useAppDispatch } from '../store/hooks';
+import { addCartItem } from '../store/slices/krogerSlice';
+import { ProductAlternatives } from './kroger/ProductAlternatives';
 import './CartCheckout.css';
 
 interface Props {
@@ -44,12 +47,20 @@ interface ItemResult { upc: string; name: string; success: boolean; error?: stri
 
 export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
   const unique = useMemo(() => dedup(bag), [bag]);
-  const { priced } = useKrogerPrices(unique);
+  const { priced: initialPriced } = useKrogerPrices(unique);
+  const dispatch = useAppDispatch();
 
+  // Local state for priced items (allows updating when user selects alternative)
+  const [priced, setPriced] = useState<PricedItem[]>([]);
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [status, setStatus] = useState<SendStatus>('idle');
   const [results, setResults] = useState<ItemResult[]>([]);
   const [progress, setProgress] = useState(0);
+
+  // Sync initial priced items
+  React.useEffect(() => {
+    setPriced(initialPriced);
+  }, [initialPriced]);
 
   const loading = priced.some(p => p.loading);
   const inStock = priced.filter(p => p.product && p.product.price);
@@ -58,7 +69,7 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
 
   // Auto-select all in-stock items once loading finishes
   React.useEffect(() => {
-    if (!loading && status === 'idle') {
+    if (!loading && status === 'idle' && priced.length > 0) {
       const indices = new Set<number>();
       priced.forEach((p, i) => {
         if (p.product && p.product.price) indices.add(i);
@@ -86,6 +97,14 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
 
   const selectNone = () => setSelected(new Set());
 
+  const handleSelectAlternative = (idx: number, alt: KrogerProduct) => {
+    setPriced(prev => {
+      const next = [...prev];
+      next[idx] = { ...next[idx], product: alt };
+      return next;
+    });
+  };
+
   const selectedItems = priced.filter((_, i) => selected.has(i));
   const selectedTotal = selectedItems.reduce((sum, p) => sum + (p.product?.price?.regular || 0), 0);
 
@@ -101,6 +120,17 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
       const p = items[i];
       try {
         await kroger.addToCart(p.product!.upc, 1);
+
+        // Track in Redux
+        dispatch(addCartItem({
+          upc: p.product!.upc,
+          name: p.ingredient.name,
+          description: p.product!.description,
+          price: p.product!.price?.regular || 0,
+          quantity: 1,
+          image: p.product!.image,
+        }));
+
         itemResults.push({ upc: p.product!.upc, name: p.ingredient.name, success: true });
       } catch (e: any) {
         itemResults.push({ upc: p.product!.upc, name: p.ingredient.name, success: false, error: e.message });
@@ -153,18 +183,25 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
                 {priced.map((p, i) => {
                   if (!p.product || !p.product.price) return null;
                   return (
-                    <li key={i} className={selected.has(i) ? 'checkout-item selected' : 'checkout-item'} onClick={() => toggleItem(i)}>
-                      <span className="checkout-check">{selected.has(i) ? '✓' : ''}</span>
-                      {p.product.image && <img src={p.product.image} alt="" className="checkout-thumb" />}
-                      <div className="checkout-item-info">
-                        <span className="checkout-item-name">{p.ingredient.name}</span>
-                        <span className="checkout-item-match">{p.product.description}</span>
-                        {p.product.size && <span className="checkout-item-size">{p.product.size}</span>}
+                    <li key={i} className={selected.has(i) ? 'checkout-item selected' : 'checkout-item'}>
+                      <div className="checkout-item-main" onClick={() => toggleItem(i)}>
+                        <span className="checkout-check">{selected.has(i) ? '\u2713' : ''}</span>
+                        {p.product.image && <img src={p.product.image} alt="" className="checkout-thumb" />}
+                        <div className="checkout-item-info">
+                          <span className="checkout-item-name">{p.ingredient.name}</span>
+                          <span className="checkout-item-match">{p.product.description}</span>
+                          {p.product.size && <span className="checkout-item-size">{p.product.size}</span>}
+                        </div>
+                        <div className="checkout-item-price">
+                          <span className="checkout-price">${p.product.price.regular.toFixed(2)}</span>
+                          {p.product.price.promo && <span className="checkout-promo">Sale ${p.product.price.promo.toFixed(2)}</span>}
+                        </div>
                       </div>
-                      <div className="checkout-item-price">
-                        <span className="checkout-price">${p.product.price.regular.toFixed(2)}</span>
-                        {p.product.price.promo && <span className="checkout-promo">Sale ${p.product.price.promo.toFixed(2)}</span>}
-                      </div>
+                      <ProductAlternatives
+                        ingredientName={p.ingredient.name}
+                        currentProduct={p.product}
+                        onSelectAlternative={(alt) => handleSelectAlternative(i, alt)}
+                      />
                     </li>
                   );
                 })}
@@ -241,7 +278,7 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
           <ul className="checkout-result-list">
             {results.map((r, i) => (
               <li key={i} className={r.success ? 'result-ok' : 'result-fail'}>
-                <span className="result-icon">{r.success ? '✓' : '✗'}</span>
+                <span className="result-icon">{r.success ? '\u2713' : '\u2717'}</span>
                 <span>{r.name}</span>
                 {r.error && <span className="result-error">{r.error}</span>}
               </li>

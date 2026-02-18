@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
-type Page = 'pantry' | 'recipes' | 'planner';
-const VALID: Page[] = ['pantry', 'recipes', 'planner'];
+type Page = 'pantry' | 'recipes' | 'planner' | 'cart';
+const VALID: Page[] = ['pantry', 'recipes', 'planner', 'cart'];
 
 const read = (): Page => {
   const h = window.location.hash.replace('#', '') as Page;

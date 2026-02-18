@@ -146,6 +146,19 @@
   white-space: nowrap;
 }
 
+.store-badge.connected {
+  border-color: #22c55e;
+}
+
+.connection-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  flex-shrink: 0;
+}
+
 /* Store modal */
 .store-modal-overlay {
   position: fixed;

@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { kroger, KrogerStore } from '../../services/kroger';
-import { KrogerStorePicker } from '../KrogerStorePicker';
+import { useAppSelector } from '../../store/hooks';
+import { kroger } from '../../services/kroger';
+import { KrogerSetupModal } from '../kroger/KrogerSetupModal';
 import './Header.css';
 
 interface HeaderProps {
-  onNavClick: (page: 'recipes' | 'pantry' | 'planner') => void;
+  onNavClick: (page: 'recipes' | 'pantry' | 'planner' | 'cart') => void;
   currentPage: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
-  const [showStorePicker, setShowStorePicker] = useState(false);
-  const [selectedStore, setSelectedStore] = useState<KrogerStore | null>(() => kroger.getSelectedStore());
-
-  const handleStoreSelect = (store: KrogerStore) => {
-    kroger.setStore(store);
-    setSelectedStore(store);
-    setShowStorePicker(false);
-  };
+  const [showSetupModal, setShowSetupModal] = useState(false);
+  const { isAuthenticated, selectedStore } = useAppSelector(s => s.kroger);
 
   return (
     <>
@@ -42,36 +37,36 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
             >
               Meal Planner
             </button>
+            {kroger.isConfigured() && (
+              <button
+                className={`nav-btn ${currentPage === 'cart' ? 'active' : ''}`}
+                onClick={() => onNavClick('cart')}
+              >
+                My Cart
+              </button>
+            )}
           </nav>
           {kroger.isConfigured() && (
             <div className="header-kroger">
-              <button className="store-badge" onClick={() => setShowStorePicker(true)}>
+              <button
+                className={`store-badge ${isAuthenticated ? 'connected' : ''}`}
+                onClick={() => setShowSetupModal(true)}
+              >
                 <svg className="store-badge-icon" width="14" height="14" viewBox="0 0 24 24"
                   fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span className="store-badge-name">{selectedStore?.name || 'Set Store'}</span>
+                {isAuthenticated && <span className="connection-indicator" />}
               </button>
-              {!kroger.isLoggedIn() ? (
-                <button className="kroger-connect-btn" onClick={() => kroger.login()}>
-                  Connect Kroger
-                </button>
-              ) : (
-                <span className="kroger-connected">Connected</span>
-              )}
             </div>
           )}
         </div>
       </header>
 
-      {showStorePicker && (
-        <div className="store-modal-overlay" onClick={() => setShowStorePicker(false)}>
-          <div className="store-modal" onClick={e => e.stopPropagation()}>
-            <button className="store-modal-close" onClick={() => setShowStorePicker(false)}>×</button>
-            <KrogerStorePicker onSelect={handleStoreSelect} selectedStore={selectedStore} />
-          </div>
-        </div>
+      {showSetupModal && (
+        <KrogerSetupModal onClose={() => setShowSetupModal(false)} />
       )}
     </>
   );
