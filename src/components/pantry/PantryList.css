@@ -1,0 +1,33 @@
+.pantry-list { max-width: 800px; margin: 0 auto; }
+.pantry-summary {
+  text-align: center; font-size: 0.85rem; color: #999; margin-bottom: 1rem;
+}
+.pantry-search {
+  display: block; width: 100%; max-width: 360px; margin: 0 auto 1.25rem;
+  padding: 8px 14px; border: 1px solid #ddd; border-radius: 20px;
+  font-size: 0.9rem; outline: none; background: #fafafa;
+}
+.pantry-search:focus { border-color: #999; background: #fff; }
+.pantry-section {
+  margin-bottom: 1rem; border: 1px solid #e5e5e5;
+  border-radius: 8px; overflow: hidden;
+}
+.section-header {
+  display: flex; align-items: center; width: 100%;
+  padding: 0.75rem 1rem; background: #fafafa; border: none;
+  cursor: pointer; font-size: 1rem; text-align: left; gap: 0.5rem;
+}
+.section-header:hover { background: #f0f0f0; }
+.section-label { font-weight: 600; color: #333; }
+.section-count {
+  background: #e5e5e5; color: #666; padding: 0.1rem 0.5rem;
+  border-radius: 10px; font-size: 0.8rem; font-weight: 600;
+}
+.section-chevron { margin-left: auto; color: #999; }
+.section-items {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 12px 14px;
+}
+.empty-pantry {
+  text-align: center; padding: 4rem 2rem; color: #666; font-size: 1.1rem;
+}

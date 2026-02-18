@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { PantryItem as PantryItemType } from '../../types';
 import './PantryItem.css';
 
@@ -7,12 +7,12 @@ interface Props {
   onRemove: (id: string) => void;
 }
 
-export const PantryItem: React.FC<Props> = ({ item, onRemove }) => {
-  return (
-    <div className="pantry-item">
-      <span className="item-name">{item.name}</span>
-      {item.quantity && <span className="item-quantity">{item.quantity}</span>}
-      <button className="remove-btn" onClick={() => onRemove(item.id)} aria-label="Remove">×</button>
-    </div>
-  );
-};
+export const PantryItem = memo<Props>(({ item, onRemove }) => (
+  <span className="pantry-chip">
+    <span className="chip-name">{item.name}</span>
+    {item.quantity && <span className="chip-qty">{item.quantity}</span>}
+    <button className="chip-remove" onClick={() => onRemove(item.id)} aria-label="Remove">×</button>
+  </span>
+));
+
+PantryItem.displayName = 'PantryItem';
