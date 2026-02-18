@@ -10,9 +10,13 @@
 }
 .bag-header h2 { font-size: 1rem; margin: 0; flex: 1; }
 .bag-total { font-size: 1rem; font-weight: 700; color: #333; }
-.bag-actions { display: flex; gap: 0.5rem; }
+.bag-footer {
+  display: flex; gap: 0.5rem; margin-top: 0.75rem;
+  padding-top: 0.75rem; border-top: 1px dashed #ddd;
+}
 .copy-btn, .clear-btn {
-  padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;
+  flex: 1; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;
+  text-align: center;
 }
 .copy-btn { background: #333; color: #fff; }
 .copy-btn:hover { background: #555; }
