@@ -4,9 +4,11 @@
 }
 .bag-header {
   display: flex; align-items: center; gap: 0.75rem;
-  margin-bottom: 1rem; flex-wrap: wrap;
+  margin-bottom: 0.75rem; flex-wrap: wrap;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed #ddd;
 }
-.bag-header h2 { font-size: 1.1rem; margin: 0; flex: 1; }
+.bag-header h2 { font-size: 1rem; margin: 0; flex: 1; }
 .bag-total { font-size: 1rem; font-weight: 700; color: #333; }
 .bag-actions { display: flex; gap: 0.5rem; }
 .copy-btn, .clear-btn {
@@ -17,21 +19,23 @@
 .clear-btn { background: #f5f5f5; color: #666; }
 .clear-btn:hover { background: #e5e5e5; }
 
+/* Receipt-style list */
 .bag-items {
   list-style: none; padding: 0; margin: 0;
-  display: flex; flex-wrap: wrap; gap: 8px;
 }
 .bag-items li {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #f5f5f5; border: 1px solid #e5e5e5; border-radius: 20px;
-  padding: 5px 8px 5px 12px; font-size: 0.85rem;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0.45rem 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 0.85rem;
 }
-.bag-item-name { white-space: nowrap; color: #333; font-weight: 500; }
-.bag-price { font-size: 0.78rem; color: #888; font-weight: 500; white-space: nowrap; }
+.bag-items li:last-child { border-bottom: none; }
+.bag-item-name { flex: 1; color: #333; font-weight: 500; }
+.bag-price { font-size: 0.8rem; color: #888; font-weight: 500; white-space: nowrap; }
 .remove-item {
   display: inline-flex; align-items: center; justify-content: center;
   width: 18px; height: 18px; border-radius: 50%; background: transparent;
-  border: none; color: #bbb; font-size: 0.85rem; cursor: pointer;
-  padding: 0; line-height: 1; transition: all 0.15s;
+  border: none; color: #ccc; font-size: 0.85rem; cursor: pointer;
+  padding: 0; line-height: 1; transition: all 0.15s; flex-shrink: 0;
 }
 .remove-item:hover { background: #ff4444; color: #fff; }
