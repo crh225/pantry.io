@@ -13,6 +13,20 @@
   border-radius: 8px;
   padding: 1.25rem;
   text-align: center;
+  position: relative;
+  transition: box-shadow 0.15s, opacity 0.15s, border-color 0.15s;
+}
+
+.night-card[draggable="true"] { cursor: grab; }
+.night-card[draggable="true"]:active { cursor: grabbing; }
+.night-card.dragging { opacity: 0.4; }
+.night-card.drag-over { border-color: #667eea; box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.25); }
+
+.drag-handle {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .night-card h3 {
@@ -44,6 +58,9 @@
 }
 
 .bag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 0.5rem 1rem;
   background: #333;
   color: white;
@@ -55,14 +72,17 @@
 .bag-btn:hover { background: #555; }
 
 .remove-night-btn {
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
   background: #f5f5f5;
   color: #666;
   border-radius: 4px;
   font-size: 0.85rem;
 }
 
-.remove-night-btn:hover { background: #e5e5e5; }
+.remove-night-btn:hover { background: #e5e5e5; color: #ff4444; }
 
 .assign-btn {
   padding: 1.5rem 2rem;
@@ -80,41 +100,39 @@
   color: #667eea;
 }
 
-.night-move {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.night-move button {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #e5e5e5;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.15s;
-}
-
-.night-move button:hover {
-  background: #333;
-  color: white;
-  border-color: #333;
-}
-
-.swap-btn {
-  padding: 0.5rem 1rem;
-  background: #f5f5f5;
-  color: #333;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.swap-btn:hover { background: #e5e5e5; }
+/* Mobile arrow buttons — hidden on desktop */
+.night-move-mobile { display: none; }
 
 @media (max-width: 768px) {
   .nights-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* Hide drag handle on mobile */
+  .drag-handle { display: none; }
+
+  /* Show arrow buttons on mobile */
+  .night-move-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .night-move-mobile button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .night-move-mobile button:hover {
+    background: #333;
+    color: white;
+    border-color: #333;
+  }
 }

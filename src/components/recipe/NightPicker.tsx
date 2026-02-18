@@ -18,7 +18,7 @@ export const NightPicker: React.FC<NightPickerProps> = ({ nights, onPick }) => (
           onClick={() => onPick(n.id)}
         >
           {n.label}
-          {n.recipe && <span className="picker-swap">↻ swap</span>}
+          {n.recipe && <span className="picker-swap">replace</span>}
         </button>
       ))}
     </div>
