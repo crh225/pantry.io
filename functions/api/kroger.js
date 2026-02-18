@@ -1,4 +1,4 @@
-const BASE = 'https://api-ce.kroger.com';
+const BASE = 'https://api.kroger.com';
 
 let cachedToken = null;
 

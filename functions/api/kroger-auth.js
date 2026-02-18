@@ -1,4 +1,4 @@
-const KROGER_BASE = 'https://api-ce.kroger.com';
+const KROGER_BASE = 'https://api.kroger.com';
 const DB = 'https://pantry-io-eeccf-default-rtdb.firebaseio.com';
 
 export async function onRequest({ request, env }) {
