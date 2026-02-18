@@ -1,5 +1,9 @@
-export async function krogerFetch(apiPath: string): Promise<any> {
-  const res = await fetch(`/api/kroger?path=${encodeURIComponent(apiPath)}`);
+export async function krogerFetch(apiPath: string, userToken?: string | null): Promise<any> {
+  const headers: Record<string, string> = {};
+  if (userToken) {
+    headers['X-Kroger-Token'] = userToken;
+  }
+  const res = await fetch(`/api/kroger?path=${encodeURIComponent(apiPath)}`, { headers });
   if (!res.ok) return null;
   return res.json();
 }

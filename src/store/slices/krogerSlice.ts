@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { KrogerStore } from '../../services/kroger';
+import { KrogerStore, KrogerProfile } from '../../services/kroger';
+import { kroger } from '../../services/kroger';
 
 const STORE_KEY = 'kroger_selected_store';
 const SESSION_KEY = 'kroger_session_id';
 const TOKEN_KEY = 'kroger_access_token';
 const EXPIRY_KEY = 'kroger_token_expiry';
 const CART_KEY = 'kroger_cart_items';
+const PROFILE_KEY = 'kroger_profile';
 
 export interface CartItem {
   upc: string;
@@ -23,6 +25,8 @@ interface KrogerState {
   tokenExpiry: number | null;
   selectedStore: KrogerStore | null;
   cartItems: CartItem[];
+  profile: KrogerProfile | null;
+  profileLoading: boolean;
 }
 
 // Load initial state from localStorage
@@ -39,6 +43,8 @@ const loadInitialState = (): KrogerState => {
       tokenExpiry,
       selectedStore: JSON.parse(localStorage.getItem(STORE_KEY) || 'null'),
       cartItems: JSON.parse(localStorage.getItem(CART_KEY) || '[]'),
+      profile: JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null'),
+      profileLoading: false,
     };
   } catch {
     return {
@@ -47,6 +53,8 @@ const loadInitialState = (): KrogerState => {
       tokenExpiry: null,
       selectedStore: null,
       cartItems: [],
+      profile: null,
+      profileLoading: false,
     };
   }
 };
@@ -59,6 +67,15 @@ export const handleAuthCallback = createAsyncThunk(
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(EXPIRY_KEY, (Date.now() + expiresIn * 1000).toString());
     return { sessionId, expiresIn };
+  }
+);
+
+// Thunk for fetching user profile
+export const fetchProfile = createAsyncThunk(
+  'kroger/fetchProfile',
+  async () => {
+    const profile = await kroger.fetchProfile();
+    return profile;
   }
 );
 
@@ -90,9 +107,11 @@ const krogerSlice = createSlice({
       state.isAuthenticated = false;
       state.sessionId = null;
       state.tokenExpiry = null;
+      state.profile = null;
       localStorage.removeItem(SESSION_KEY);
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(EXPIRY_KEY);
+      localStorage.removeItem(PROFILE_KEY);
     },
     addCartItem: (state, action: PayloadAction<Omit<CartItem, 'addedAt'>>) => {
       const existing = state.cartItems.find(i => i.upc === action.payload.upc);
@@ -113,11 +132,27 @@ const krogerSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(handleAuthCallback.fulfilled, (state, action) => {
-      state.isAuthenticated = true;
-      state.sessionId = action.payload.sessionId;
-      state.tokenExpiry = Date.now() + action.payload.expiresIn * 1000;
-    });
+    builder
+      .addCase(handleAuthCallback.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.sessionId = action.payload.sessionId;
+        state.tokenExpiry = Date.now() + action.payload.expiresIn * 1000;
+      })
+      .addCase(fetchProfile.pending, (state) => {
+        state.profileLoading = true;
+      })
+      .addCase(fetchProfile.fulfilled, (state, action) => {
+        state.profile = action.payload;
+        state.profileLoading = false;
+        if (action.payload) {
+          try {
+            localStorage.setItem(PROFILE_KEY, JSON.stringify(action.payload));
+          } catch {}
+        }
+      })
+      .addCase(fetchProfile.rejected, (state) => {
+        state.profileLoading = false;
+      });
   },
 });
 

@@ -11,7 +11,7 @@ export async function onRequest({ request, env }) {
 
   if (action === 'login') {
     const authUrl = `${KROGER_BASE}/v1/connect/oauth2/authorize` +
-      `?scope=${encodeURIComponent('cart.basic:write product.compact')}` +
+      `?scope=${encodeURIComponent('cart.basic:write product.compact profile.compact')}` +
       `&response_type=code` +
       `&client_id=${clientId}` +
       `&redirect_uri=${encodeURIComponent(redirectUri)}`;

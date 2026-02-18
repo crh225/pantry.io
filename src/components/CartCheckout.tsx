@@ -12,9 +12,24 @@ interface Props {
   onBack: () => void;
 }
 
-// Same cleaning logic as ShoppingBag
-const PREP_SUFFIXES = /,?\s+(chopped|minced|diced|sliced|grated|crushed|peeled|deveined|julienned|shredded|melted|softened|cubed|halved|quartered|divided|to taste|for garnish|for serving|as needed|optional|finely|coarsely|freshly|thinly).*$/i;
-const PREP_PREFIXES = /^(fresh|freshly|dried|ground|large|small|medium|extra|thick|thin|boneless|skinless)\s+/i;
+// Prep words to remove (as suffixes like "tomatoes, diced" or prefixes like "diced tomatoes")
+const PREP_WORDS = [
+  'chopped', 'minced', 'diced', 'sliced', 'grated', 'crushed', 'peeled',
+  'deveined', 'julienned', 'shredded', 'melted', 'softened', 'cubed',
+  'halved', 'quartered', 'divided', 'crumbled', 'torn', 'beaten', 'whisked',
+  'room temperature', 'at room temperature', 'warmed', 'chilled', 'frozen',
+  'thawed', 'rinsed', 'drained', 'patted dry', 'trimmed', 'cored', 'seeded',
+  'deseeded', 'pitted', 'zested', 'juiced', 'separated', 'sifted',
+  'to taste', 'for garnish', 'for serving', 'as needed', 'optional',
+  'finely', 'coarsely', 'freshly', 'thinly', 'roughly', 'lightly',
+  'fresh', 'dried', 'ground', 'whole', 'raw', 'cooked',
+  'large', 'small', 'medium', 'extra', 'thick', 'thin',
+  'boneless', 'skinless', 'bone-in', 'skin-on',
+  'packed', 'loosely packed', 'firmly packed',
+];
+const PREP_PATTERN = new RegExp(
+  `(,?\\s*\\b(${PREP_WORDS.join('|')})\\b\\s*)+`, 'gi'
+);
 const COMPOUND_SEASONING = /^salt\s+and\s+pepper/i;
 const SKIP_ITEMS = new Set([
   'salt', 'pepper', 'black pepper', 'white pepper', 'water', 'ice',
@@ -25,9 +40,9 @@ const SKIP_ITEMS = new Set([
 const cleanName = (name: string): string => {
   let n = name.trim();
   if (COMPOUND_SEASONING.test(n)) return '';
-  n = n.replace(PREP_SUFFIXES, '');
-  n = n.replace(PREP_PREFIXES, '');
-  return n.trim();
+  n = n.replace(PREP_PATTERN, ' ');
+  n = n.replace(/\s+/g, ' ').replace(/^[,\s]+|[,\s]+$/g, '').trim();
+  return n;
 };
 
 const dedup = (bag: Ingredient[]): Ingredient[] => {
@@ -87,16 +102,6 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
     });
   };
 
-  const selectAll = () => {
-    const indices = new Set<number>();
-    priced.forEach((p, i) => {
-      if (p.product && p.product.price) indices.add(i);
-    });
-    setSelected(indices);
-  };
-
-  const selectNone = () => setSelected(new Set());
-
   const handleSelectAlternative = (idx: number, alt: KrogerProduct) => {
     setPriced(prev => {
       const next = [...prev];
@@ -114,14 +119,16 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
 
     setStatus('sending');
     setProgress(0);
-    const itemResults: ItemResult[] = [];
 
-    for (let i = 0; i < items.length; i++) {
-      const p = items[i];
-      try {
-        await kroger.addToCart(p.product!.upc, 1);
+    // Build batch request
+    const cartItems = items.map(p => ({ upc: p.product!.upc, quantity: 1 }));
 
-        // Track in Redux
+    try {
+      // Single API call to add all items
+      await kroger.addMultipleToCart(cartItems);
+
+      // Track all items in Redux
+      const itemResults: ItemResult[] = items.map(p => {
         dispatch(addCartItem({
           upc: p.product!.upc,
           name: p.ingredient.name,
@@ -130,13 +137,20 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
           quantity: 1,
           image: p.product!.image,
         }));
+        return { upc: p.product!.upc, name: p.ingredient.name, success: true };
+      });
 
-        itemResults.push({ upc: p.product!.upc, name: p.ingredient.name, success: true });
-      } catch (e: any) {
-        itemResults.push({ upc: p.product!.upc, name: p.ingredient.name, success: false, error: e.message });
-      }
-      setProgress(i + 1);
-      setResults([...itemResults]);
+      setProgress(items.length);
+      setResults(itemResults);
+    } catch (e: any) {
+      // If batch fails, mark all as failed
+      const itemResults: ItemResult[] = items.map(p => ({
+        upc: p.product!.upc,
+        name: p.ingredient.name,
+        success: false,
+        error: e.message,
+      }));
+      setResults(itemResults);
     }
 
     setStatus('done');
@@ -172,13 +186,7 @@ export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
           {/* In-stock items */}
           {inStock.length > 0 && (
             <div className="checkout-section">
-              <div className="checkout-section-header">
-                <h3>Available ({inStock.length})</h3>
-                <div className="checkout-select-actions">
-                  <button onClick={selectAll}>Select All</button>
-                  <button onClick={selectNone}>Select None</button>
-                </div>
-              </div>
+              <h3>Available ({inStock.length})</h3>
               <ul className="checkout-items">
                 {priced.map((p, i) => {
                   if (!p.product || !p.product.price) return null;

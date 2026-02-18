@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { removeCartItem, clearCart } from '../../store/slices/krogerSlice';
+import { ConfirmModal } from '../common/ConfirmModal';
 import './MyCartPage.css';
 
 export const MyCartPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { cartItems, selectedStore } = useAppSelector(s => s.kroger);
+  const { cartItems, selectedStore, profile } = useAppSelector(s => s.kroger);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -14,9 +16,8 @@ export const MyCartPage: React.FC = () => {
   };
 
   const handleClearAll = () => {
-    if (window.confirm('Clear all items from your cart?')) {
-      dispatch(clearCart());
-    }
+    dispatch(clearCart());
+    setShowClearConfirm(false);
   };
 
   const formatTime = (timestamp: number) => {
@@ -37,12 +38,12 @@ export const MyCartPage: React.FC = () => {
       <div className="my-cart-page">
         <div className="cart-page-header">
           <h1>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '0.5rem', flexShrink: 0}}>
               <circle cx="9" cy="21" r="1"/>
               <circle cx="20" cy="21" r="1"/>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
-            My Kroger Cart
+            {profile?.firstName ? `${profile.firstName}'s Kroger Cart` : 'My Kroger Cart'}
           </h1>
           {selectedStore && (
             <p className="cart-store">
@@ -51,6 +52,7 @@ export const MyCartPage: React.FC = () => {
                 <circle cx="12" cy="10" r="3" />
               </svg>
               {selectedStore.name}
+              {selectedStore.city && `, ${selectedStore.city}`}
             </p>
           )}
         </div>
@@ -72,12 +74,12 @@ export const MyCartPage: React.FC = () => {
       <div className="cart-page-header">
         <div className="cart-page-title">
           <h1>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '0.5rem', flexShrink: 0}}>
               <circle cx="9" cy="21" r="1"/>
               <circle cx="20" cy="21" r="1"/>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
-            My Kroger Cart
+            {profile?.firstName ? `${profile.firstName}'s Kroger Cart` : 'My Kroger Cart'}
           </h1>
           {selectedStore && (
             <p className="cart-store">
@@ -86,10 +88,11 @@ export const MyCartPage: React.FC = () => {
                 <circle cx="12" cy="10" r="3" />
               </svg>
               {selectedStore.name}
+              {selectedStore.city && `, ${selectedStore.city}`}
             </p>
           )}
         </div>
-        <button className="cart-clear-btn" onClick={handleClearAll}>
+        <button className="cart-clear-btn" onClick={() => setShowClearConfirm(true)}>
           Clear All
         </button>
       </div>
@@ -146,6 +149,18 @@ export const MyCartPage: React.FC = () => {
           </svg>
         </a>
       </div>
+
+      {showClearConfirm && (
+        <ConfirmModal
+          title="Clear Cart"
+          message="This will clear your local cart tracking. Items already in your Kroger cart will not be affected."
+          confirmText="Clear"
+          cancelText="Keep Items"
+          danger
+          onConfirm={handleClearAll}
+          onCancel={() => setShowClearConfirm(false)}
+        />
+      )}
     </div>
   );
 };

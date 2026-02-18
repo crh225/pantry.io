@@ -1,52 +1,50 @@
 .product-alternatives {
-  margin-top: 0.5rem;
-  padding-left: 2.5rem;
+  padding: 0 1rem 0.5rem 3.5rem;
 }
 
 .alternatives-toggle {
   background: none;
   border: none;
-  color: #666;
-  font-size: 0.85rem;
+  color: #999;
+  font-size: 0.75rem;
   cursor: pointer;
-  padding: 0.25rem 0;
-  display: flex;
+  padding: 0;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .alternatives-toggle:hover {
-  color: #333;
+  color: #667eea;
+  text-decoration: underline;
 }
 
 .alternatives-list {
   margin-top: 0.5rem;
-  border-left: 2px solid #e5e5e5;
-  padding-left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .alternatives-loading,
 .alternatives-empty {
-  padding: 0.5rem;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #999;
 }
 
 .alternatives-error {
-  padding: 0.5rem;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #dc3545;
 }
 
 .alternative-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  background: #f9f9f9;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 4px;
   cursor: pointer;
   width: 100%;
   text-align: left;
@@ -54,50 +52,53 @@
 }
 
 .alternative-item:hover {
-  background: #f0f0f0;
-  border-color: #ccc;
+  background: #f0f7ff;
+  border-color: #667eea;
 }
 
 .alt-thumb {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: 3px;
   background: white;
   flex-shrink: 0;
 }
 
 .alt-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .alt-description {
-  font-size: 0.85rem;
-  color: #333;
+  font-size: 0.8rem;
+  color: #555;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .alt-size {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #999;
+  flex-shrink: 0;
 }
 
 .alt-price {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  color: #333;
   flex-shrink: 0;
 }
 
 .alt-promo {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #22c55e;
+  font-weight: 600;
 }

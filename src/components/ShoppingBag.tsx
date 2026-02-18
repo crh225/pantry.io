@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useAppDispatch } from '../store/hooks';
-import { removeFromBag, clearBag } from '../store/slices/mealPlanSlice';
+import { removeFromBag } from '../store/slices/mealPlanSlice';
 import { kroger } from '../services/kroger';
 import { Ingredient } from '../types';
 import { useKrogerPrices } from '../hooks/useKrogerPrices';
@@ -8,9 +8,24 @@ import './ShoppingBag.css';
 
 interface Props { bag: Ingredient[]; onCheckout?: () => void; }
 
-// Phrases that indicate prep instructions, not the ingredient itself
-const PREP_SUFFIXES = /,?\s+(chopped|minced|diced|sliced|grated|crushed|peeled|deveined|julienned|shredded|melted|softened|cubed|halved|quartered|divided|to taste|for garnish|for serving|as needed|optional|finely|coarsely|freshly|thinly).*$/i;
-const PREP_PREFIXES = /^(fresh|freshly|dried|ground|large|small|medium|extra|thick|thin|boneless|skinless)\s+/i;
+// Prep words to remove (as suffixes like "tomatoes, diced" or prefixes like "diced tomatoes")
+const PREP_WORDS = [
+  'chopped', 'minced', 'diced', 'sliced', 'grated', 'crushed', 'peeled',
+  'deveined', 'julienned', 'shredded', 'melted', 'softened', 'cubed',
+  'halved', 'quartered', 'divided', 'crumbled', 'torn', 'beaten', 'whisked',
+  'room temperature', 'at room temperature', 'warmed', 'chilled', 'frozen',
+  'thawed', 'rinsed', 'drained', 'patted dry', 'trimmed', 'cored', 'seeded',
+  'deseeded', 'pitted', 'zested', 'juiced', 'separated', 'sifted',
+  'to taste', 'for garnish', 'for serving', 'as needed', 'optional',
+  'finely', 'coarsely', 'freshly', 'thinly', 'roughly', 'lightly',
+  'fresh', 'dried', 'ground', 'whole', 'raw', 'cooked',
+  'large', 'small', 'medium', 'extra', 'thick', 'thin',
+  'boneless', 'skinless', 'bone-in', 'skin-on',
+  'packed', 'loosely packed', 'firmly packed',
+];
+const PREP_PATTERN = new RegExp(
+  `(,?\\s*\\b(${PREP_WORDS.join('|')})\\b\\s*)+`, 'gi'
+);
 const COMPOUND_SEASONING = /^salt\s+and\s+pepper/i;
 
 // Items that are basically free/universal — skip them in the shopping bag
@@ -22,10 +37,12 @@ const SKIP_ITEMS = new Set([
 
 const cleanName = (name: string): string => {
   let n = name.trim();
-  if (COMPOUND_SEASONING.test(n)) return '';  // filter out entirely
-  n = n.replace(PREP_SUFFIXES, '');
-  n = n.replace(PREP_PREFIXES, '');
-  return n.trim();
+  if (COMPOUND_SEASONING.test(n)) return '';
+  // Remove prep words from anywhere in the string
+  n = n.replace(PREP_PATTERN, ' ');
+  // Clean up extra spaces and commas
+  n = n.replace(/\s+/g, ' ').replace(/^[,\s]+|[,\s]+$/g, '').trim();
+  return n;
 };
 
 const dedup = (bag: Ingredient[]): Ingredient[] => {
@@ -44,11 +61,6 @@ export const ShoppingBag: React.FC<Props> = ({ bag, onCheckout }) => {
   const dispatch = useAppDispatch();
   const unique = useMemo(() => dedup(bag), [bag]);
   const { priced, total, available } = useKrogerPrices(unique);
-
-  const handleExport = () => {
-    const text = unique.map(i => `${i.measure} ${i.name}`).join('\n');
-    navigator.clipboard.writeText(text);
-  };
 
   if (unique.length === 0) return null;
 
@@ -74,10 +86,6 @@ export const ShoppingBag: React.FC<Props> = ({ bag, onCheckout }) => {
           Send to Kroger Cart
         </button>
       )}
-      <div className="bag-footer">
-        <button onClick={handleExport} className="copy-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{verticalAlign:'middle',marginRight:3}}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
-        <button onClick={() => dispatch(clearBag())} className="clear-btn">Clear</button>
-      </div>
     </div>
   );
 };

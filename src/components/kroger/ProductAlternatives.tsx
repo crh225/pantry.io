@@ -36,8 +36,6 @@ export const ProductAlternatives: React.FC<Props> = ({
     });
   }, [expanded, ingredientName, currentProduct.upc]);
 
-  const altCount = alternatives.length > 0 ? alternatives.length : null;
-
   return (
     <div className="product-alternatives">
       <button
@@ -47,7 +45,7 @@ export const ProductAlternatives: React.FC<Props> = ({
           setExpanded(!expanded);
         }}
       >
-        {expanded ? '\u25BC' : '\u25B6'} {altCount ? `${altCount} alternatives` : 'View alternatives'}
+        {expanded ? '\u2212 less' : '+ swap'}
       </button>
 
       {expanded && (

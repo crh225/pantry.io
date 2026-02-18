@@ -11,7 +11,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
   const [showSetupModal, setShowSetupModal] = useState(false);
-  const { isAuthenticated, selectedStore } = useAppSelector(s => s.kroger);
+  const { isAuthenticated, selectedStore, profile } = useAppSelector(s => s.kroger);
 
   return (
     <>
@@ -57,7 +57,10 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
-                <span className="store-badge-name">{selectedStore?.name || 'Set Store'}</span>
+                <span className="store-badge-name">
+                  {selectedStore?.name || 'Set Store'}
+                  {isAuthenticated && profile?.firstName && ` • Hi, ${profile.firstName}`}
+                </span>
                 {isAuthenticated && <span className="connection-indicator" />}
               </button>
             </div>
