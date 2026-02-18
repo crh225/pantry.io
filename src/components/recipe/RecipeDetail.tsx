@@ -24,7 +24,7 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const paragraphs = selectedRecipe.instructions
     .split('\n')
     .map(p => p.trim())
-    .filter(p => p && !/^[\d▢\s\.\-]*$/.test(p) && p.length > 3);
+    .filter(p => p && !/^[\d▢\s.-]*$/.test(p) && p.length > 3);
   const handleAssign = (nightId: string) => {
     dispatch(assignRecipe({ nightId, recipe: selectedRecipe }));
     setShowPicker(false);
