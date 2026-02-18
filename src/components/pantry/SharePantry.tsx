@@ -11,11 +11,13 @@ export const SharePantry: React.FC = () => {
   const [shareUrl, setShareUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [error, setError] = useState('');
 
   if (items.length === 0) return null;
 
   const handleCreate = async () => {
     setCreating(true);
+    setError('');
     try {
       const res = await fetch('/api/share', {
         method: 'POST',
@@ -23,10 +25,10 @@ export const SharePantry: React.FC = () => {
         body: JSON.stringify({ items, expiresIn: expiry }),
       });
       const data = await res.json();
-      if (!data.id) throw new Error('Failed');
+      if (!res.ok || !data.id) throw new Error(data.error || `Server returned ${res.status}`);
       setShareUrl(`${window.location.origin}?s=${data.id}`);
-    } catch {
-      alert('Failed to create share link.');
+    } catch (e: any) {
+      setError(e.message || 'Failed to create share link.');
     }
     setCreating(false);
   };
@@ -41,6 +43,7 @@ export const SharePantry: React.FC = () => {
     setShowPopup(true);
     setShareUrl('');
     setCopied(false);
+    setError('');
   };
 
   return (
@@ -63,6 +66,7 @@ export const SharePantry: React.FC = () => {
                       onClick={() => setExpiry('7d')}>7 Days</button>
                   </div>
                 </div>
+                {error && <p className="share-error">{error}</p>}
                 <button className="share-create-btn" onClick={handleCreate} disabled={creating}>
                   {creating ? 'Creating...' : 'Create Link'}
                 </button>

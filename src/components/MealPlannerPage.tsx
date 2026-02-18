@@ -41,8 +41,16 @@ export const MealPlannerPage: React.FC = () => {
           Set your Kroger store in the header to see local prices
         </div>
       )}
-      <MealNights nights={nights} onSelectNight={setSelectingNight} onViewRecipe={handleViewRecipe} onAddToBag={handleAddToBag} />
-      <ShoppingBag bag={bag} />
+      <div className="planner-layout">
+        <div className="planner-main">
+          <MealNights nights={nights} onSelectNight={setSelectingNight} onViewRecipe={handleViewRecipe} onAddToBag={handleAddToBag} />
+        </div>
+        {bag.length > 0 && (
+          <div className="planner-sidebar">
+            <ShoppingBag bag={bag} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
