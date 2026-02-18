@@ -1,0 +1,20 @@
+.recipe-layout {
+  display: flex;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.recipe-content {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .recipe-layout {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+}

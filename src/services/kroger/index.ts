@@ -2,6 +2,7 @@ import { KrogerConfig, KrogerStore } from './types';
 import { krogerProductApi } from './productApi';
 import { krogerLocationApi } from './locationApi';
 import { krogerPost } from './proxy';
+import { krogerAuth } from './auth';
 
 const STORE_KEY = 'kroger_selected_store';
 
@@ -50,9 +51,15 @@ export const kroger = {
   },
   addToCart: async (upc: string, quantity: number = 1) => {
     if (!config) throw new Error('Kroger not configured');
-    return krogerPost('/v1/cart/add', {
-      items: [{ upc, quantity }],
-    });
+    const token = await krogerAuth.getAccessToken();
+    return krogerPost('/v1/cart/add', { items: [{ upc, quantity }] }, 'PUT', token);
+  },
+  // Auth methods
+  isLoggedIn: () => krogerAuth.isLoggedIn(),
+  login: () => krogerAuth.login(),
+  logout: () => krogerAuth.logout(),
+  handleAuthCallback: (sessionId: string, token: string, expiresIn: number) => {
+    krogerAuth.handleCallback(sessionId, token, expiresIn);
   },
 };
 

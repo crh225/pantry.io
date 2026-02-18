@@ -1,10 +1,11 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { TourOverlay } from './components/tour/TourOverlay';
 import { useImportPantry } from './hooks/useImportPantry';
 import { useHashNav } from './hooks/useHashNav';
 import { useTour } from './hooks/useTour';
+import { kroger } from './services/kroger';
 import './App.css';
 
 const RecipesPage = lazy(() => import('./components/recipe/RecipesPage').then(m => ({ default: m.RecipesPage })));
@@ -16,11 +17,23 @@ function App() {
   const { imported, dismiss } = useImportPantry();
   const tour = useTour(setCurrentPage as (p: any) => void);
 
+  // Handle Kroger OAuth callback
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('kroger_session');
+    const token = params.get('kroger_token');
+    const expiresIn = params.get('kroger_expires');
+    if (sessionId && token) {
+      kroger.handleAuthCallback(sessionId, token, parseInt(expiresIn || '1800', 10));
+      window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+    }
+  }, []);
+
   return (
     <div className="app">
       <Header onNavClick={setCurrentPage} currentPage={currentPage} />
       <main className="main-content">
-        {imported && <div className="import-toast" onClick={dismiss}>✅ Pantry items imported! ×</div>}
+        {imported && <div className="import-toast" onClick={dismiss}>✓ Pantry items imported! ×</div>}
         <Suspense fallback={<div className="loading">Loading...</div>}>
           {currentPage === 'recipes' && <RecipesPage />}
           {currentPage === 'pantry' && <PantryPage />}

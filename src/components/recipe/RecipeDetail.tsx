@@ -46,6 +46,12 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         <DetailTags recipe={selectedRecipe} />
         <IngredientsSection ingredients={ingredients} />
         <InstructionsSection paragraphs={paragraphs} />
+        {selectedRecipe.sourceUrl && (
+          <a className="recipe-source-link" href={selectedRecipe.sourceUrl}
+            target="_blank" rel="noopener noreferrer">
+            View Full Recipe →
+          </a>
+        )}
       </div>
     </div>
   );

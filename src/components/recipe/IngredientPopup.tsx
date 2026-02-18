@@ -39,7 +39,7 @@ export const IngredientPopup: React.FC<Props> = ({ name }) => {
         {product?.size && <span className="popup-size">{product.size}</span>}
         {product?.aisle && <span className="popup-aisle">{product.aisle}</span>}
         {loading && <span className="popup-loading">Looking up price...</span>}
-        {product && kroger.isConfigured() && cartState === 'idle' && (
+        {product && kroger.isLoggedIn() && cartState === 'idle' && (
           <button className="popup-cart-btn" onClick={handleAddToCart}>+ Add to Kroger Cart</button>
         )}
         {cartState === 'adding' && <span className="popup-loading">Adding...</span>}

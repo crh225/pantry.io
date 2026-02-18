@@ -15,3 +15,150 @@
   color: white;
   border-color: #333;
 }
+
+/* Popup overlay */
+.share-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.share-popup {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.share-popup h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.share-popup-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: none;
+  font-size: 1.25rem;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-popup-close:hover {
+  background: #333;
+  color: white;
+}
+
+.share-desc {
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.share-expiry-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.share-expiry-toggle {
+  display: flex;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.expiry-opt {
+  padding: 0.4rem 0.8rem;
+  background: white;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.expiry-opt + .expiry-opt {
+  border-left: 1px solid #e5e5e5;
+}
+
+.expiry-opt.active {
+  background: #333;
+  color: white;
+}
+
+.share-create-btn {
+  width: 100%;
+  padding: 0.65rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.share-create-btn:hover { background: #555; }
+.share-create-btn:disabled { opacity: 0.6; cursor: default; }
+
+/* URL result */
+.share-url-box {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.share-url-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #333;
+  background: #fafafa;
+  min-width: 0;
+}
+
+.share-copy-btn {
+  padding: 0.5rem 1rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.share-copy-btn:hover { background: #555; }
+
+.share-expiry-note {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #999;
+  text-align: center;
+}

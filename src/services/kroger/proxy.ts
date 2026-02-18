@@ -4,10 +4,16 @@ export async function krogerFetch(apiPath: string): Promise<any> {
   return res.json();
 }
 
-export async function krogerPost(apiPath: string, body: any, method: string = 'PUT'): Promise<any> {
+export async function krogerPost(
+  apiPath: string, body: any, method: string = 'PUT', userToken?: string | null
+): Promise<any> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (userToken) {
+    headers['X-Kroger-Token'] = userToken;
+  }
   const res = await fetch(`/api/kroger?path=${encodeURIComponent(apiPath)}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ _method: method, _body: body }),
   });
   if (!res.ok) {

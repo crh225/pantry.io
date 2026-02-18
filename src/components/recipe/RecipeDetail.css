@@ -50,8 +50,11 @@
 }
 
 .in-pantry {
-  opacity: 0.6;
+  background: #f5f5f5;
 }
+.in-pantry .ing-name { color: #aaa; }
+.in-pantry .ing-measure { color: #ccc; }
+.in-pantry .ing-status { opacity: 0.5; }
 
 .need-to-buy .ing-name {
   font-weight: 600;
@@ -111,6 +114,23 @@
 }
 
 .ing-name { color: #333; }
+
+.recipe-source-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #f5f5f5;
+  color: #555;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.recipe-source-link:hover {
+  background: #333;
+  color: white;
+}
 
 @media (max-width: 768px) {
   .recipe-detail { padding: 1rem; }

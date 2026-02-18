@@ -29,7 +29,9 @@ export async function onRequest({ request, env }) {
   }
 
   try {
-    const token = await getToken(env);
+    // Use user token for authenticated requests (cart), fall back to client credentials
+    const userToken = request.headers.get('X-Kroger-Token');
+    const token = userToken || await getToken(env);
 
     // Support forwarded PUT/POST requests (e.g. cart API)
     const fetchOpts = {

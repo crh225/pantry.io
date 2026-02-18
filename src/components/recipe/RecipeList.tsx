@@ -23,6 +23,22 @@ const useEnriched = (recipes: Recipe[], pantryItems: { name: string }[], sort: S
   }, [recipes, pantryNames, sort]);
 };
 
+const SkeletonCard: React.FC = () => (
+  <div className="recipe-card skeleton-card">
+    <div className="skeleton-image" />
+    <div className="recipe-info">
+      <div className="skeleton-line skeleton-title" />
+      <div className="skeleton-line skeleton-meta" />
+    </div>
+  </div>
+);
+
+const SkeletonGrid: React.FC = () => (
+  <div className="recipe-list">
+    {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
+  </div>
+);
+
 export const RecipeList: React.FC<Props> = ({ onRecipeClick }) => {
   const { recipes, related, loading } = useAppSelector(s => s.recipe);
   const pantryItems = useAppSelector(s => s.pantry.items);
@@ -30,7 +46,7 @@ export const RecipeList: React.FC<Props> = ({ onRecipeClick }) => {
   const enriched = useEnriched(recipes, pantryItems, sort);
   const enrichedRelated = useEnriched(related, pantryItems, sort);
 
-  if (loading) return <div className="loading">Searching recipes...</div>;
+  if (loading) return <SkeletonGrid />;
   if (recipes.length === 0 && related.length === 0) return <div className="empty">Pick a cuisine or protein to explore</div>;
 
   return (
