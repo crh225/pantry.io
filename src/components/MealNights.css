@@ -19,6 +19,8 @@
   text-align: center;
   position: relative;
   transition: box-shadow 0.15s, opacity 0.15s, border-color 0.15s;
+  display: flex;
+  flex-direction: column;
 }
 
 .night-card[draggable="true"] { cursor: grab; }
@@ -59,6 +61,8 @@
   gap: 0.5rem;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 0.5rem;
 }
 
 .bag-btn {
