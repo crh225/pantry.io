@@ -14,6 +14,7 @@ const RecipesPage = lazy(() => import('./components/recipe/RecipesPage').then(m 
 const PantryPage = lazy(() => import('./components/pantry/PantryPage').then(m => ({ default: m.PantryPage })));
 const MealPlannerPage = lazy(() => import('./components/MealPlannerPage').then(m => ({ default: m.MealPlannerPage })));
 const MyCartPage = lazy(() => import('./components/cart/MyCartPage').then(m => ({ default: m.MyCartPage })));
+const OrderHistoryPage = lazy(() => import('./components/cart/OrderHistoryPage').then(m => ({ default: m.OrderHistoryPage })));
 
 function App() {
   const { page: currentPage, navigate: setCurrentPage } = useHashNav();
@@ -55,6 +56,7 @@ function App() {
           {currentPage === 'pantry' && <PantryPage />}
           {currentPage === 'planner' && <MealPlannerPage />}
           {currentPage === 'cart' && <MyCartPage />}
+          {currentPage === 'history' && <OrderHistoryPage />}
         </Suspense>
       </main>
       <Footer />

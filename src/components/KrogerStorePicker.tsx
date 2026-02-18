@@ -123,7 +123,7 @@ export const KrogerStorePicker: React.FC<Props> = ({ onSelect, selectedStore, on
         >
           {geoLoading ? '...' : <LocationIcon />}
         </button>
-        {isChanging && <button className="cancel-btn" onClick={() => setIsChanging(false)}>Cancel</button>}
+
       </div>
       {error && <p className="store-error">{error}</p>}
       {stores.map(s => (

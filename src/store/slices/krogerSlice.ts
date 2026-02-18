@@ -27,6 +27,7 @@ interface KrogerState {
   cartItems: CartItem[];
   profile: KrogerProfile | null;
   profileLoading: boolean;
+  pendingSend: boolean;
 }
 
 // Load initial state from localStorage
@@ -45,6 +46,7 @@ const loadInitialState = (): KrogerState => {
       cartItems: JSON.parse(localStorage.getItem(CART_KEY) || '[]'),
       profile: JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null'),
       profileLoading: false,
+      pendingSend: false,
     };
   } catch {
     return {
@@ -55,6 +57,7 @@ const loadInitialState = (): KrogerState => {
       cartItems: [],
       profile: null,
       profileLoading: false,
+      pendingSend: false,
     };
   }
 };
@@ -130,6 +133,9 @@ const krogerSlice = createSlice({
       state.cartItems = [];
       saveCart([]);
     },
+    setPendingSend: (state, action: PayloadAction<boolean>) => {
+      state.pendingSend = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -156,5 +162,5 @@ const krogerSlice = createSlice({
   },
 });
 
-export const { setStore, clearStore, logout, addCartItem, removeCartItem, clearCart } = krogerSlice.actions;
+export const { setStore, clearStore, logout, addCartItem, removeCartItem, clearCart, setPendingSend } = krogerSlice.actions;
 export default krogerSlice.reducer;

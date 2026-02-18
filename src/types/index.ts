@@ -12,6 +12,8 @@ export interface Recipe {
 export interface PantryItem {
   id: string; name: string; quantity: string;
   location: 'pantry' | 'fridge' | 'freezer';
+  addedAt?: number;
+  expiresAt?: number;
 }
 
 export interface RecipeState {

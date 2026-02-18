@@ -6,7 +6,7 @@
 .recipe-selector .back-btn {
   padding: 0.5rem 1rem;
   background: #f5f5f5;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -23,7 +23,7 @@
   flex: 1;
   padding: 0.75rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
 }
 
@@ -31,7 +31,7 @@
   padding: 0.75rem 1.5rem;
   background: #333;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .quick-cuisines button:hover {
-  background: #667eea;
+  background: #2563eb;
   color: white;
 }
 
@@ -80,7 +80,7 @@
 .selector-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border-color: #667eea;
+  border-color: #2563eb;
 }
 
 .selector-card img {

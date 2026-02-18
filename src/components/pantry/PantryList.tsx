@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { removeItem } from '../../store/slices/pantrySlice';
+import { removeItem, updateItem } from '../../store/slices/pantrySlice';
+import { PantryItem as PantryItemType } from '../../types';
 import { PantrySection } from './PantrySection';
+import { EditItemModal } from './EditItemModal';
 import './PantryList.css';
 
 const sections = [
@@ -14,6 +16,7 @@ export const PantryList: React.FC = () => {
   const { items } = useAppSelector(state => state.pantry);
   const dispatch = useAppDispatch();
   const [filter, setFilter] = useState('');
+  const [editing, setEditing] = useState<PantryItemType | null>(null);
 
   const filtered = useMemo(() => {
     const q = filter.toLowerCase();
@@ -27,21 +30,36 @@ export const PantryList: React.FC = () => {
     return map;
   }, [filtered]);
 
+  const handleRemove = useCallback((id: string) => dispatch(removeItem(id)), [dispatch]);
+  const handleEdit = useCallback((item: PantryItemType) => setEditing(item), []);
+  const handleSave = (updated: PantryItemType) => {
+    dispatch(updateItem(updated));
+    setEditing(null);
+  };
+
   if (items.length === 0) {
     return <div className="empty-pantry">Your pantry is empty. Add some items to get started!</div>;
   }
 
   return (
     <div className="pantry-list">
-      <div className="pantry-summary">{items.length} item{items.length !== 1 ? 's' : ''}</div>
-      {items.length > 10 && (
-        <input className="pantry-search" placeholder="Search items..." value={filter}
-          onChange={e => setFilter(e.target.value)} />
+      <div className="pantry-list-header">
+        <span className="pantry-summary">{items.length} item{items.length !== 1 ? 's' : ''}</span>
+        {items.length > 10 && (
+          <input className="pantry-search" placeholder="Search items..." value={filter}
+            onChange={e => setFilter(e.target.value)} />
+        )}
+      </div>
+      <div className="pantry-columns">
+        {sections.map(s => (
+          <PantrySection key={s.key} label={s.label} items={grouped[s.key] || []}
+            onRemove={handleRemove}
+            onEdit={handleEdit} />
+        ))}
+      </div>
+      {editing && (
+        <EditItemModal item={editing} onSave={handleSave} onClose={() => setEditing(null)} />
       )}
-      {sections.map(s => grouped[s.key]?.length > 0 && (
-        <PantrySection key={s.key} label={s.label} items={grouped[s.key]}
-          onRemove={id => dispatch(removeItem(id))} />
-      ))}
     </div>
   );
 };

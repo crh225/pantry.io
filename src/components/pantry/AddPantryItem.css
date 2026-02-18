@@ -14,8 +14,8 @@
   width: 100%;
   padding: 0.75rem;
   background-color: #fee;
-  color: #c00;
-  border-radius: 4px;
+  color: #dc2626;
+  border-radius: 6px;
   font-size: 0.9rem;
 }
 
@@ -23,7 +23,7 @@
 .pantry-select {
   padding: 0.75rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
 }
 
@@ -48,7 +48,7 @@
   padding: 0.75rem 2rem;
   background-color: #333;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
   transition: background-color 0.2s;
 }

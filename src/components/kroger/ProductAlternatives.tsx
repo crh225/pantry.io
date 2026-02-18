@@ -26,7 +26,7 @@ export const ProductAlternatives: React.FC<Props> = ({
     kroger.searchProducts(ingredientName).then(results => {
       // Filter out current product and take top 3 alternatives (ensure price.regular exists)
       const alts = results
-        .filter(p => p.upc !== currentProduct.upc && p.price?.regular)
+        .filter((p: KrogerProduct) => p.upc !== currentProduct.upc && p.price?.regular)
         .slice(0, 3);
       setAlternatives(alts);
       setLoading(false);

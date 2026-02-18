@@ -24,8 +24,8 @@
 .tab:hover { color: #333; }
 
 .tab.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+  color: #2563eb;
+  border-bottom-color: #2563eb;
 }
 
 .text-search {
@@ -40,7 +40,7 @@
   flex: 1;
   padding: 0.75rem 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
 }
 
@@ -48,7 +48,7 @@
   padding: 0.75rem 1.5rem;
   background-color: #333;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
   display: flex;
   align-items: center;

@@ -1,45 +1,50 @@
 .pantry-section {
-  margin-bottom: 1rem;
+  background: white;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
 }
 
 .section-header {
   display: flex;
   align-items: center;
-  width: 100%;
+  gap: 0.5rem;
   padding: 0.75rem 1rem;
   background: #fafafa;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: left;
-  gap: 0.5rem;
-}
-
-.section-header:hover {
-  background: #f0f0f0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .section-label {
   font-weight: 600;
+  font-size: 1rem;
   color: #333;
 }
+
+.sort-expiry-btn {
+  margin-left: auto;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+  color: #999;
+  display: flex;
+  align-items: center;
+  transition: all 0.15s;
+}
+.sort-expiry-btn:hover { color: #333; border-color: #999; }
+.sort-expiry-btn.active { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
 
 .section-count {
   background: #e5e5e5;
   color: #666;
   padding: 0.1rem 0.5rem;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 0.8rem;
   font-weight: 600;
-}
-
-.section-chevron {
-  margin-left: auto;
-  color: #999;
-  font-size: 0.9rem;
 }
 
 .section-items {
@@ -47,4 +52,14 @@
   flex-wrap: wrap;
   gap: 8px;
   padding: 12px 14px;
+  flex: 1;
+  align-content: flex-start;
+}
+
+.section-empty {
+  color: #999;
+  font-size: 0.85rem;
+  text-align: center;
+  width: 100%;
+  padding: 2rem 0;
 }

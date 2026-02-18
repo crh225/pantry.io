@@ -3,6 +3,7 @@ import recipeReducer from './slices/recipeSlice';
 import pantryReducer from './slices/pantrySlice';
 import mealPlanReducer from './slices/mealPlanSlice';
 import krogerReducer from './slices/krogerSlice';
+import orderHistoryReducer from './slices/orderHistorySlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     pantry: pantryReducer,
     mealPlan: mealPlanReducer,
     kroger: krogerReducer,
+    orderHistory: orderHistoryReducer,
   },
 });
 

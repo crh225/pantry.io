@@ -11,6 +11,7 @@ const PROFILE_KEY = 'kroger_profile';
 let config: KrogerConfig | null = null;
 let selectedStore: KrogerStore | null = null;
 let userProfile: KrogerProfile | null = null;
+const searchCache = new Map<string, any>();
 
 // Load saved store from localStorage
 const loadSavedStore = (): KrogerStore | null => {
@@ -57,11 +58,19 @@ export const kroger = {
     localStorage.removeItem(STORE_KEY);
   },
 
-  // Product methods
+  // Product methods — cached to avoid redundant API calls
   searchProducts: (term: string) => {
     if (!config) throw new Error('Kroger not configured');
-    return krogerProductApi.search(term, config);
+    const key = term.toLowerCase().trim();
+    const cached = searchCache.get(key);
+    if (cached) return Promise.resolve(cached);
+    const promise = krogerProductApi.search(term, config).then(results => {
+      searchCache.set(key, results);
+      return results;
+    });
+    return promise;
   },
+  clearSearchCache: () => { searchCache.clear(); },
 
   // Location methods
   searchStores: (zip: string) => {

@@ -9,7 +9,9 @@
       "WebFetch(domain:developer.kroger.com)",
       "WebFetch(domain:www.postman.com)",
       "WebFetch(domain:github.com)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

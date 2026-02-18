@@ -1,8 +1,26 @@
-import React, { useRef, useState } from 'react';
-import { useAppDispatch } from '../store/hooks';
+import React, { useRef, useState, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { removeRecipe, moveNight } from '../store/slices/mealPlanSlice';
-import { MealNight, Recipe } from '../types';
+import { useKrogerPrices } from '../hooks/useKrogerPrices';
+import { isIngredientAvailable } from '../utils/ingredientMatch';
+import { MealNight, Recipe, Ingredient } from '../types';
 import './MealNights.css';
+
+const NightCost: React.FC<{ ingredients: Ingredient[] }> = ({ ingredients }) => {
+  const pantryItems = useAppSelector(s => s.pantry.items);
+  const pantryNames = useMemo(() => pantryItems.map(i => i.name.toLowerCase()), [pantryItems]);
+  const missing = useMemo(
+    () => ingredients.filter(i => !isIngredientAvailable(i.name, pantryNames)),
+    [ingredients, pantryNames]
+  );
+  const { priced, total, available } = useKrogerPrices(missing);
+  if (!available) return null;
+  const loading = priced.some(p => p.loading);
+  if (!loading && total === 0) return null;
+  return (
+    <span className="night-cost">{loading ? '...' : `~$${total.toFixed(2)}`}</span>
+  );
+};
 
 interface Props {
   nights: MealNight[];
@@ -26,8 +44,16 @@ const CartIcon = () => (
   </svg>
 );
 
+const CheckIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
+
 export const MealNights: React.FC<Props> = ({ nights, onSelectNight, onViewRecipe, onAddToBag }) => {
   const dispatch = useAppDispatch();
+  const pantryItems = useAppSelector(s => s.pantry.items);
+  const pantryNames = useMemo(() => pantryItems.map(i => i.name.toLowerCase()), [pantryItems]);
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
   const [dragging, setDragging] = useState<number | null>(null);
@@ -80,6 +106,7 @@ export const MealNights: React.FC<Props> = ({ nights, onSelectNight, onViewRecip
                 <img src={night.recipe.thumbnail} alt={night.recipe.name}
                   onClick={() => onViewRecipe(night.recipe!)} className="night-img-clickable" />
                 <p className="night-recipe-name">{night.recipe.name}</p>
+                <NightCost ingredients={night.recipe.ingredients} />
                 <div className="night-move-mobile">
                   {idx > 0 && <button onClick={() => dispatch(moveNight({ nightId: night.id, dir: -1 }))}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -89,7 +116,11 @@ export const MealNights: React.FC<Props> = ({ nights, onSelectNight, onViewRecip
                   </button>}
                 </div>
                 <div className="night-actions">
-                  <button onClick={() => onAddToBag(night.recipe!)} className="bag-btn"><CartIcon /> Bag</button>
+                  {night.recipe!.ingredients.length > 0 &&
+                   night.recipe!.ingredients.every(i => isIngredientAvailable(i.name, pantryNames))
+                    ? <span className="all-in-pantry"><CheckIcon /> All in pantry</span>
+                    : <button onClick={() => onAddToBag(night.recipe!)} className="bag-btn"><CartIcon /> Bag</button>
+                  }
                   <button onClick={() => dispatch(removeRecipe(night.id))} className="remove-night-btn">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                   </button>

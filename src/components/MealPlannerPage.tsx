@@ -5,9 +5,9 @@ import { setSelected } from '../store/slices/recipeSlice';
 import { fetchRecipeById } from '../store/slices/recipeThunks';
 import { addToBag } from '../store/slices/mealPlanSlice';
 import { recipeApi } from '../services/recipeApi';
+import { isIngredientAvailable } from '../utils/ingredientMatch';
 import { MealNights } from './MealNights';
 import { ShoppingBag } from './ShoppingBag';
-import { CartCheckout } from './CartCheckout';
 import { RecipeSelector } from './RecipeSelector';
 import { RecipeDetail } from './recipe/RecipeDetail';
 import { Recipe } from '../types';
@@ -16,25 +16,32 @@ import './MealPlannerPage.css';
 export const MealPlannerPage: React.FC = () => {
   const [selectingNight, setSelectingNight] = useState<string | null>(null);
   const [viewingRecipe, setViewingRecipe] = useState(false);
-  const [checkingOut, setCheckingOut] = useState(false);
   const { nights, bag } = useAppSelector(s => s.mealPlan);
+  const pantryItems = useAppSelector(s => s.pantry.items);
   const dispatch = useAppDispatch();
   const hasStore = kroger.getSelectedStore() !== null;
+  const pantryNames = pantryItems.map(i => i.name.toLowerCase());
+  const bagNames = bag.map(b => b.name.toLowerCase());
 
   const handleViewRecipe = (r: Recipe) => {
     dispatch(setSelected(r));
     if (!r.id.startsWith('dj-')) dispatch(fetchRecipeById(r.id));
     setViewingRecipe(true);
   };
+  const addMissingToBag = (ingredients: { name: string; measure: string }[]) => {
+    const missing = ingredients
+      .filter(i => !isIngredientAvailable(i.name, pantryNames))
+      .filter(i => !bagNames.includes(i.name.toLowerCase()));
+    if (missing.length > 0) dispatch(addToBag(missing));
+  };
   const handleAddToBag = async (r: Recipe) => {
-    if (r.ingredients.length > 0) { dispatch(addToBag(r.ingredients)); return; }
+    if (r.ingredients.length > 0) { addMissingToBag(r.ingredients); return; }
     const full = await recipeApi.getById(r.id);
-    if (full) dispatch(addToBag(full.ingredients));
+    if (full) addMissingToBag(full.ingredients);
   };
 
   if (viewingRecipe) return <div className="meal-planner"><RecipeDetail onBack={() => setViewingRecipe(false)} /></div>;
   if (selectingNight) return <div className="meal-planner"><RecipeSelector nightId={selectingNight} onDone={() => setSelectingNight(null)} /></div>;
-  if (checkingOut) return <div className="meal-planner"><CartCheckout bag={bag} onBack={() => setCheckingOut(false)} /></div>;
   return (
     <div className="meal-planner">
       <div className="planner-header"><h1>Meal Planner</h1><p>Plan your meals, price them at Kroger, and go pick up</p></div>
@@ -50,7 +57,7 @@ export const MealPlannerPage: React.FC = () => {
         </div>
         {bag.length > 0 && (
           <div className="planner-sidebar">
-            <ShoppingBag bag={bag} onCheckout={() => setCheckingOut(true)} />
+            <ShoppingBag bag={bag} />
           </div>
         )}
       </div>

@@ -41,7 +41,7 @@
 }
 
 .coming-soon-banner {
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #45a049 100%);
   color: white;
   padding: 0.5rem 2rem;
   text-align: center;
@@ -109,7 +109,7 @@
 
 .kroger-connected {
   font-size: 0.8rem;
-  color: #4CAF50;
+  color: #22c55e;
   font-weight: 600;
 }
 

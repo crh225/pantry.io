@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PantryState, PantryItem } from '../../types';
+import { getShelfLifeDays } from '../../data/shelfLife';
 
 const VID_KEY = 'pantry_visitor_id';
 
@@ -40,9 +41,13 @@ const pantrySlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action: PayloadAction<Omit<PantryItem, 'id'>>) => {
+      const now = Date.now();
+      const shelfDays = getShelfLifeDays(action.payload.name, action.payload.location);
       const newItem: PantryItem = {
         ...action.payload,
-        id: Date.now().toString(),
+        id: crypto.randomUUID ? crypto.randomUUID() : `${now}-${Math.random().toString(36).slice(2)}`,
+        addedAt: now,
+        expiresAt: shelfDays ? now + shelfDays * 86_400_000 : undefined,
       };
       state.items.push(newItem);
       persist(state.items);

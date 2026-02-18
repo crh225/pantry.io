@@ -15,7 +15,7 @@
 }
 
 .alternatives-toggle:hover {
-  color: #667eea;
+  color: #2563eb;
   text-decoration: underline;
 }
 
@@ -34,7 +34,7 @@
 
 .alternatives-error {
   font-size: 0.75rem;
-  color: #dc3545;
+  color: #dc2626;
 }
 
 .alternative-item {
@@ -44,7 +44,7 @@
   padding: 0.4rem 0.6rem;
   background: #fafafa;
   border: 1px solid #eee;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   width: 100%;
   text-align: left;
@@ -53,14 +53,14 @@
 
 .alternative-item:hover {
   background: #f0f7ff;
-  border-color: #667eea;
+  border-color: #2563eb;
 }
 
 .alt-thumb {
   width: 28px;
   height: 28px;
   object-fit: contain;
-  border-radius: 3px;
+  border-radius: 6px;
   background: white;
   flex-shrink: 0;
 }

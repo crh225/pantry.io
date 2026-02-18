@@ -73,9 +73,9 @@
 }
 
 .confirm-modal-confirm.danger {
-  background: #dc3545;
+  background: #dc2626;
 }
 
 .confirm-modal-confirm.danger:hover {
-  background: #c82333;
+  background: #b91c1c;
 }

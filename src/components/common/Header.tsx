@@ -5,7 +5,7 @@ import { KrogerSetupModal } from '../kroger/KrogerSetupModal';
 import './Header.css';
 
 interface HeaderProps {
-  onNavClick: (page: 'recipes' | 'pantry' | 'planner' | 'cart') => void;
+  onNavClick: (page: 'recipes' | 'pantry' | 'planner' | 'cart' | 'history') => void;
   currentPage: string;
 }
 
@@ -38,12 +38,20 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
               Meal Planner
             </button>
             {kroger.isConfigured() && (
-              <button
-                className={`nav-btn ${currentPage === 'cart' ? 'active' : ''}`}
-                onClick={() => onNavClick('cart')}
-              >
-                My Cart
-              </button>
+              <>
+                <button
+                  className={`nav-btn ${currentPage === 'cart' ? 'active' : ''}`}
+                  onClick={() => onNavClick('cart')}
+                >
+                  My Cart
+                </button>
+                <button
+                  className={`nav-btn ${currentPage === 'history' ? 'active' : ''}`}
+                  onClick={() => onNavClick('history')}
+                >
+                  History
+                </button>
+              </>
             )}
           </nav>
           {kroger.isConfigured() && (
@@ -58,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
                   <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span className="store-badge-name">
-                  {selectedStore?.name || 'Set Store'}
+                  {selectedStore ? selectedStore.name.replace(/^[^-]+-\s*/, '') : 'Set Store'}
                   {isAuthenticated && profile?.firstName && ` • Hi, ${profile.firstName}`}
                 </span>
                 {isAuthenticated && <span className="connection-indicator" />}

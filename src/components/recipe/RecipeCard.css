@@ -38,7 +38,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .recipe-info { padding: 1rem; }
@@ -62,7 +62,7 @@
 .recipe-tag {
   padding: 0.25rem 0.5rem;
   background-color: #f5f5f5;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .recipe-cal {
@@ -96,7 +96,7 @@
 }
 
 .skeleton-line {
-  border-radius: 4px;
+  border-radius: 6px;
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
