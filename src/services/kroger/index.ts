@@ -1,6 +1,7 @@
 import { KrogerConfig, KrogerStore } from './types';
 import { krogerProductApi } from './productApi';
 import { krogerLocationApi } from './locationApi';
+import { krogerPost } from './proxy';
 
 const STORE_KEY = 'kroger_selected_store';
 
@@ -46,6 +47,12 @@ export const kroger = {
   searchStores: (zip: string) => {
     if (!config) throw new Error('Kroger not configured');
     return krogerLocationApi.searchByZip(zip, config);
+  },
+  addToCart: async (upc: string, quantity: number = 1) => {
+    if (!config) throw new Error('Kroger not configured');
+    return krogerPost('/v1/cart/add', {
+      items: [{ upc, quantity }],
+    });
   },
 };
 

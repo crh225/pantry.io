@@ -2,24 +2,26 @@
   display: flex; align-items: center; gap: 0.6rem;
   padding: 0.6rem; background: #fafafa; border-radius: 6px;
   cursor: pointer; position: relative; transition: background 0.15s;
+  z-index: 1;
 }
 .ing-item:hover { background: #f0f0f0; }
+.ing-item.open { z-index: 50; }
 
 .ing-thumb {
   width: 32px; height: 32px; object-fit: contain;
   border-radius: 4px; flex-shrink: 0;
 }
 
-.ing-text { flex: 1; display: flex; flex-direction: column; }
+.ing-text { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .ing-text .ing-name { font-size: 0.9rem; font-weight: 500; color: #333; }
 .ing-text .ing-measure { font-size: 0.8rem; color: #999; }
 .ing-status { font-size: 0.85rem; flex-shrink: 0; }
 
 .ing-popup {
   position: absolute; left: 0; right: 0; top: 100%;
-  z-index: 100; background: white; border: 1px solid #e5e5e5;
+  z-index: 200; background: white; border: 1px solid #ddd;
   border-radius: 8px; padding: 0.75rem; margin-top: 0.25rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   display: flex; gap: 0.75rem; align-items: flex-start;
 }
 
@@ -30,7 +32,7 @@
 
 .popup-info {
   display: flex; flex-direction: column; gap: 0.2rem;
-  font-size: 0.85rem;
+  font-size: 0.85rem; flex: 1;
 }
 .popup-info strong { font-size: 0.9rem; color: #333; }
 .popup-price { font-weight: 700; color: #333; }
@@ -38,3 +40,15 @@
 .popup-size { color: #999; }
 .popup-aisle { color: #666; }
 .popup-loading, .popup-note { color: #bbb; font-style: italic; }
+
+.popup-cart-btn {
+  margin-top: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: #333; color: white; border: none;
+  border-radius: 4px; font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s;
+  align-self: flex-start;
+}
+.popup-cart-btn:hover { background: #555; }
+.popup-cart-btn:disabled { background: #ccc; cursor: default; }
+.popup-cart-added { color: #4CAF50; font-weight: 600; font-size: 0.8rem; margin-top: 0.3rem; }

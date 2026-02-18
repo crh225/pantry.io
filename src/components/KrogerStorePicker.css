@@ -1,46 +1,77 @@
 .store-picker {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  padding: 1.5rem;
 }
 
-.store-picker h3 { font-size: 1rem; margin-bottom: 0.75rem; }
-
-.store-search {
-  display: flex; gap: 0.5rem; margin-bottom: 0.75rem;
+.store-picker h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-
-.store-search input {
-  padding: 0.5rem; border: 1px solid #ddd;
-  border-radius: 4px; width: 120px; font-size: 0.9rem;
-}
-
-.store-search button {
-  padding: 0.5rem 1rem; background: #333; color: white;
-  border-radius: 4px; font-weight: 600; font-size: 0.85rem;
-}
-
-.store-option {
-  display: flex; flex-direction: column; gap: 0.2rem;
-  width: 100%; text-align: left; padding: 0.6rem;
-  border: 1px solid #e5e5e5; border-radius: 6px;
-  margin-bottom: 0.4rem; background: white; cursor: pointer;
-}
-
-.store-option:hover { border-color: #333; }
-.store-option strong { font-size: 0.9rem; }
-.store-option span { font-size: 0.8rem; color: #666; }
 
 .store-hint {
   font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 0.75rem;
+  color: #999;
+  margin-bottom: 1rem;
 }
 
-.store-picker.selected {
+.store-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.store-search input {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.store-search input:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.store-search button {
+  padding: 0.6rem 1.25rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.store-search button:hover { background: #555; }
+.store-search button:disabled { background: #ccc; }
+
+.store-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
   background: white;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.store-option:hover { border-color: #333; }
+.store-option strong { font-size: 0.9rem; color: #333; }
+.store-option span { font-size: 0.8rem; color: #666; }
+
+/* Selected store view */
+.store-picker.selected {
+  padding: 1.25rem 1.5rem;
 }
 
 .selected-store {
@@ -50,13 +81,17 @@
 }
 
 .store-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  color: #666;
+  flex-shrink: 0;
 }
 
 .store-info {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 .store-info strong {
@@ -67,6 +102,9 @@
 .store-info span {
   font-size: 0.8rem;
   color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .change-store-btn {
@@ -77,6 +115,7 @@
   font-size: 0.8rem;
   color: #666;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .change-store-btn:hover {
@@ -85,9 +124,13 @@
 }
 
 .cancel-btn {
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.75rem;
   background: #f5f5f5;
   color: #666;
-  border-radius: 4px;
+  border: none;
+  border-radius: 6px;
   font-size: 0.85rem;
+  cursor: pointer;
 }
+
+.cancel-btn:hover { background: #eee; color: #333; }

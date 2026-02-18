@@ -30,9 +30,22 @@ export async function onRequest({ request, env }) {
 
   try {
     const token = await getToken(env);
-    const res = await fetch(`${BASE}${apiPath}`, {
+
+    // Support forwarded PUT/POST requests (e.g. cart API)
+    const fetchOpts = {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
+    };
+
+    if (request.method === 'POST') {
+      const payload = await request.json().catch(() => null);
+      if (payload && payload._method) {
+        fetchOpts.method = payload._method;
+        fetchOpts.headers['Content-Type'] = 'application/json';
+        fetchOpts.body = JSON.stringify(payload._body);
+      }
+    }
+
+    const res = await fetch(`${BASE}${apiPath}`, fetchOpts);
     const body = await res.text();
     return new Response(body, {
       status: res.status,

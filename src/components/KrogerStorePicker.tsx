@@ -8,6 +8,14 @@ interface Props {
   onClear?: () => void;
 }
 
+const PinIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
+
 export const KrogerStorePicker: React.FC<Props> = ({ onSelect, selectedStore, onClear }) => {
   const [zip, setZip] = useState('');
   const [stores, setStores] = useState<KrogerStore[]>([]);
@@ -31,12 +39,11 @@ export const KrogerStorePicker: React.FC<Props> = ({ onSelect, selectedStore, on
     setZip('');
   };
 
-  // Show selected store
   if (selectedStore && !isChanging) {
     return (
       <div className="store-picker selected">
         <div className="selected-store">
-          <span className="store-icon">📍</span>
+          <span className="store-icon"><PinIcon size={20} /></span>
           <div className="store-info">
             <strong>{selectedStore.name}</strong>
             <span>{selectedStore.address}</span>
@@ -49,7 +56,7 @@ export const KrogerStorePicker: React.FC<Props> = ({ onSelect, selectedStore, on
 
   return (
     <div className="store-picker">
-      <h3>📍 Select Your Kroger</h3>
+      <h3><PinIcon size={16} /> Select Your Kroger</h3>
       <p className="store-hint">Find local prices and availability</p>
       <div className="store-search">
         <input value={zip} onChange={e => setZip(e.target.value)} placeholder="ZIP code"
