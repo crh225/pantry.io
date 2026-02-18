@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Ingredient } from '../types';
-import { useKrogerPrices, PricedItem } from '../hooks/useKrogerPrices';
+import { useKrogerPrices } from '../hooks/useKrogerPrices';
 import { kroger } from '../services/kroger';
 import './CartCheckout.css';
 
@@ -44,7 +44,7 @@ interface ItemResult { upc: string; name: string; success: boolean; error?: stri
 
 export const CartCheckout: React.FC<Props> = ({ bag, onBack }) => {
   const unique = useMemo(() => dedup(bag), [bag]);
-  const { priced, total, available } = useKrogerPrices(unique);
+  const { priced } = useKrogerPrices(unique);
 
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [status, setStatus] = useState<SendStatus>('idle');
