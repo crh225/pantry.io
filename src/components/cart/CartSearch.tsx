@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { addCartItem } from '../../store/slices/krogerSlice';
 import { kroger, KrogerProduct } from '../../services/kroger';
+import { CartSearchResult } from './CartSearchResult';
 import './CartSearch.css';
 
 export const CartSearch: React.FC = () => {
@@ -13,16 +14,12 @@ export const CartSearch: React.FC = () => {
   const [quantities, setQuantities] = useState<Map<string, number>>(new Map());
 
   const getQty = (upc: string) => quantities.get(upc) || 1;
-  const setQty = (upc: string, q: number) =>
-    setQuantities(prev => new Map(prev).set(upc, Math.max(1, Math.min(99, q))));
+  const setQty = (upc: string, q: number) => setQuantities(prev => new Map(prev).set(upc, Math.max(1, Math.min(99, q))));
 
   const handleSearch = async () => {
     if (!query.trim()) return;
     setLoading(true);
-    try {
-      const products = await kroger.searchProducts(query.trim());
-      setResults(products);
-    } catch { setResults([]); }
+    try { setResults(await kroger.searchProducts(query.trim())); } catch { setResults([]); }
     setLoading(false);
   };
 
@@ -31,9 +28,8 @@ export const CartSearch: React.FC = () => {
     const qty = getQty(product.upc);
     try {
       await kroger.addToCart(product.upc, qty);
-      const item = { upc: product.upc, name: product.description, description: product.description,
-        price: product.price.promo || product.price.regular, quantity: qty, image: product.image };
-      dispatch(addCartItem(item));
+      dispatch(addCartItem({ upc: product.upc, name: product.description, description: product.description,
+        price: product.price.promo || product.price.regular, quantity: qty, image: product.image }));
       setAdded(prev => new Set(prev).add(product.upc));
     } catch {}
   };
@@ -45,38 +41,10 @@ export const CartSearch: React.FC = () => {
           onKeyDown={e => e.key === 'Enter' && handleSearch()} />
         <button onClick={handleSearch} disabled={loading}>{loading ? '...' : 'Search'}</button>
       </div>
-      {results.length > 0 && (
-        <ul className="cart-search-results">
-          {results.map(p => (
-            <li key={p.upc} className="search-result-item">
-              {p.image && <img src={p.image} alt="" className="search-result-img" />}
-              <div className="search-result-info">
-                <span className="search-result-name">{p.description}</span>
-                {p.size && <span className="search-result-size">{p.size}</span>}
-              </div>
-              {p.price && (
-                <div className="search-result-price">
-                  {p.price.promo ? (
-                    <><span className="search-price-original">${p.price.regular.toFixed(2)}</span>
-                    <span className="search-price-sale">${p.price.promo.toFixed(2)}</span></>
-                  ) : (
-                    <span>${p.price.regular.toFixed(2)}</span>
-                  )}
-                </div>
-              )}
-              <div className="search-qty-control">
-                <button className="qty-btn" onClick={() => setQty(p.upc, getQty(p.upc) - 1)} disabled={getQty(p.upc) <= 1 || added.has(p.upc)}>-</button>
-                <span className="qty-value">{getQty(p.upc)}</span>
-                <button className="qty-btn" onClick={() => setQty(p.upc, getQty(p.upc) + 1)} disabled={added.has(p.upc)}>+</button>
-              </div>
-              <button className="search-add-btn" onClick={() => handleAdd(p)}
-                disabled={added.has(p.upc) || !p.price}>
-                {added.has(p.upc) ? 'Added' : 'Add'}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      {results.length > 0 && <ul className="cart-search-results">
+        {results.map(p => <CartSearchResult key={p.upc} product={p} qty={getQty(p.upc)}
+          added={added.has(p.upc)} onSetQty={q => setQty(p.upc, q)} onAdd={() => handleAdd(p)} />)}
+      </ul>}
     </div>
   );
 };

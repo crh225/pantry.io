@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { kroger } from '../../services/kroger';
 import { KrogerSetupModal } from '../kroger/KrogerSetupModal';
+import { HeaderNav } from './HeaderNav';
+import { KrogerBadge } from './KrogerBadge';
 import './Header.css';
 
 interface HeaderProps {
@@ -18,67 +20,14 @@ export const Header: React.FC<HeaderProps> = ({ onNavClick, currentPage }) => {
       <header className="header">
         <div className="header-content">
           <h1 className="logo" onClick={() => onNavClick('pantry')} style={{ cursor: 'pointer' }}>Pantry.io</h1>
-          <nav className="nav">
-            <button
-              className={`nav-btn ${currentPage === 'pantry' ? 'active' : ''}`}
-              onClick={() => onNavClick('pantry')}
-            >
-              My Pantry
-            </button>
-            <button
-              className={`nav-btn ${currentPage === 'recipes' ? 'active' : ''}`}
-              onClick={() => onNavClick('recipes')}
-            >
-              Recipes
-            </button>
-            <button
-              className={`nav-btn ${currentPage === 'planner' ? 'active' : ''}`}
-              onClick={() => onNavClick('planner')}
-            >
-              Meal Planner
-            </button>
-            {kroger.isConfigured() && (
-              <>
-                <button
-                  className={`nav-btn ${currentPage === 'cart' ? 'active' : ''}`}
-                  onClick={() => onNavClick('cart')}
-                >
-                  My Cart
-                </button>
-                <button
-                  className={`nav-btn ${currentPage === 'history' ? 'active' : ''}`}
-                  onClick={() => onNavClick('history')}
-                >
-                  History
-                </button>
-              </>
-            )}
-          </nav>
+          <HeaderNav currentPage={currentPage} onNavClick={onNavClick} />
           {kroger.isConfigured() && (
-            <div className="header-kroger">
-              <button
-                className={`store-badge ${isAuthenticated ? 'connected' : ''}`}
-                onClick={() => setShowSetupModal(true)}
-              >
-                <svg className="store-badge-icon" width="14" height="14" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                <span className="store-badge-name">
-                  {selectedStore ? selectedStore.name.replace(/^[^-]+-\s*/, '') : 'Set Store'}
-                  {isAuthenticated && profile?.firstName && ` • Hi, ${profile.firstName}`}
-                </span>
-                {isAuthenticated && <span className="connection-indicator" />}
-              </button>
-            </div>
+            <KrogerBadge isAuthenticated={isAuthenticated} selectedStore={selectedStore}
+              profile={profile} onClick={() => setShowSetupModal(true)} />
           )}
         </div>
       </header>
-
-      {showSetupModal && (
-        <KrogerSetupModal onClose={() => setShowSetupModal(false)} />
-      )}
+      {showSetupModal && <KrogerSetupModal onClose={() => setShowSetupModal(false)} />}
     </>
   );
 };
