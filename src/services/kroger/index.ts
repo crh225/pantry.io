@@ -1,132 +1,52 @@
-import { KrogerConfig, KrogerStore, KrogerProfile } from './types';
+import { KrogerConfig, KrogerStore } from './types';
 import { krogerProductApi } from './productApi';
 import { krogerLocationApi } from './locationApi';
 import { krogerProfileApi } from './profileApi';
 import { krogerPost } from './proxy';
 import { krogerAuth } from './auth';
-
-const STORE_KEY = 'kroger_selected_store';
-const PROFILE_KEY = 'kroger_profile';
+import { initStoreService, storeService } from './storeService';
 
 let config: KrogerConfig | null = null;
-let selectedStore: KrogerStore | null = null;
-let userProfile: KrogerProfile | null = null;
 const searchCache = new Map<string, any>();
 
-// Load saved store from localStorage
-const loadSavedStore = (): KrogerStore | null => {
-  try {
-    const saved = localStorage.getItem(STORE_KEY);
-    return saved ? JSON.parse(saved) : null;
-  } catch { return null; }
-};
-
-// Load saved profile from localStorage
-const loadSavedProfile = (): KrogerProfile | null => {
-  try {
-    const saved = localStorage.getItem(PROFILE_KEY);
-    return saved ? JSON.parse(saved) : null;
-  } catch { return null; }
-};
-
 export const kroger = {
-  configure: (c: KrogerConfig) => {
-    config = c;
-    // Load previously saved store
-    const saved = loadSavedStore();
-    if (saved) {
-      config.locationId = saved.locationId;
-      selectedStore = saved;
-    }
-    // Load previously saved profile
-    userProfile = loadSavedProfile();
-  },
+  configure: (c: KrogerConfig) => { config = c; initStoreService(config); },
   isConfigured: () => config !== null,
   getConfig: () => config,
-
-  // Store methods
-  getSelectedStore: () => selectedStore,
-  setStore: (store: KrogerStore) => {
-    if (!config) return;
-    config.locationId = store.locationId;
-    selectedStore = store;
-    localStorage.setItem(STORE_KEY, JSON.stringify(store));
-  },
-  clearStore: () => {
-    if (config) config.locationId = undefined;
-    selectedStore = null;
-    localStorage.removeItem(STORE_KEY);
-  },
-
-  // Product methods — cached to avoid redundant API calls
+  getSelectedStore: () => storeService.getSelectedStore(),
+  setStore: (store: KrogerStore) => { if (config) storeService.setStore(store, config); },
+  clearStore: () => { if (config) storeService.clearStore(config); },
   searchProducts: (term: string) => {
     if (!config) throw new Error('Kroger not configured');
     const key = term.toLowerCase().trim();
     const cached = searchCache.get(key);
     if (cached) return Promise.resolve(cached);
-    const promise = krogerProductApi.search(term, config).then(results => {
-      searchCache.set(key, results);
-      return results;
-    });
-    return promise;
+    return krogerProductApi.search(term, config).then(r => { searchCache.set(key, r); return r; });
   },
   clearSearchCache: () => { searchCache.clear(); },
-
-  // Location methods
-  searchStores: (zip: string) => {
-    if (!config) throw new Error('Kroger not configured');
-    return krogerLocationApi.searchByZip(zip, config);
-  },
-  searchStoresByLocation: (lat: number, lng: number, radiusMiles?: number) => {
-    return krogerLocationApi.searchByLatLng(lat, lng, radiusMiles);
-  },
-  getStoreDetails: (locationId: string) => {
-    return krogerLocationApi.getStore(locationId);
-  },
-  getChains: () => {
-    return krogerLocationApi.getChains();
-  },
-
-  // Cart methods
+  searchStores: (zip: string) => { if (!config) throw new Error('Kroger not configured'); return krogerLocationApi.searchByZip(zip, config); },
+  searchStoresByLocation: (lat: number, lng: number, r?: number) => krogerLocationApi.searchByLatLng(lat, lng, r),
+  getStoreDetails: (id: string) => krogerLocationApi.getStore(id),
+  getChains: () => krogerLocationApi.getChains(),
   addToCart: async (upc: string, quantity: number = 1) => {
     if (!config) throw new Error('Kroger not configured');
-    const token = await krogerAuth.getAccessToken();
-    return krogerPost('/v1/cart/add', { items: [{ upc, quantity }] }, 'PUT', token);
+    return krogerPost('/v1/cart/add', { items: [{ upc, quantity }] }, 'PUT', await krogerAuth.getAccessToken());
   },
   addMultipleToCart: async (items: { upc: string; quantity: number }[]) => {
     if (!config) throw new Error('Kroger not configured');
-    const token = await krogerAuth.getAccessToken();
-    return krogerPost('/v1/cart/add', { items }, 'PUT', token);
+    return krogerPost('/v1/cart/add', { items }, 'PUT', await krogerAuth.getAccessToken());
   },
-
-  // Profile methods
-  getProfile: () => userProfile,
-  fetchProfile: async (): Promise<KrogerProfile | null> => {
+  getProfile: () => storeService.getProfile(),
+  fetchProfile: async () => {
     const profile = await krogerProfileApi.getProfile();
-    if (profile) {
-      userProfile = profile;
-      try {
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-      } catch {}
-    }
+    if (profile) storeService.setProfile(profile);
     return profile;
   },
-  clearProfile: () => {
-    userProfile = null;
-    localStorage.removeItem(PROFILE_KEY);
-  },
-
-  // Auth methods
+  clearProfile: () => storeService.setProfile(null),
   isLoggedIn: () => krogerAuth.isLoggedIn(),
   login: () => krogerAuth.login(),
-  logout: () => {
-    krogerAuth.logout();
-    userProfile = null;
-    localStorage.removeItem(PROFILE_KEY);
-  },
-  handleAuthCallback: (sessionId: string, token: string, expiresIn: number) => {
-    krogerAuth.handleCallback(sessionId, token, expiresIn);
-  },
+  logout: () => { krogerAuth.logout(); storeService.setProfile(null); },
+  handleAuthCallback: (s: string, t: string, e: number) => krogerAuth.handleCallback(s, t, e),
 };
 
 export type { KrogerProduct, KrogerStore, KrogerConfig, KrogerProfile, KrogerDepartment, KrogerStoreHours } from './types';
