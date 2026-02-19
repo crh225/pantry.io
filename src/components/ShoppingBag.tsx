@@ -12,24 +12,12 @@ export const ShoppingBag: React.FC<{ bag: Ingredient[] }> = ({ bag }) => {
   const dispatch = useAppDispatch();
   const unique = useMemo(() => dedup(bag), [bag]);
   const { priced, total, available } = useKrogerPrices(unique);
-
   if (unique.length === 0) return null;
-
   const handleRemove = (cleanedName: string) => {
-    // Find all original bag items that match this cleaned name and remove them
     const target = cleanedName.toLowerCase();
-    bag.forEach(i => {
-      if (cleanName(i.name).toLowerCase() === target) {
-        dispatch(removeFromBag(i.name));
-      }
-    });
+    bag.forEach(i => { if (cleanName(i.name).toLowerCase() === target) dispatch(removeFromBag(i.name)); });
   };
-
-  const handleCheckout = () => {
-    dispatch(setPendingSend(true));
-    window.location.hash = 'cart';
-  };
-
+  const handleCheckout = () => { dispatch(setPendingSend(true)); window.location.hash = 'cart'; };
   return (
     <div className="shopping-bag">
       <div className="bag-header">

@@ -6,6 +6,7 @@ import { NightPicker } from './NightPicker';
 import { DetailTags } from './DetailTags';
 import { IngredientsSection } from './IngredientsSection';
 import { InstructionsSection } from './InstructionsSection';
+import { RecipeActions } from './RecipeActions';
 import './RecipeDetail.css';
 
 export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
@@ -16,36 +17,20 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [added, setAdded] = useState(false);
   const [addedToBag, setAddedToBag] = useState(false);
-
   const pantryNames = pantryItems.map(i => i.name.toLowerCase());
   const bagNames = bag.map(b => b.name.toLowerCase());
   if (!selectedRecipe) return <div className="loading">Loading recipe...</div>;
-
-  const paragraphs = selectedRecipe.instructions
-    .split('\n')
-    .map(p => p.trim())
-    .filter(p => p && !/^[\d▢\s.-]*$/.test(p) && p.length > 3);
+  const paragraphs = selectedRecipe.instructions.split('\n').map(p => p.trim()).filter(p => p && !/^[\d▢\s.-]*$/.test(p) && p.length > 3);
   const handleAssign = (nightId: string) => {
     dispatch(assignRecipe({ nightId, recipe: selectedRecipe }));
-    setShowPicker(false);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+    setShowPicker(false); setAdded(true); setTimeout(() => setAdded(false), 2000);
   };
-  const ingredients = selectedRecipe.ingredients.map(ing => ({
-    ...ing,
-    inPantry: isIngredientAvailable(ing.name, pantryNames),
-  }));
-
+  const ingredients = selectedRecipe.ingredients.map(ing => ({ ...ing, inPantry: isIngredientAvailable(ing.name, pantryNames) }));
   const needToBuy = ingredients.filter(i => !i.inPantry);
   const handleAddMissing = () => {
     const toAdd = needToBuy.filter(i => !bagNames.includes(i.name.toLowerCase()));
-    if (toAdd.length > 0) {
-      dispatch(addToBag(toAdd.map(i => ({ name: i.name, measure: i.measure }))));
-      setAddedToBag(true);
-      setTimeout(() => setAddedToBag(false), 2000);
-    }
+    if (toAdd.length > 0) { dispatch(addToBag(toAdd.map(i => ({ name: i.name, measure: i.measure })))); setAddedToBag(true); setTimeout(() => setAddedToBag(false), 2000); }
   };
-
   return (
     <div className="recipe-detail">
       <button className="back-btn" onClick={onBack}>← Back</button>
@@ -53,27 +38,14 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       <div className="detail-body">
         <div className="detail-title-row">
           <h1>{selectedRecipe.name}</h1>
-          <div className="detail-actions">
-            {needToBuy.length > 0 && (
-              <button className="add-bag-btn" onClick={handleAddMissing}>
-                {addedToBag ? '\u2713 Added!' : `+ Add ${needToBuy.length} Missing`}
-              </button>
-            )}
-            <button className="add-night-btn" onClick={() => setShowPicker(!showPicker)}>
-              {added ? '\u2713 Added!' : '+ Add to Meal'}
-            </button>
-          </div>
+          <RecipeActions needToBuyCount={needToBuy.length} addedToBag={addedToBag} added={added}
+            onAddMissing={handleAddMissing} onTogglePicker={() => setShowPicker(!showPicker)} />
         </div>
         {showPicker && <NightPicker nights={nights} onPick={handleAssign} />}
         <DetailTags recipe={selectedRecipe} />
         <IngredientsSection ingredients={ingredients} />
         <InstructionsSection paragraphs={paragraphs} />
-        {selectedRecipe.sourceUrl && (
-          <a className="recipe-source-link" href={selectedRecipe.sourceUrl}
-            target="_blank" rel="noopener noreferrer">
-            View Full Recipe →
-          </a>
-        )}
+        {selectedRecipe.sourceUrl && <a className="recipe-source-link" href={selectedRecipe.sourceUrl} target="_blank" rel="noopener noreferrer">View Full Recipe →</a>}
       </div>
     </div>
   );

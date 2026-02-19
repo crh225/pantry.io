@@ -22,16 +22,13 @@ export const MealPlannerPage: React.FC = () => {
   const hasStore = kroger.getSelectedStore() !== null;
   const pantryNames = pantryItems.map(i => i.name.toLowerCase());
   const bagNames = bag.map(b => b.name.toLowerCase());
-
   const handleViewRecipe = (r: Recipe) => {
     dispatch(setSelected(r));
     if (!r.id.startsWith('dj-')) dispatch(fetchRecipeById(r.id));
     setViewingRecipe(true);
   };
   const addMissingToBag = (ingredients: { name: string; measure: string }[]) => {
-    const missing = ingredients
-      .filter(i => !isIngredientAvailable(i.name, pantryNames))
-      .filter(i => !bagNames.includes(i.name.toLowerCase()));
+    const missing = ingredients.filter(i => !isIngredientAvailable(i.name, pantryNames)).filter(i => !bagNames.includes(i.name.toLowerCase()));
     if (missing.length > 0) dispatch(addToBag(missing));
   };
   const handleAddToBag = async (r: Recipe) => {
@@ -39,27 +36,15 @@ export const MealPlannerPage: React.FC = () => {
     const full = await recipeApi.getById(r.id);
     if (full) addMissingToBag(full.ingredients);
   };
-
   if (viewingRecipe) return <div className="meal-planner"><RecipeDetail onBack={() => setViewingRecipe(false)} /></div>;
   if (selectingNight) return <div className="meal-planner"><RecipeSelector nightId={selectingNight} onDone={() => setSelectingNight(null)} /></div>;
   return (
     <div className="meal-planner">
       <div className="planner-header"><h1>Meal Planner</h1><p>Plan your meals, price them at Kroger, and go pick up</p></div>
-      {kroger.isConfigured() && !hasStore && (
-        <div className="store-prompt">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{verticalAlign:'middle',marginRight:4}}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Set your Kroger store in the header to see local prices
-        </div>
-      )}
+      {kroger.isConfigured() && !hasStore && <div className="store-prompt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{verticalAlign:'middle',marginRight:4}}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Set your Kroger store in the header to see local prices</div>}
       <div className="planner-layout">
-        <div className="planner-main">
-          <MealNights nights={nights} onSelectNight={setSelectingNight} onViewRecipe={handleViewRecipe} onAddToBag={handleAddToBag} />
-        </div>
-        {bag.length > 0 && (
-          <div className="planner-sidebar">
-            <ShoppingBag bag={bag} />
-          </div>
-        )}
+        <div className="planner-main"><MealNights nights={nights} onSelectNight={setSelectingNight} onViewRecipe={handleViewRecipe} onAddToBag={handleAddToBag} /></div>
+        {bag.length > 0 && <div className="planner-sidebar"><ShoppingBag bag={bag} /></div>}
       </div>
     </div>
   );

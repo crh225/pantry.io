@@ -1,34 +1,20 @@
 export interface KrogerProduct {
-  productId: string;
-  upc: string;
-  description: string;
-  brand: string;
+  productId: string; upc: string; description: string; brand: string;
   price: { regular: number; promo?: number } | null;
-  image: string;
-  aisle: string;
-  size: string;
+  image: string; aisle: string; size: string;
 }
 
 export interface KrogerStore {
-  locationId: string;
-  name: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  phone: string;
-  distance: number;
-  chain: string;
-  departments: KrogerDepartment[];
+  locationId: string; name: string; address: string; city: string;
+  state: string; zipCode: string; phone: string; distance: number;
+  chain: string; departments: KrogerDepartment[];
   hours: KrogerStoreHours | null;
   geolocation: { latitude: number; longitude: number } | null;
 }
 
 export interface KrogerDepartment {
-  departmentId: string;
-  name: string;
-  phone?: string;
-  hours?: KrogerStoreHours;
+  departmentId: string; name: string;
+  phone?: string; hours?: KrogerStoreHours;
 }
 
 export interface KrogerStoreHours {
@@ -43,13 +29,9 @@ export interface KrogerStoreHours {
 }
 
 export interface KrogerProfile {
-  id: string;
-  firstName: string;
-  lastName: string;
+  id: string; firstName: string; lastName: string;
 }
 
 export interface KrogerConfig {
-  clientId: string;
-  clientSecret: string;
-  locationId?: string;
+  clientId: string; clientSecret: string; locationId?: string;
 }

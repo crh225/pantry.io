@@ -5,9 +5,9 @@ import { TourOverlay } from './components/tour/TourOverlay';
 import { useImportPantry } from './hooks/useImportPantry';
 import { useHashNav } from './hooks/useHashNav';
 import { useTour } from './hooks/useTour';
-import { kroger } from './services/kroger';
+import { useAuthCallback } from './hooks/useAuthCallback';
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { handleAuthCallback, fetchProfile } from './store/slices/krogerSlice';
+import { fetchProfile } from './store/slices/krogerSlice';
 import './App.css';
 
 const RecipesPage = lazy(() => import('./components/recipe/RecipesPage').then(m => ({ default: m.RecipesPage })));
@@ -22,29 +22,8 @@ function App() {
   const tour = useTour(setCurrentPage as (p: any) => void);
   const dispatch = useAppDispatch();
   const { isAuthenticated, profile } = useAppSelector(s => s.kroger);
-
-  // Fetch profile on load if authenticated but no profile cached
-  useEffect(() => {
-    if (isAuthenticated && !profile) {
-      dispatch(fetchProfile());
-    }
-  }, [isAuthenticated, profile, dispatch]);
-
-  // Handle Kroger OAuth callback
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get('kroger_session');
-    const token = params.get('kroger_token');
-    const expiresIn = params.get('kroger_expires');
-    if (sessionId && token) {
-      // Update both service layer and Redux state
-      kroger.handleAuthCallback(sessionId, token, parseInt(expiresIn || '1800', 10));
-      dispatch(handleAuthCallback({ sessionId, token, expiresIn: parseInt(expiresIn || '1800', 10) }));
-      // Fetch user profile after successful auth
-      dispatch(fetchProfile());
-      window.history.replaceState({}, '', window.location.pathname + window.location.hash);
-    }
-  }, [dispatch]);
+  useAuthCallback();
+  useEffect(() => { if (isAuthenticated && !profile) dispatch(fetchProfile()); }, [isAuthenticated, profile, dispatch]);
 
   return (
     <div className="app">

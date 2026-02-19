@@ -21,34 +21,20 @@ export const OrderHistoryPage: React.FC = () => {
   const { orders } = useAppSelector(s => s.orderHistory);
   const [showClear, setShowClear] = useState(false);
   const grouped = useMemo(() => groupByDate(orders), [orders]);
-
   return (
     <div className="history-page">
       <div className="history-header">
         <h1>Order History</h1>
-        {orders.length > 0 && (
-          <button className="history-clear-btn" onClick={() => setShowClear(true)}>Clear History</button>
-        )}
+        {orders.length > 0 && <button className="history-clear-btn" onClick={() => setShowClear(true)}>Clear History</button>}
       </div>
-
       {orders.length > 0 && <BudgetSummary orders={orders} />}
-
       {orders.length === 0 ? (
-        <div className="history-empty">
-          <h3>No orders yet</h3>
-          <p>Items you send to your Kroger cart will appear here</p>
-        </div>
-      ) : (
-        grouped.map(([date, dateOrders]) => (
-          <OrderGroup key={date} date={date} orders={dateOrders as any} />
-        ))
-      )}
-
+        <div className="history-empty"><h3>No orders yet</h3><p>Items you send to your Kroger cart will appear here</p></div>
+      ) : grouped.map(([date, dateOrders]) => <OrderGroup key={date} date={date} orders={dateOrders as any} />)}
       {showClear && (
         <ConfirmModal title="Clear History" message="This will permanently delete your order history."
           confirmText="Clear" cancelText="Keep" danger
-          onConfirm={() => { dispatch(clearHistory()); setShowClear(false); }}
-          onCancel={() => setShowClear(false)} />
+          onConfirm={() => { dispatch(clearHistory()); setShowClear(false); }} onCancel={() => setShowClear(false)} />
       )}
     </div>
   );

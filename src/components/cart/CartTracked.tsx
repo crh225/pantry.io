@@ -6,23 +6,19 @@ import { CartEmpty } from './CartEmpty';
 const formatTime = (ts: number) => {
   const d = Math.floor((Date.now() - ts) / 60000);
   if (d < 60) return `${d}m ago`;
-  if (d < 1440) return `${Math.floor(d / 60)}h ago`;
-  return `${Math.floor(d / 1440)}d ago`;
+  return d < 1440 ? `${Math.floor(d / 60)}h ago` : `${Math.floor(d / 1440)}d ago`;
 };
 
 export const CartTracked: React.FC = () => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(s => s.kroger);
   const total = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
-
   if (cartItems.length === 0) return <CartEmpty />;
-
   return (
     <>
       <div className="cart-notice">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12.01" y2="8"/>
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
         </svg>
         Items shown are tracked locally. Visit Kroger.com or the app to complete your purchase.
       </div>
@@ -51,8 +47,7 @@ export const CartTracked: React.FC = () => {
         <a href="https://www.kroger.com/cart" target="_blank" rel="noopener noreferrer" className="cart-checkout-btn">
           View Cart on Kroger.com
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
           </svg>
         </a>
       </div>
