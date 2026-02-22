@@ -12,7 +12,12 @@ export const QuickAdd: React.FC<Props> = ({ onClose }) => {
   const dispatch = useAppDispatch();
 
   const toggle = (n: string) => { const s = new Set(selected); s.has(n) ? s.delete(n) : s.add(n); setSelected(s); };
-  const selAll = (items: { name: string }[]) => { const s = new Set(selected); items.forEach(i => s.add(i.name)); setSelected(s); };
+  const selAll = (items: { name: string }[]) => {
+    const allIn = items.every(i => selected.has(i.name));
+    const s = new Set(selected);
+    if (allIn) items.forEach(i => s.delete(i.name)); else items.forEach(i => s.add(i.name));
+    setSelected(s);
+  };
   const handleAdd = () => {
     const all = [
       ...commonPantryItems.map(i => ({ ...i, location: 'pantry' as const })),

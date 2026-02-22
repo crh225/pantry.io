@@ -80,6 +80,38 @@
 
 .select-all-btn:hover { color: var(--color-text); }
 
+.section-title-actions {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.section-chevron {
+  font-size: 0.85rem; color: var(--color-text-muted);
+  transition: transform 0.2s;
+}
+.section-chevron.open { transform: rotate(180deg); }
+
+.section-all-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--color-success-light);
+  color: var(--color-success);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+}
+
+.section-count-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+}
+
 .quick-add-section {
   margin-bottom: 2rem;
 }

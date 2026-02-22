@@ -37,7 +37,7 @@ export const NightCard: React.FC<Props> = ({
           {idx < total - 1 && <button onClick={() => dispatch(moveNight({ nightId: night.id, dir: 1 }))}><ChevronRight /></button>}
         </div>
         <div className="night-actions">
-          {allInPantry ? <span className="all-in-pantry"><CheckIcon /> All in pantry</span>
+          {allInPantry ? <span className="all-in-pantry"><CheckIcon /> In pantry</span>
             : allInBag ? <span className="all-in-bag"><CheckIcon /> In bag</span>
             : <button onClick={() => onAddToBag(night.recipe!)} className="bag-btn"><CartIcon /> Bag</button>}
           <button onClick={() => dispatch(removeRecipe(night.id))} className="remove-night-btn"><XIcon /></button>

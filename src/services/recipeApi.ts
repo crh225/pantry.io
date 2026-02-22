@@ -1,6 +1,9 @@
 import { Recipe, Ingredient } from '../types';
 
-const BASE = 'https://www.themealdb.com/api/json/v1/1';
+const mealdbFetch = async (path: string) => {
+  const res = await fetch(`/api/mealdb?path=${encodeURIComponent(path)}`);
+  return res.json();
+};
 
 const transformMeal = (meal: any): Recipe => {
   const ingredients: Ingredient[] = [];
@@ -18,23 +21,21 @@ const transformMeal = (meal: any): Recipe => {
   };
 };
 
-const fetchJson = async (url: string) => (await fetch(url)).json();
-
 export const recipeApi = {
   searchByName: async (q: string): Promise<Recipe[]> => {
-    const d = await fetchJson(`${BASE}/search.php?s=${q}`);
+    const d = await mealdbFetch(`search.php?s=${q}`);
     return d.meals ? d.meals.map(transformMeal) : [];
   },
   searchByCategory: async (c: string): Promise<Recipe[]> => {
-    const d = await fetchJson(`${BASE}/filter.php?c=${c}`);
+    const d = await mealdbFetch(`filter.php?c=${c}`);
     return d.meals ? d.meals.map(transformMeal) : [];
   },
   searchByArea: async (a: string): Promise<Recipe[]> => {
-    const d = await fetchJson(`${BASE}/filter.php?a=${a}`);
+    const d = await mealdbFetch(`filter.php?a=${a}`);
     return d.meals ? d.meals.map(transformMeal) : [];
   },
   getById: async (id: string): Promise<Recipe | null> => {
-    const d = await fetchJson(`${BASE}/lookup.php?i=${id}`);
+    const d = await mealdbFetch(`lookup.php?i=${id}`);
     return d.meals ? transformMeal(d.meals[0]) : null;
   },
   hydrateMany: async (ids: string[]): Promise<Recipe[]> => {
