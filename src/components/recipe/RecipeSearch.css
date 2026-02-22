@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   gap: 0;
-  border-bottom: 2px solid #e5e5e5;
+  border-bottom: 2px solid var(--color-border);
   padding: 0 2rem;
 }
 
@@ -15,18 +15,13 @@
   padding: 1rem 2rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-secondary);
   border-bottom: 3px solid transparent;
   transition: color 0.2s, border-color 0.2s;
   margin-bottom: -2px;
 }
-
-.tab:hover { color: #333; }
-
-.tab.active {
-  color: #2563eb;
-  border-bottom-color: #2563eb;
-}
+.tab:hover { color: var(--color-text); }
+.tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
 
 .text-search {
   display: flex;
@@ -39,38 +34,39 @@
 .search-input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
+  transition: border-color 0.15s;
 }
+.search-input:focus { outline: none; border-color: var(--color-accent); }
 
 .search-btn {
   padding: 0.75rem 1.5rem;
-  background-color: #333;
+  background-color: var(--color-primary);
   color: white;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s;
 }
-
-.search-btn:hover { background-color: #555; }
+.search-btn:hover { background-color: var(--color-primary-hover); }
 
 .collapsed-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 2rem;
-  background: #fafafa;
-  border-bottom: 1px solid #e5e5e5;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   cursor: pointer;
   transition: background 0.15s;
 }
-
-.collapsed-bar:hover { background: #f0f0f0; }
-.collapsed-label { color: #333; font-size: 0.95rem; }
-.collapsed-change { color: #999; font-size: 0.85rem; font-weight: 500; }
+.collapsed-bar:hover { background: var(--color-border-light); }
+.collapsed-label { color: var(--color-text); font-size: 0.95rem; }
+.collapsed-change { color: var(--color-text-muted); font-size: 0.85rem; font-weight: 500; }
 
 @media (max-width: 768px) {
   .search-tabs { padding: 0 1rem; }

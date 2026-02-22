@@ -10,33 +10,33 @@
 .cart-search-bar input {
   flex: 1;
   padding: 0.6rem 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
 }
 .cart-search-bar input:focus {
   outline: none;
-  border-color: #333;
+  border-color: var(--color-primary);
 }
 .cart-search-bar button {
   padding: 0.6rem 1rem;
-  background: #333;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
 }
-.cart-search-bar button:hover { background: #555; }
-.cart-search-bar button:disabled { background: #999; }
+.cart-search-bar button:hover { background: var(--color-primary-hover); }
+.cart-search-bar button:disabled { background: var(--color-text-muted); }
 
 .cart-search-results {
   list-style: none;
   padding: 0;
   margin: 0;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -45,16 +45,16 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-border-light);
 }
 .search-result-item:last-child { border-bottom: none; }
 
 .search-result-img {
   width: 40px;
   height: 40px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   object-fit: contain;
-  background: #fafafa;
+  background: var(--color-bg);
   flex-shrink: 0;
 }
 
@@ -66,7 +66,7 @@
   display: block;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -74,7 +74,7 @@
 .search-result-size {
   display: block;
   font-size: 0.75rem;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .search-result-price {
@@ -85,58 +85,58 @@
   display: block;
   font-weight: 600;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--color-text);
 }
 .search-price-original {
   font-size: 0.75rem !important;
-  color: #999 !important;
+  color: var(--color-text-muted) !important;
   text-decoration: line-through;
   font-weight: 400 !important;
 }
-.search-price-sale { color: #dc2626 !important; }
+.search-price-sale { color: var(--color-danger) !important; }
 
 .search-qty-control {
   display: inline-flex;
   align-items: center;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   flex-shrink: 0;
 }
 .search-qty-control .qty-btn {
   width: 26px;
   height: 26px;
-  background: #f5f5f5;
+  background: var(--color-border-light);
   border: none;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.search-qty-control .qty-btn:hover { background: #e5e5e5; }
-.search-qty-control .qty-btn:disabled { color: #ccc; cursor: default; }
-.search-qty-control .qty-btn:disabled:hover { background: #f5f5f5; }
+.search-qty-control .qty-btn:hover { background: var(--color-border); }
+.search-qty-control .qty-btn:disabled { color: var(--color-text-muted); cursor: default; }
+.search-qty-control .qty-btn:disabled:hover { background: var(--color-border-light); }
 .search-qty-control .qty-value {
   width: 28px;
   text-align: center;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
 }
 
 .search-add-btn {
   padding: 0.4rem 0.75rem;
-  background: #2563eb;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   flex-shrink: 0;
 }
-.search-add-btn:hover { background: #1d4ed8; }
-.search-add-btn:disabled { background: #22c55e; cursor: default; }
+.search-add-btn:hover { background: var(--color-accent-hover); }
+.search-add-btn:disabled { background: var(--color-success); cursor: default; }

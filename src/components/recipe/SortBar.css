@@ -7,21 +7,21 @@
   margin: 0 auto;
 }
 
-.sort-label { font-size: 0.85rem; color: #999; }
+.sort-label { font-size: 0.85rem; color: var(--color-text-muted); }
 
 .sort-opt {
   padding: 0.35rem 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   font-size: 0.8rem;
-  color: #666;
-  background: white;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
   cursor: pointer;
   transition: all 0.15s;
 }
 
-.sort-opt:hover { border-color: #333; color: #333; }
-.sort-opt.active { background: #333; color: white; border-color: #333; }
+.sort-opt:hover { border-color: var(--color-primary); color: var(--color-text); }
+.sort-opt.active { background: var(--color-primary); color: var(--color-surface); border-color: var(--color-primary); }
 
 @media (max-width: 768px) {
   .sort-bar { padding: 0.5rem 1rem; }

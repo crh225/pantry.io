@@ -1,63 +1,51 @@
 .pantry-section {
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 200px;
+  box-shadow: var(--shadow-sm);
 }
 
 .section-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: #fafafa;
-  border-bottom: 1px solid #e5e5e5;
+  background: var(--color-border-light);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.section-label {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #333;
-}
+.section-label { font-weight: 600; font-size: 1rem; color: var(--color-text); }
 
 .sort-expiry-btn {
   margin-left: auto;
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 3px 6px;
-  cursor: pointer;
-  color: #999;
-  display: flex;
-  align-items: center;
+  background: none; border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm); padding: 3px 6px;
+  cursor: pointer; color: var(--color-text-muted);
+  display: flex; align-items: center;
   transition: all 0.15s;
 }
-.sort-expiry-btn:hover { color: #333; border-color: #999; }
-.sort-expiry-btn.active { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
+.sort-expiry-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+.sort-expiry-btn.active { color: var(--color-accent); border-color: var(--color-accent); background: var(--color-accent-light); }
 
 .section-count {
-  background: #e5e5e5;
-  color: #666;
+  background: var(--color-border);
+  color: var(--color-text-secondary);
   padding: 0.1rem 0.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 0.8rem;
   font-weight: 600;
 }
 
 .section-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 14px;
-  flex: 1;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 12px 14px; flex: 1;
   align-content: flex-start;
 }
 
 .section-empty {
-  color: #999;
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   text-align: center;
   width: 100%;

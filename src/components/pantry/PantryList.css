@@ -11,21 +11,21 @@
 
 .pantry-summary {
   font-size: 0.85rem;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .pantry-search {
   padding: 8px 14px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   outline: none;
-  background: #fafafa;
+  background: var(--color-bg);
   width: 220px;
 }
 .pantry-search:focus {
-  border-color: #2563eb;
-  background: #fff;
+  border-color: var(--color-accent);
+  background: var(--color-surface);
 }
 
 .pantry-columns {
@@ -37,7 +37,7 @@
 .empty-pantry {
   text-align: center;
   padding: 4rem 2rem;
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 1.1rem;
 }
 

@@ -1,6 +1,7 @@
 .header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .header-content {
@@ -9,39 +10,43 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 2rem;
 }
 
 .logo {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #333;
+  font-family: var(--font-display);
+  color: var(--color-primary);
 }
 
 .nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.5rem;
 }
 
 .nav-btn {
   padding: 0.5rem 1rem;
-  color: #666;
-  font-size: 1rem;
-  transition: color 0.2s;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background 0.2s;
 }
 
 .nav-btn:hover {
-  color: #333;
+  color: var(--color-text);
+  background: var(--color-border-light);
 }
 
 .nav-btn.active {
-  color: #000;
+  color: var(--color-primary);
   font-weight: 600;
-  border-bottom: 2px solid #333;
+  background: var(--color-success-light);
 }
 
 .coming-soon-banner {
-  background: linear-gradient(135deg, #22c55e 0%, #45a049 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
   color: white;
   padding: 0.5rem 2rem;
   text-align: center;
@@ -55,181 +60,89 @@
     gap: 0.75rem;
     padding: 1rem;
   }
-
-  .logo {
-    font-size: 1.5rem;
-  }
-
-  .nav {
-    width: 100%;
-    justify-content: space-around;
-    gap: 0.5rem;
-  }
-
-  .nav-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  .coming-soon-banner {
-    font-size: 0.8rem;
-    padding: 0.4rem 1rem;
-  }
+  .logo { font-size: 1.5rem; }
+  .nav { width: 100%; justify-content: space-around; gap: 0.25rem; }
+  .nav-btn { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
+  .coming-soon-banner { font-size: 0.8rem; padding: 0.4rem 1rem; }
 }
 
 @media (max-width: 360px) {
-  .nav-btn {
-    padding: 0.4rem 0.5rem;
-    font-size: 0.85rem;
-  }
+  .nav-btn { padding: 0.4rem 0.5rem; font-size: 0.85rem; }
 }
 
-/* Kroger header group */
-.header-kroger {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+.header-kroger { display: flex; align-items: center; gap: 0.5rem; }
 
 .kroger-connect-btn {
-  padding: 0.35rem 0.75rem;
-  background: #333;
+  padding: 0.4rem 0.85rem;
+  background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
 }
+.kroger-connect-btn:hover { background: var(--color-primary-hover); }
 
-.kroger-connect-btn:hover {
-  background: #555;
-}
+.kroger-connected { font-size: 0.8rem; color: var(--color-success); font-weight: 600; }
 
-.kroger-connected {
-  font-size: 0.8rem;
-  color: #22c55e;
-  font-weight: 600;
-}
-
-/* Store badge */
 .store-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: flex; align-items: center; gap: 0.4rem;
   padding: 0.4rem 0.75rem;
-  background: #f5f5f5;
-  border: 1px solid #e5e5e5;
-  border-radius: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
-  color: #666;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
 }
-
-.store-badge:hover {
-  background: #eee;
-  border-color: #ccc;
-}
-
-.store-badge-icon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.store-badge-name {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.store-badge.connected {
-  border-color: #22c55e;
-}
-
+.store-badge:hover { background: var(--color-border-light); border-color: var(--color-border); }
+.store-badge-icon { display: flex; align-items: center; flex-shrink: 0; }
+.store-badge-name { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.store-badge.connected { border-color: var(--color-success); }
 .connection-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #22c55e;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-success);
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
   flex-shrink: 0;
 }
 
-/* Store modal */
 .store-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .store-modal {
-  background: white;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  width: 90%; max-width: 400px; max-height: 80vh;
+  overflow-y: auto; position: relative;
+  box-shadow: var(--shadow-lg);
 }
-
-.store-modal .store-picker {
-  padding-top: 2.5rem;
-}
+.store-modal .store-picker { padding-top: 2.5rem; }
 
 .store-modal-close {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #f5f5f5;
-  border: none;
-  font-size: 1.25rem;
-  color: #666;
-  cursor: pointer;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--color-border-light); border: none;
+  font-size: 1.25rem; color: var(--color-text-secondary);
+  cursor: pointer; z-index: 1;
+  display: flex; align-items: center; justify-content: center; line-height: 1;
 }
-
-.store-modal-close:hover {
-  background: #333;
-  color: white;
-}
+.store-modal-close:hover { background: var(--color-primary); color: white; }
 
 @media (max-width: 768px) {
   .store-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.8rem;
+    position: absolute; top: 1rem; right: 1rem;
+    padding: 0.3rem 0.6rem; font-size: 0.8rem;
   }
-
-  .store-badge-name {
-    max-width: 140px;
-  }
-
-  .header-content {
-    position: relative;
-  }
-
-  .store-modal-overlay {
-    padding-top: 2rem;
-  }
+  .store-badge-name { max-width: 140px; }
+  .header-content { position: relative; }
+  .store-modal-overlay { padding-top: 2rem; }
 }

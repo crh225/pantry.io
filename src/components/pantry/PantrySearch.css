@@ -8,19 +8,22 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #999;
+  color: var(--color-text-muted);
   pointer-events: none;
 }
 
 .pantry-search input {
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: 0.95rem;
+  background: var(--color-surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .pantry-search input:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }

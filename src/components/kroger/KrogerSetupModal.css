@@ -9,17 +9,18 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .kroger-modal {
-  background: white;
-  border-radius: 12px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
   width: 90%;
   max-width: 500px;
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
 }
 
 .kroger-modal-close {
@@ -29,10 +30,10 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #f5f5f5;
+  background: var(--color-border-light);
   border: none;
   font-size: 1.25rem;
-  color: #666;
+  color: var(--color-text-secondary);
   cursor: pointer;
   z-index: 1;
   display: flex;
@@ -42,8 +43,8 @@
 }
 
 .kroger-modal-close:hover {
-  background: #333;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-surface);
 }
 
 .kroger-modal-content {
@@ -61,7 +62,7 @@
 .kroger-connect-section h3 {
   font-size: 1.25rem;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .kroger-connected-state {
@@ -74,30 +75,30 @@
 .connected-text {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #22c55e;
+  color: var(--color-success);
   margin: 0;
 }
 
 .connected-subtext {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
 .kroger-done-btn {
   margin-top: 1rem;
   padding: 0.75rem 2rem;
-  background: #333;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .kroger-done-btn:hover {
-  background: #555;
+  background: var(--color-primary-hover);
 }
 
 .kroger-connect-prompt {
@@ -106,7 +107,7 @@
 
 .connect-description {
   font-size: 0.95rem;
-  color: #333;
+  color: var(--color-text);
   margin-bottom: 1rem;
 }
 
@@ -120,7 +121,7 @@
   padding: 0.75rem 0;
   padding-left: 2rem;
   position: relative;
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
 }
 
@@ -128,17 +129,17 @@
   content: '\2713';
   position: absolute;
   left: 0;
-  color: #22c55e;
+  color: var(--color-success);
   font-weight: 700;
 }
 
 .kroger-connect-btn {
   width: 100%;
   padding: 0.85rem;
-  background: #333;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -146,20 +147,20 @@
 }
 
 .kroger-connect-btn:hover {
-  background: #555;
+  background: var(--color-primary-hover);
 }
 
 .kroger-back-btn {
   width: 100%;
   padding: 0.75rem;
-  background: white;
-  color: #666;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   cursor: pointer;
 }
 
 .kroger-back-btn:hover {
-  background: #f5f5f5;
+  background: var(--color-border-light);
 }

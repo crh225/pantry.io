@@ -1,15 +1,15 @@
 .household-btn {
   padding: 0.5rem 1rem;
-  background-color: #f5f5f5;
+  background-color: var(--color-border-light);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--color-text);
   cursor: pointer;
   transition: background-color 0.15s;
 }
-.household-btn:hover { background-color: #e5e5e5; }
+.household-btn:hover { background-color: var(--color-border); }
 
 .household-actions {
   display: flex;
@@ -20,26 +20,26 @@
 .household-join-btn {
   width: 100%;
   padding: 0.65rem;
-  background: white;
-  color: #333;
-  border: 2px solid #333;
-  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
 }
-.household-join-btn:hover { background: #f5f5f5; }
+.household-join-btn:hover { background: var(--color-border-light); }
 
 .household-code-display {
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.3rem;
-  color: #333;
+  color: var(--color-text);
   padding: 1.25rem;
-  background: #f5f5f5;
-  border-radius: 8px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
   font-family: monospace;
 }
@@ -47,43 +47,43 @@
 .household-code-input {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
   letter-spacing: 0.3rem;
   font-family: monospace;
-  color: #333;
+  color: var(--color-text);
   margin-bottom: 1rem;
   box-sizing: border-box;
 }
 .household-code-input:focus {
   outline: none;
-  border-color: #333;
+  border-color: var(--color-primary);
 }
 
 .household-linked-code {
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-secondary);
   padding: 0.75rem;
-  background: #f0fdf4;
-  border-radius: 6px;
+  background: var(--color-success-light);
+  border-radius: var(--radius-sm);
   margin-bottom: 1rem;
 }
 
 .household-unlink-btn {
   width: 100%;
   padding: 0.65rem;
-  background: white;
-  color: #dc2626;
-  border: 2px solid #dc2626;
-  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-danger);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
 }
-.household-unlink-btn:hover { background: #fff5f5; }
+.household-unlink-btn:hover { background: var(--color-danger-light); }

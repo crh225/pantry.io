@@ -9,16 +9,18 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background: white;
+  background: var(--color-surface);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   max-width: 500px;
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: var(--shadow-lg);
 }
 
 .modal-content h2 {
@@ -33,7 +35,7 @@
 
 .shopping-items li {
   padding: 0.75rem;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .modal-actions {
@@ -44,20 +46,20 @@
 
 .action-btn {
   padding: 0.75rem 1.5rem;
-  background-color: #333;
-  color: white;
-  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: var(--radius-sm);
   font-weight: 600;
   transition: background-color 0.2s;
 }
 
 .action-btn:hover {
-  background-color: #555;
+  background-color: var(--color-primary-hover);
 }
 
 .action-btn.secondary {
-  background-color: #e5e5e5;
-  color: #333;
+  background-color: var(--color-border);
+  color: var(--color-text);
 }
 
 .action-btn.secondary:hover {

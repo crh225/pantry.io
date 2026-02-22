@@ -5,8 +5,8 @@
 
 .recipe-selector .back-btn {
   padding: 0.5rem 1rem;
-  background: #f5f5f5;
-  border-radius: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -22,16 +22,16 @@
 .selector-search input {
   flex: 1;
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
 }
 
 .selector-search button {
   padding: 0.75rem 1.5rem;
-  background: #333;
-  color: white;
-  border-radius: 6px;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: var(--radius-sm);
   font-weight: 600;
 }
 
@@ -44,21 +44,21 @@
 
 .quick-cuisines button {
   padding: 0.5rem 1rem;
-  background: #f5f5f5;
-  border-radius: 20px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
   font-weight: 600;
-  color: #555;
+  color: var(--color-primary-hover);
 }
 
 .quick-cuisines button:hover {
-  background: #2563eb;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-surface);
 }
 
 .selector-msg {
   text-align: center;
-  color: #666;
+  color: var(--color-text-secondary);
   padding: 2rem;
 }
 
@@ -69,18 +69,19 @@
 }
 
 .selector-card {
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-sm);
 }
 
 .selector-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border-color: #2563eb;
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent);
 }
 
 .selector-card img {

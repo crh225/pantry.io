@@ -1,64 +1,65 @@
 .ing-item {
   display: flex; align-items: center; gap: 0.6rem;
-  padding: 0.6rem; background: #fafafa; border-radius: 6px;
+  padding: 0.6rem; background: var(--color-border-light); border-radius: var(--radius-sm);
   cursor: pointer; position: relative; transition: background 0.15s;
 }
-.ing-item:hover { background: #f0f0f0; }
+.ing-item:hover { background: var(--color-border); }
 .ing-item.open { z-index: 50; }
 
 .ing-thumb {
   width: 32px; height: 32px; object-fit: contain;
-  border-radius: 6px; flex-shrink: 0;
+  border-radius: var(--radius-sm); flex-shrink: 0;
 }
 
 .ing-text { flex: 1; display: flex; flex-direction: column; min-width: 0; }
-.ing-text .ing-name { font-size: 0.9rem; font-weight: 500; color: #333; }
-.ing-text .ing-measure { font-size: 0.8rem; color: #999; }
+.ing-text .ing-name { font-size: 0.9rem; font-weight: 500; color: var(--color-text); }
+.ing-text .ing-measure { font-size: 0.8rem; color: var(--color-text-muted); }
 .ing-status { font-size: 0.85rem; flex-shrink: 0; }
 
 .ing-popup {
   position: absolute; left: 0; right: 0; top: 100%;
-  z-index: 200; background: white; border: 1px solid #ddd;
-  border-radius: 8px; padding: 0.75rem; margin-top: 0.25rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  z-index: 200; background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); padding: 0.75rem; margin-top: 0.25rem;
+  box-shadow: var(--shadow-md);
   display: flex; gap: 0.75rem; align-items: flex-start;
 }
 
 .popup-close {
   position: absolute; top: 0.4rem; right: 0.4rem;
   width: 24px; height: 24px; border-radius: 50%;
-  background: #f5f5f5; border: none; font-size: 1rem;
-  color: #666; cursor: pointer; display: flex;
+  background: var(--color-border-light); border: none; font-size: 1rem;
+  color: var(--color-text-secondary); cursor: pointer; display: flex;
   align-items: center; justify-content: center; line-height: 1;
 }
-.popup-close:hover { background: #333; color: white; }
+.popup-close:hover { background: var(--color-primary); color: white; }
 
 .popup-img {
   width: 64px; height: 64px; object-fit: contain;
-  border-radius: 6px; background: #fafafa; flex-shrink: 0;
+  border-radius: var(--radius-sm); background: var(--color-border-light); flex-shrink: 0;
 }
 
 .popup-info {
   display: flex; flex-direction: column; gap: 0.2rem;
   font-size: 0.85rem; flex: 1;
 }
-.popup-info strong { font-size: 0.9rem; color: #333; }
-.popup-price { font-weight: 700; color: #333; }
-.popup-promo { color: #dc2626; font-weight: 600; }
-.popup-size { color: #999; }
-.popup-aisle { color: #666; }
-.popup-loading, .popup-note { color: #bbb; font-style: italic; }
+.popup-info strong { font-size: 0.9rem; color: var(--color-text); }
+.popup-price { font-weight: 700; color: var(--color-text); }
+.popup-promo { color: var(--color-danger); font-weight: 600; }
+.popup-size { color: var(--color-text-muted); }
+.popup-aisle { color: var(--color-text-secondary); }
+.popup-loading, .popup-note { color: var(--color-text-muted); font-style: italic; }
 
 .popup-cart-btn {
   padding: 0.35rem 0.75rem;
-  background: #333; color: white; border: none;
-  border-radius: 6px; font-size: 0.8rem; font-weight: 600;
+  background: var(--color-primary); color: white; border: none;
+  border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600;
   cursor: pointer; transition: background 0.15s;
   align-self: flex-start;
 }
-.popup-cart-btn:hover { background: #555; }
-.popup-cart-btn:disabled { background: #ccc; cursor: default; }
-.popup-cart-added { color: #22c55e; font-weight: 600; font-size: 0.8rem; }
+.popup-cart-btn:hover { background: var(--color-primary-hover); }
+.popup-cart-btn:disabled { background: var(--color-text-muted); cursor: default; }
+.popup-cart-added { color: var(--color-success); font-weight: 600; font-size: 0.8rem; }
 
 .popup-actions {
   display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; align-items: center;
@@ -66,9 +67,9 @@
 
 .popup-pantry-btn {
   padding: 0.35rem 0.75rem;
-  background: #16a34a; color: white; border: none;
-  border-radius: 6px; font-size: 0.8rem; font-weight: 600;
+  background: var(--color-success); color: white; border: none;
+  border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600;
   cursor: pointer; transition: background 0.15s;
 }
-.popup-pantry-btn:hover { background: #15803d; }
-.popup-pantry-added { color: #16a34a; font-weight: 600; font-size: 0.8rem; }
+.popup-pantry-btn:hover { background: var(--color-success-dark); }
+.popup-pantry-added { color: var(--color-success); font-weight: 600; font-size: 0.8rem; }

@@ -5,7 +5,7 @@
 .alternatives-toggle {
   background: none;
   border: none;
-  color: #999;
+  color: var(--color-text-muted);
   font-size: 0.75rem;
   cursor: pointer;
   padding: 0;
@@ -15,7 +15,7 @@
 }
 
 .alternatives-toggle:hover {
-  color: #2563eb;
+  color: var(--color-accent);
   text-decoration: underline;
 }
 
@@ -29,12 +29,12 @@
 .alternatives-loading,
 .alternatives-empty {
   font-size: 0.75rem;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .alternatives-error {
   font-size: 0.75rem;
-  color: #dc2626;
+  color: var(--color-danger);
 }
 
 .alternative-item {
@@ -42,9 +42,9 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.6rem;
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 6px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   width: 100%;
   text-align: left;
@@ -52,16 +52,16 @@
 }
 
 .alternative-item:hover {
-  background: #f0f7ff;
-  border-color: #2563eb;
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
 }
 
 .alt-thumb {
   width: 28px;
   height: 28px;
   object-fit: contain;
-  border-radius: 6px;
-  background: white;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
   flex-shrink: 0;
 }
 
@@ -75,7 +75,7 @@
 
 .alt-description {
   font-size: 0.8rem;
-  color: #555;
+  color: var(--color-primary-hover);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -83,7 +83,7 @@
 
 .alt-size {
   font-size: 0.7rem;
-  color: #999;
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
@@ -93,12 +93,12 @@
   gap: 0.35rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   flex-shrink: 0;
 }
 
 .alt-promo {
   font-size: 0.7rem;
-  color: #22c55e;
+  color: var(--color-success);
   font-weight: 600;
 }

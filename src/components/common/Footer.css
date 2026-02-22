@@ -6,5 +6,5 @@
 .footer p {
   margin: 0;
   font-size: 0.8rem;
-  color: #bbb;
+  color: var(--color-text-muted);
 }

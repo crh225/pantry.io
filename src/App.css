@@ -1,6 +1,6 @@
 .app {
   min-height: 100vh;
-  background-color: #fafafa;
+  background-color: var(--color-bg);
   display: flex;
   flex-direction: column;
 }
@@ -13,7 +13,7 @@
 .import-toast {
   text-align: center;
   padding: 0.75rem;
-  background: #333;
+  background: var(--color-primary);
   color: white;
   font-weight: 500;
   font-size: 0.9rem;

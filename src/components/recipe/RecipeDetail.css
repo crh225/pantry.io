@@ -6,19 +6,20 @@
 
 .back-btn {
   padding: 0.5rem 1rem;
-  background-color: #f5f5f5;
-  color: #333;
-  border-radius: 6px;
+  background-color: var(--color-border-light);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
   margin-bottom: 1.5rem;
   font-weight: 600;
+  transition: background 0.15s;
 }
-
-.back-btn:hover { background-color: #e5e5e5; }
+.back-btn:hover { background-color: var(--color-border); }
 
 .detail-hero img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-md);
 }
 
 .detail-title-row {
@@ -44,52 +45,31 @@
 .add-night-btn,
 .add-bag-btn {
   padding: 0.6rem 1.2rem;
-  background: #333;
+  background: var(--color-primary);
   color: white;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
   transition: background 0.15s;
 }
-
 .add-night-btn:hover,
-.add-bag-btn:hover {
-  background: #555;
-}
+.add-bag-btn:hover { background: var(--color-primary-hover); }
 
-.add-bag-btn {
-  background: #2563eb;
-}
+.add-bag-btn { background: var(--color-accent); }
+.add-bag-btn:hover { background: var(--color-accent-hover); }
 
-.add-bag-btn:hover {
-  background: #1d4ed8;
-}
+.add-bag-btn.in-bag { background: var(--color-success); cursor: default; }
+.add-bag-btn.in-bag:hover { background: var(--color-success); }
 
-.add-bag-btn.in-bag {
-  background: #22c55e;
-  cursor: default;
-}
-.add-bag-btn.in-bag:hover {
-  background: #22c55e;
-}
-
-.in-pantry {
-  background: #f5f5f5;
-}
-.in-pantry .ing-name { color: #aaa; }
-.in-pantry .ing-measure { color: #ccc; }
+.in-pantry { background: var(--color-border-light); }
+.in-pantry .ing-name { color: var(--color-text-muted); }
+.in-pantry .ing-measure { color: var(--color-text-muted); }
 .in-pantry .ing-status { opacity: 0.5; }
 
-.need-to-buy .ing-name {
-  font-weight: 600;
-}
+.need-to-buy .ing-name { font-weight: 600; }
 
-.ing-status {
-  font-size: 0.85rem;
-  width: 1.2rem;
-  flex-shrink: 0;
-}
+.ing-status { font-size: 0.85rem; width: 1.2rem; flex-shrink: 0; }
 
 .detail-tags {
   display: flex;
@@ -100,21 +80,19 @@
 
 .tag {
   padding: 0.4rem 1rem;
-  background-color: #f5f5f5;
-  border-radius: 20px;
+  background-color: var(--color-border-light);
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
-.detail-section {
-  margin-bottom: 2.5rem;
-}
+.detail-section { margin-bottom: 2.5rem; }
 
 .detail-section h2 {
   font-size: 1.25rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e5e5e5;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .ingredients-grid {
@@ -129,48 +107,37 @@
   display: flex;
   gap: 0.5rem;
   padding: 0.75rem;
-  background: #fafafa;
-  border-radius: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
 }
 
 .ing-measure {
   font-weight: 600;
-  color: #2563eb;
+  color: var(--color-accent);
   white-space: nowrap;
 }
 
-.ing-name { color: #333; }
+.ing-name { color: var(--color-text); }
 
 .recipe-source-link {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;
-  background: #f5f5f5;
-  color: #555;
-  border-radius: 6px;
+  background: var(--color-border-light);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.15s;
 }
-.recipe-source-link:hover {
-  background: #333;
-  color: white;
-}
+.recipe-source-link:hover { background: var(--color-primary); color: white; }
 
 @media (max-width: 768px) {
-  .recipe-detail {
-    padding: 1rem;
-  }
+  .recipe-detail { padding: 1rem; }
   .detail-body h1 { font-size: 1.5rem; }
   .ingredients-grid { grid-template-columns: 1fr; }
-  .detail-actions {
-    width: 100%;
-    flex-direction: column;
-  }
+  .detail-actions { width: 100%; flex-direction: column; }
   .add-night-btn,
-  .add-bag-btn {
-    width: 100%;
-    justify-content: center;
-  }
+  .add-bag-btn { width: 100%; justify-content: center; }
 }

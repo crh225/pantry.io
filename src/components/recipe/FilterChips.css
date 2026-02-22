@@ -7,60 +7,32 @@
   padding: 0 2rem 0.5rem;
 }
 
-.filter-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
+.filter-row { display: flex; align-items: center; gap: 0.75rem; }
 
 .filter-row-label {
-  font-size: 0.85rem;
-  color: #999;
-  flex-shrink: 0;
-  min-width: 52px;
+  font-size: 0.85rem; color: var(--color-text-muted);
+  flex-shrink: 0; min-width: 52px;
 }
 
 .chip-scroll {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  gap: 0.5rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding: 2px 0;
+  display: flex; flex: 1; min-width: 0; gap: 0.5rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding: 2px 0;
 }
-
-.chip-scroll::-webkit-scrollbar {
-  display: none;
-}
+.chip-scroll::-webkit-scrollbar { display: none; }
 
 .filter-chip {
   padding: 0.35rem 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 16px;
-  font-size: 0.8rem;
-  color: #666;
-  background: white;
-  cursor: pointer;
-  white-space: nowrap;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem; color: var(--color-text-secondary);
+  background: var(--color-surface);
+  cursor: pointer; white-space: nowrap;
   transition: all 0.15s;
 }
-
-.filter-chip:hover {
-  border-color: #333;
-  color: #333;
-}
-
-.filter-chip.selected {
-  background: #333;
-  color: white;
-  border-color: #333;
-}
+.filter-chip:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.filter-chip.selected { background: var(--color-primary); color: white; border-color: var(--color-primary); }
 
 @media (max-width: 768px) {
-  .filter-chips {
-    padding: 0 1rem 0.5rem;
-    gap: 0.4rem;
-  }
+  .filter-chips { padding: 0 1rem 0.5rem; gap: 0.4rem; }
 }

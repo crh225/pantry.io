@@ -1,33 +1,27 @@
 .pantry-chip {
   display: inline-flex; align-items: center; gap: 6px;
-  background: #f5f5f5; border: 1px solid #e5e5e5; border-radius: 20px;
-  padding: 5px 10px 5px 12px; font-size: 0.85rem; color: #333;
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-pill);
+  padding: 5px 10px 5px 12px; font-size: 0.85rem; color: var(--color-text);
   transition: background 0.15s, border-color 0.15s;
+  box-shadow: var(--shadow-sm);
 }
-.pantry-chip:hover { background: #eee; }
+.pantry-chip:hover { background: var(--color-border-light); }
 .chip-body {
   display: inline-flex; align-items: center; gap: 6px;
   cursor: pointer;
 }
 .chip-name { font-weight: 500; white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
-.chip-qty { color: #999; font-size: 0.8rem; }
+.chip-qty { color: var(--color-text-muted); font-size: 0.8rem; }
 .chip-remove {
   display: inline-flex; align-items: center; justify-content: center;
   width: 18px; height: 18px; border-radius: 50%;
-  background: transparent; border: none; color: #bbb;
+  background: transparent; border: none; color: var(--color-text-muted);
   font-size: 0.85rem; cursor: pointer; padding: 0;
   transition: all 0.15s; line-height: 1;
 }
-.chip-remove:hover { background: #dc2626; color: #fff; }
+.chip-remove:hover { background: var(--color-danger); color: #fff; }
 
-/* Expiry label */
-.chip-expiry {
-  font-size: 0.7rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* Expiry text colors */
-.expiry-text-fresh { color: #22c55e; }
-.expiry-text-soon { color: #d97706; }
-.expiry-text-expired { color: #dc2626; }
+.chip-expiry { font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.expiry-text-fresh { color: var(--color-success); }
+.expiry-text-soon { color: var(--color-warning); }
+.expiry-text-expired { color: var(--color-danger); }

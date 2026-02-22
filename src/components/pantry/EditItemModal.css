@@ -6,15 +6,16 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .edit-modal {
-  background: white;
-  border-radius: 12px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   width: 90%;
   max-width: 360px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
   position: relative;
 }
 
@@ -28,17 +29,17 @@
 .edit-modal-header h3 {
   margin: 0;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .edit-modal-close {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #f5f5f5;
+  background: var(--color-border-light);
   border: none;
   font-size: 1.25rem;
-  color: #666;
+  color: var(--color-text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -47,8 +48,8 @@
 }
 
 .edit-modal-close:hover {
-  background: #333;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-surface);
 }
 
 .edit-field {
@@ -59,7 +60,7 @@
   display: block;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-secondary);
   margin-bottom: 0.3rem;
 }
 
@@ -67,8 +68,8 @@
 .edit-field select {
   width: 100%;
   padding: 0.6rem 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   box-sizing: border-box;
 }
@@ -76,7 +77,7 @@
 .edit-field input:focus,
 .edit-field select:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--color-accent);
 }
 
 .edit-date-row {
@@ -91,18 +92,18 @@
 
 .clear-date-btn {
   padding: 0.5rem 0.75rem;
-  background: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  background: var(--color-border-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 0.8rem;
-  color: #666;
+  color: var(--color-text-secondary);
   cursor: pointer;
   white-space: nowrap;
 }
 
 .clear-date-btn:hover {
-  background: #eee;
-  color: #333;
+  background: var(--color-border-light);
+  color: var(--color-text);
 }
 
 .edit-actions {
@@ -111,31 +112,31 @@
   justify-content: flex-end;
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--color-border);
 }
 
 .edit-cancel {
   padding: 0.6rem 1.25rem;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--color-border-light);
+  color: var(--color-text-secondary);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
 }
 
-.edit-cancel:hover { background: #eee; color: #333; }
+.edit-cancel:hover { background: var(--color-border-light); color: var(--color-text); }
 
 .edit-save {
   padding: 0.6rem 1.25rem;
-  background: #2563eb;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
 }
 
-.edit-save:hover { background: #1d4ed8; }
+.edit-save:hover { background: var(--color-accent-hover); }

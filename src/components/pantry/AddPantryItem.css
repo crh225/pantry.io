@@ -2,28 +2,29 @@
   display: flex;
   gap: 1rem;
   padding: 1.5rem;
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   margin-bottom: 2rem;
   flex-wrap: wrap;
   position: relative;
+  box-shadow: var(--shadow-sm);
 }
 
 .error-message {
   width: 100%;
   padding: 0.75rem;
-  background-color: #fee;
-  color: #dc2626;
-  border-radius: 6px;
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
 }
 
 .pantry-input,
 .pantry-select {
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
 }
 
@@ -46,22 +47,22 @@
 
 .add-btn {
   padding: 0.75rem 2rem;
-  background-color: #333;
-  color: white;
-  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: var(--radius-sm);
   font-weight: 600;
   transition: background-color 0.2s;
 }
 
 .add-btn:hover {
-  background-color: #555;
+  background-color: var(--color-primary-hover);
 }
 
 @media (max-width: 768px) {
   .add-pantry-form {
     flex-direction: column;
   }
-  
+
   .pantry-select {
     flex: 1;
   }
