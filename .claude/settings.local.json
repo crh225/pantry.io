@@ -22,7 +22,9 @@
       "Bash(node -e:*)",
       "Bash(node:*)",
       "Bash(git -C \"C:/Users/Chris/Development/pantry.io\" ls-files \"scripts/*\")",
-      "Bash(git -C \"C:/Users/Chris/Development/pantry.io\" rm --cached _count.mjs)"
+      "Bash(git -C \"C:/Users/Chris/Development/pantry.io\" rm --cached _count.mjs)",
+      "Bash(xargs:*)",
+      "Bash(ls:*)"
     ]
   }
 }

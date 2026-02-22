@@ -27,9 +27,10 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   };
   const ingredients = selectedRecipe.ingredients.map(ing => ({ ...ing, inPantry: isIngredientAvailable(ing.name, pantryNames) }));
   const needToBuy = ingredients.filter(i => !i.inPantry);
+  const notInBag = needToBuy.filter(i => !bagNames.includes(i.name.toLowerCase()));
+  const allInBag = needToBuy.length > 0 && notInBag.length === 0;
   const handleAddMissing = () => {
-    const toAdd = needToBuy.filter(i => !bagNames.includes(i.name.toLowerCase()));
-    if (toAdd.length > 0) { dispatch(addToBag(toAdd.map(i => ({ name: i.name, measure: i.measure })))); setAddedToBag(true); setTimeout(() => setAddedToBag(false), 2000); }
+    if (notInBag.length > 0) { dispatch(addToBag(notInBag.map(i => ({ name: i.name, measure: i.measure })))); setAddedToBag(true); setTimeout(() => setAddedToBag(false), 2000); }
   };
   return (
     <div className="recipe-detail">
@@ -38,7 +39,7 @@ export const RecipeDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       <div className="detail-body">
         <div className="detail-title-row">
           <h1>{selectedRecipe.name}</h1>
-          <RecipeActions needToBuyCount={needToBuy.length} addedToBag={addedToBag} added={added}
+          <RecipeActions needToBuyCount={notInBag.length} allInBag={allInBag} addedToBag={addedToBag} added={added}
             onAddMissing={handleAddMissing} onTogglePicker={() => setShowPicker(!showPicker)} />
         </div>
         {showPicker && <NightPicker nights={nights} onPick={handleAssign} />}

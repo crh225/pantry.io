@@ -14,6 +14,7 @@ const transformMeal = (meal: any): Recipe => {
     category: meal.strCategory || '', area: meal.strArea || '',
     instructions: meal.strInstructions || '',
     thumbnail: meal.strMealThumb || '', ingredients,
+    sourceUrl: meal.strSource || undefined,
   };
 };
 

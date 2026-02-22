@@ -102,6 +102,18 @@
   font-size: 0.8rem;
 }
 
+.all-in-bag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.4rem 0.75rem;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
 .remove-night-btn {
   display: inline-flex;
   align-items: center;

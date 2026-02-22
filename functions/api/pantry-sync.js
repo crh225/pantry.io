@@ -16,7 +16,7 @@ export async function onRequest({ request, env }) {
     try {
       const res = await fetch(`${DB}/pantries/${encodeURIComponent(visitorId)}.json`);
       const data = await res.json();
-      return new Response(JSON.stringify({ items: data?.items || [] }), {
+      return new Response(JSON.stringify({ items: data?.items || [], mealPlan: data?.mealPlan || null }), {
         status: 200, headers: { 'Content-Type': 'application/json' },
       });
     } catch (e) {
@@ -36,13 +36,12 @@ export async function onRequest({ request, env }) {
 
     try {
       const body = await request.json();
-      const data = {
-        items: body.items || [],
-        updatedAt: Date.now(),
-      };
+      const data = { updatedAt: Date.now() };
+      if (body.items !== undefined) data.items = body.items;
+      if (body.mealPlan !== undefined) data.mealPlan = body.mealPlan;
 
       const res = await fetch(`${DB}/pantries/${encodeURIComponent(visitorId)}.json?auth=${secret}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });

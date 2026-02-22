@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Recipe, Ingredient } from '../../types';
+import { Recipe, Ingredient, MealPlanState } from '../../types';
 import { persist, loadInitialState } from './mealPlanHelpers';
 
 const mealPlanSlice = createSlice({
@@ -42,8 +42,12 @@ const mealPlanSlice = createSlice({
       }
       persist(state);
     },
+    setMealPlan: (_state, action: PayloadAction<MealPlanState>) => {
+      localStorage.setItem('mealPlan', JSON.stringify(action.payload));
+      return action.payload;
+    },
   },
 });
 
-export const { assignRecipe, removeRecipe, addToBag, removeFromBag, clearBag, swapNights, moveNight } = mealPlanSlice.actions;
+export const { assignRecipe, removeRecipe, addToBag, removeFromBag, clearBag, swapNights, moveNight, setMealPlan } = mealPlanSlice.actions;
 export default mealPlanSlice.reducer;

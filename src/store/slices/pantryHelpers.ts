@@ -1,6 +1,7 @@
 import { PantryItem } from '../../types';
 
 const VID_KEY = 'pantry_visitor_id';
+const HOUSEHOLD_CODE_KEY = 'household_code';
 
 export const getVisitorId = (): string => {
   let vid = localStorage.getItem(VID_KEY);
@@ -9,6 +10,16 @@ export const getVisitorId = (): string => {
     localStorage.setItem(VID_KEY, vid);
   }
   return vid;
+};
+
+export const setVisitorId = (vid: string) => {
+  localStorage.setItem(VID_KEY, vid);
+};
+
+export const getHouseholdCode = (): string | null => localStorage.getItem(HOUSEHOLD_CODE_KEY);
+export const setHouseholdCode = (code: string | null) => {
+  if (code) localStorage.setItem(HOUSEHOLD_CODE_KEY, code);
+  else localStorage.removeItem(HOUSEHOLD_CODE_KEY);
 };
 
 let syncTimer: ReturnType<typeof setTimeout> | null = null;

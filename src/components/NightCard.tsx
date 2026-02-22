@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { removeRecipe, moveNight } from '../store/slices/mealPlanSlice';
 import { isIngredientAvailable } from '../utils/ingredientMatch';
 import { MealNight, Recipe } from '../types';
@@ -19,7 +19,10 @@ export const NightCard: React.FC<Props> = ({
   onDragStart, onDragEnter, onDragEnd, onSelectNight, onViewRecipe, onAddToBag,
 }) => {
   const dispatch = useAppDispatch();
+  const bagNames = useAppSelector(s => s.mealPlan.bag.map(b => b.name.toLowerCase()));
   const allInPantry = night.recipe?.ingredients.length ? night.recipe.ingredients.every(i => isIngredientAvailable(i.name, pantryNames)) : false;
+  const missing = night.recipe?.ingredients.filter(i => !isIngredientAvailable(i.name, pantryNames)) || [];
+  const allInBag = !allInPantry && missing.length > 0 && missing.every(i => bagNames.includes(i.name.toLowerCase()));
   return (
     <div className={`night-card${dragging ? ' dragging' : ''}${dragOver ? ' drag-over' : ''}`}
       draggable={!!night.recipe} onDragStart={onDragStart} onDragEnter={onDragEnter} onDragOver={e => e.preventDefault()} onDragEnd={onDragEnd}>
@@ -35,6 +38,7 @@ export const NightCard: React.FC<Props> = ({
         </div>
         <div className="night-actions">
           {allInPantry ? <span className="all-in-pantry"><CheckIcon /> All in pantry</span>
+            : allInBag ? <span className="all-in-bag"><CheckIcon /> In bag</span>
             : <button onClick={() => onAddToBag(night.recipe!)} className="bag-btn"><CartIcon /> Bag</button>}
           <button onClick={() => dispatch(removeRecipe(night.id))} className="remove-night-btn"><XIcon /></button>
         </div>

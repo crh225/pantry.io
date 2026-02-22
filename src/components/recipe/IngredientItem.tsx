@@ -18,6 +18,6 @@ export const IngredientItem: React.FC<Props> = ({ name, measure, inPantry, isOpe
       <span className="ing-measure">{measure}</span>
     </div>
     <span className="ing-status">{inPantry ? '✓' : '○'}</span>
-    {isOpen && <IngredientPopup name={name} />}
+    {isOpen && <IngredientPopup name={name} measure={measure} inPantry={inPantry} onClose={onToggle} />}
   </li>
 );

@@ -6,6 +6,7 @@ import { useImportPantry } from './hooks/useImportPantry';
 import { useHashNav } from './hooks/useHashNav';
 import { useTour } from './hooks/useTour';
 import { useAuthCallback } from './hooks/useAuthCallback';
+import { useHouseholdSync } from './hooks/useHouseholdSync';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { fetchProfile } from './store/slices/krogerSlice';
 import './App.css';
@@ -23,6 +24,7 @@ function App() {
   const dispatch = useAppDispatch();
   const { isAuthenticated, profile } = useAppSelector(s => s.kroger);
   useAuthCallback();
+  useHouseholdSync();
   useEffect(() => { if (isAuthenticated && !profile) dispatch(fetchProfile()); }, [isAuthenticated, profile, dispatch]);
 
   return (
