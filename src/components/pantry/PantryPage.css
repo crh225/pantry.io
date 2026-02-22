@@ -47,15 +47,17 @@
 .quick-add-trigger,
 .scan-trigger {
   padding: 0.75rem 2rem;
-  background-color: var(--color-primary);
+  background: var(--gradient-primary);
   color: white;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 1rem;
-  transition: background 0.15s;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 .quick-add-trigger:hover,
-.scan-trigger:hover { background-color: var(--color-primary-hover); }
+.scan-trigger:hover { opacity: 0.9; }
+.quick-add-trigger:active,
+.scan-trigger:active { transform: scale(0.97); }
 
 .quick-actions {
   display: flex;

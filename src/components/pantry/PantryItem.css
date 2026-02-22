@@ -2,10 +2,10 @@
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-pill);
   padding: 5px 10px 5px 12px; font-size: 0.85rem; color: var(--color-text);
-  transition: background 0.15s, border-color 0.15s;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
   box-shadow: var(--shadow-sm);
 }
-.pantry-chip:hover { background: var(--color-border-light); }
+.pantry-chip:hover { background: var(--color-border-light); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .chip-body {
   display: inline-flex; align-items: center; gap: 6px;
   cursor: pointer;

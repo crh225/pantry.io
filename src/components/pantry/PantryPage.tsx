@@ -5,7 +5,6 @@ import { PantryList } from './PantryList';
 import { QuickAdd } from './QuickAdd';
 import { BarcodeScanner } from './BarcodeScanner';
 import { SharePantry } from './SharePantry';
-import { HouseholdLink } from './HouseholdLink';
 import './PantryPage.css';
 
 export const PantryPage: React.FC = () => {
@@ -31,7 +30,6 @@ export const PantryPage: React.FC = () => {
             <button onClick={() => setShowQuickAdd(true)} className="quick-add-link">+ Quick Add</button>
             <button onClick={() => setShowScanner(true)} className="scan-link">📷 Scan</button>
             <SharePantry />
-            <HouseholdLink />
           </div>
         )}
       </div>

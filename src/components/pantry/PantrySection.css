@@ -12,7 +12,7 @@
 .section-header {
   display: flex; align-items: center; gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: var(--color-border-light);
+  background: var(--gradient-warm);
   border-bottom: 1px solid var(--color-border);
 }
 

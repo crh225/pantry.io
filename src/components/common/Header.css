@@ -1,7 +1,7 @@
 .header {
-  background-color: var(--color-surface);
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
 }
 
 .header-content {
@@ -30,8 +30,8 @@
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   font-weight: 500;
-  border-radius: var(--radius-sm);
-  transition: color 0.2s, background 0.2s;
+  border-radius: var(--radius-pill);
+  transition: color var(--transition-fast), background var(--transition-fast);
 }
 
 .nav-btn:hover {
@@ -43,6 +43,7 @@
   color: var(--color-primary);
   font-weight: 600;
   background: var(--color-success-light);
+  box-shadow: 0 0 0 1px rgba(27, 67, 50, 0.08);
 }
 
 .coming-soon-banner {
@@ -124,6 +125,7 @@
   width: 90%; max-width: 400px; max-height: 80vh;
   overflow-y: auto; position: relative;
   box-shadow: var(--shadow-lg);
+  animation: slideUp var(--transition-med);
 }
 .store-modal .store-picker { padding-top: 2.5rem; }
 
@@ -142,7 +144,8 @@
     position: absolute; top: 1rem; right: 1rem;
     padding: 0.3rem 0.6rem; font-size: 0.8rem;
   }
-  .store-badge-name { max-width: 140px; }
+  .store-badge-name { max-width: 90px; }
+  .store-badge-greeting { display: none; }
   .header-content { position: relative; }
   .store-modal-overlay { padding-top: 2rem; }
 }

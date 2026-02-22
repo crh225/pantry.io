@@ -29,11 +29,44 @@
 .share-popup {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  width: 90%;
-  max-width: 420px;
+  padding: 1.5rem;
+  width: calc(100% - 2rem);
+  max-width: 380px;
   position: relative;
   box-shadow: var(--shadow-lg);
+  animation: slideUp var(--transition-med);
+  margin: 1rem;
+}
+
+.share-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.share-tab {
+  flex: 1;
+  padding: 0.6rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.share-tab:hover { color: var(--color-text); }
+.share-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+.share-tab-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-success);
+  display: inline-block;
 }
 
 .share-popup h3 {

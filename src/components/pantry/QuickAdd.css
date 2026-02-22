@@ -16,13 +16,15 @@
 
 .quick-add-content {
   background: var(--color-surface);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: var(--radius-lg);
-  max-width: 800px;
-  width: 100%;
+  max-width: 700px;
+  width: calc(100% - 2rem);
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow-lg);
+  animation: slideUp var(--transition-med);
+  margin: 1rem;
 }
 
 .quick-add-header {

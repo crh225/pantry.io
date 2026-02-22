@@ -18,8 +18,8 @@ export const KrogerBadge: React.FC<Props> = ({ isAuthenticated, selectedStore, p
       </svg>
       <span className="store-badge-name">
         {selectedStore ? selectedStore.name.replace(/^[^-]+-\s*/, '') : 'Set Store'}
-        {isAuthenticated && profile?.firstName && ` • Hi, ${profile.firstName}`}
       </span>
+      {isAuthenticated && profile?.firstName && <span className="store-badge-greeting"> • Hi, {profile.firstName}</span>}
       {isAuthenticated && <span className="connection-indicator" />}
     </button>
   </div>

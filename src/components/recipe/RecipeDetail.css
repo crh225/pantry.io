@@ -45,19 +45,21 @@
 .add-night-btn,
 .add-bag-btn {
   padding: 0.6rem 1.2rem;
-  background: var(--color-primary);
+  background: var(--gradient-primary);
   color: white;
   border-radius: var(--radius-sm);
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 0.15s;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 .add-night-btn:hover,
-.add-bag-btn:hover { background: var(--color-primary-hover); }
+.add-bag-btn:hover { opacity: 0.9; }
+.add-night-btn:active,
+.add-bag-btn:active { transform: scale(0.97); }
 
-.add-bag-btn { background: var(--color-accent); }
-.add-bag-btn:hover { background: var(--color-accent-hover); }
+.add-bag-btn { background: var(--gradient-accent); }
+.add-bag-btn:hover { opacity: 0.9; }
 
 .add-bag-btn.in-bag { background: var(--color-success); cursor: default; }
 .add-bag-btn.in-bag:hover { background: var(--color-success); }
@@ -92,7 +94,7 @@
   font-size: 1.25rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-primary);
 }
 
 .ingredients-grid {
