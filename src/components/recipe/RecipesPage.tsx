@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchRecipeById } from '../../store/slices/recipeThunks';
 import { setSelected } from '../../store/slices/recipeSlice';
@@ -17,7 +17,13 @@ export const RecipesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const allRecipes = useAppSelector(s => [...s.recipe.recipes, ...s.recipe.related]);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const loaded = useRef(false);
   const scroll = () => setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+  useEffect(() => {
+    if (loaded.current || allRecipes.length > 0) return;
+    loaded.current = true;
+    dispatch(searchMultiFilter({ cuisine: 'American' }));
+  }, [dispatch, allRecipes.length]);
   const apply = useCallback((c: string | null, p: string | null, d: string | null) => {
     if (!c && !p && !d) return;
     dispatch(searchMultiFilter({ cuisine: c || undefined, protein: p || undefined, dietId: d || undefined }));

@@ -18,7 +18,7 @@ export const mergedApi = {
     const [mealDb, dummy, spoon] = await Promise.all([
       recipeApi.searchByArea(area),
       dummyRecipeApi.getAll().then(all => all.filter(r => r.area.toLowerCase() === area.toLowerCase())),
-      spoonacularApi.searchByCuisine(area, 8).catch(e => { console.warn('Spoonacular unavailable:', e); return []; }),
+      spoonacularApi.searchByCuisine(area, 50).catch(e => { console.warn('Spoonacular unavailable:', e); return []; }),
     ]);
     return dedup([...mealDb, ...dummy, ...spoon]);
   },
@@ -26,7 +26,7 @@ export const mergedApi = {
     const [mealDb, dummy, spoon] = await Promise.all([
       recipeApi.searchByCategory(cat),
       dummyRecipeApi.searchByTag(cat),
-      spoonacularApi.searchByCategory(cat.toLowerCase(), 8).catch(e => { console.warn('Spoonacular unavailable:', e); return []; }),
+      spoonacularApi.searchByCategory(cat.toLowerCase(), 50).catch(e => { console.warn('Spoonacular unavailable:', e); return []; }),
     ]);
     return dedup([...mealDb, ...dummy, ...spoon]);
   },
@@ -34,7 +34,7 @@ export const mergedApi = {
     const [mealDb, dummy, spoon] = await Promise.all([
       recipeApi.searchByName(q),
       dummyRecipeApi.searchByName(q),
-      spoonacularApi.searchByName(q, 8).catch(e => { console.warn('Spoonacular unavailable:', e); return []; }),
+      spoonacularApi.searchByName(q, 50).catch(e => { console.warn('Spoonacular unavailable:', e); return []; }),
     ]);
     return dedup([...mealDb, ...dummy, ...spoon]);
   },

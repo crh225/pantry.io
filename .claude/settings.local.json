@@ -24,7 +24,10 @@
       "Bash(git -C \"C:/Users/Chris/Development/pantry.io\" ls-files \"scripts/*\")",
       "Bash(git -C \"C:/Users/Chris/Development/pantry.io\" rm --cached _count.mjs)",
       "Bash(xargs:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(npx vite build:*)"
     ]
   }
 }

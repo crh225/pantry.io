@@ -14,7 +14,7 @@ export const fetchRecipeById = createAsyncThunk('recipe/fetchById', (id: string)
 interface MultiFilter { cuisine?: string; protein?: string; dietId?: string; }
 
 const hydrateAll = (recipes: Recipe[], diet: ReturnType<typeof diets.find> | null, dispatch: any) => {
-  recipes.slice(0, 30).forEach(r => {
+  recipes.forEach(r => {
     if (r.id.startsWith('dj-') || r.ingredients.length > 0) return;
     mergedApi.getById(r.id).then(full => {
       if (!full) return;
