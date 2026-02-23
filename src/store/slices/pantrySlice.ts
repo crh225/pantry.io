@@ -3,8 +3,17 @@ import { PantryState, PantryItem } from '../../types';
 import { getShelfLifeDays } from '../../data/shelfLife';
 import { persist, getVisitorId } from './pantryHelpers';
 
+const dedup = (items: PantryItem[]): PantryItem[] => {
+  const seen = new Set<string>();
+  return items.filter(i => {
+    if (seen.has(i.id)) return false;
+    seen.add(i.id);
+    return true;
+  });
+};
+
 const initialState: PantryState = {
-  items: JSON.parse(localStorage.getItem('pantryItems') || '[]'),
+  items: dedup(JSON.parse(localStorage.getItem('pantryItems') || '[]')),
 };
 
 const pantrySlice = createSlice({
@@ -12,6 +21,8 @@ const pantrySlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action: PayloadAction<Omit<PantryItem, 'id'>>) => {
+      const exists = state.items.some(i => i.name.toLowerCase() === action.payload.name.toLowerCase() && i.location === action.payload.location);
+      if (exists) return;
       const now = Date.now();
       const shelfDays = getShelfLifeDays(action.payload.name, action.payload.location);
       state.items.push({
@@ -32,7 +43,7 @@ const pantrySlice = createSlice({
     },
     clearPantry: (state) => { state.items = []; persist(state.items); },
     setItems: (state, action: PayloadAction<PantryItem[]>) => {
-      state.items = action.payload;
+      state.items = dedup(action.payload);
       localStorage.setItem('pantryItems', JSON.stringify(state.items));
     },
   },
