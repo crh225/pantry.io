@@ -46,6 +46,7 @@
   flex-shrink: 0;
   position: sticky;
   top: 1rem;
+  margin-top: 2.75rem;
 }
 .planner-sidebar .shopping-bag { margin-bottom: 0; }
 

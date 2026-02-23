@@ -1,6 +1,6 @@
 import { splitBlock, mergeTiny } from './instructionHelpers';
 
-const JUNK = /^step\s*\d+[.:]?\s*$/i;
+const JUNK = /^step\s*\d+[.:\s-]*$/i;
 const NUM_PREFIX = /^(\d+[.):\s]+|STEP\s*\d+\s*[:.–-]\s*)/i;
 const stripHtml = (s: string) => s.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 const clean = (s: string) => stripHtml(s).replace(NUM_PREFIX, '').trim();
