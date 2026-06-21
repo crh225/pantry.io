@@ -1,9 +1,19 @@
 export interface Ingredient { name: string; measure: string; }
 
+export interface NutritionInfo {
+  calories: number;
+  fat: number;
+  saturatedFat?: number;
+  carbs: number;
+  protein: number;
+  fiber: number;
+  sodium?: number;
+}
+
 export interface Recipe {
   id: string; name: string; category: string; area: string;
   instructions: string; thumbnail: string; ingredients: Ingredient[];
-  caloriesPerServing?: number | null;
+  nutrition?: NutritionInfo;
   prepTime?: number; cookTime?: number; rating?: number; reviewCount?: number; servings?: number;
   readyInMinutes?: number; sourceUrl?: string;
   usedIngredientCount?: number; missedIngredientCount?: number;

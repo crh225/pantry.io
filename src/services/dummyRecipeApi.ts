@@ -10,7 +10,7 @@ const transform = (r: any): Recipe => ({
   instructions: (r.instructions || []).join('\n'),
   thumbnail: r.image || '',
   ingredients: (r.ingredients || []).map((i: string) => ({ name: i, measure: '' })),
-  caloriesPerServing: r.caloriesPerServing || null,
+  nutrition: r.nutrition || undefined,
   prepTime: r.prepTimeMinutes,
   cookTime: r.cookTimeMinutes,
   rating: r.rating, reviewCount: r.reviewCount,

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchRecipeById } from '../../store/slices/recipeThunks';
 import { setSelected } from '../../store/slices/recipeSlice';
@@ -15,7 +15,9 @@ export const RecipesPage: React.FC = () => {
   const [protein, setProtein] = useState<string | null>(null);
   const [dietId, setDietId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
-  const allRecipes = useAppSelector(s => [...s.recipe.recipes, ...s.recipe.related]);
+  const recipes = useAppSelector(s => s.recipe.recipes);
+  const related = useAppSelector(s => s.recipe.related);
+  const allRecipes = useMemo(() => [...recipes, ...related], [recipes, related]);
   const resultsRef = useRef<HTMLDivElement>(null);
   const loaded = useRef(false);
   const scroll = () => setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
