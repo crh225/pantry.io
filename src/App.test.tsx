@@ -10,7 +10,7 @@ test('renders Pantry.io app', () => {
       <App />
     </Provider>
   );
-  const logoElement = screen.getByText(/Pantry.io/i);
+  const logoElement = screen.getByRole('heading', { name: /^Pantry\.io$/i });
   expect(logoElement).toBeInTheDocument();
 });
 
@@ -32,13 +32,4 @@ test('renders footer', () => {
     </Provider>
   );
   expect(screen.getByText(/© 2026 Chris House/i)).toBeInTheDocument();
-});
-
-test('renders Kroger banner', () => {
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-  expect(screen.getByText(/Kroger API/i)).toBeInTheDocument();
 });

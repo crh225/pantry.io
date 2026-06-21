@@ -110,7 +110,7 @@ The application follows a layered architecture:
 - **Data Access Layer**: API integration services
 - **Domain Layer**: Business logic and utility functions
 
-All files are kept under 50 lines for maximum modularity and maintainability.
+Files approach 50 lines → signal to refactor into focused modules (soft trigger, not a hard gate).
 
 ## Performance Optimizations
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { removeRecipe, moveNight } from '../store/slices/mealPlanSlice';
 import { isIngredientAvailable } from '../utils/ingredientMatch';
@@ -19,7 +19,8 @@ export const NightCard: React.FC<Props> = ({
   onDragStart, onDragEnter, onDragEnd, onSelectNight, onViewRecipe, onAddToBag,
 }) => {
   const dispatch = useAppDispatch();
-  const bagNames = useAppSelector(s => s.mealPlan.bag.map(b => b.name.toLowerCase()));
+  const bag = useAppSelector(s => s.mealPlan.bag);
+  const bagNames = useMemo(() => bag.map(b => b.name.toLowerCase()), [bag]);
   const allInPantry = night.recipe?.ingredients.length ? night.recipe.ingredients.every(i => isIngredientAvailable(i.name, pantryNames)) : false;
   const missing = night.recipe?.ingredients.filter(i => !isIngredientAvailable(i.name, pantryNames)) || [];
   const allInBag = !allInPantry && missing.length > 0 && missing.every(i => bagNames.includes(i.name.toLowerCase()));

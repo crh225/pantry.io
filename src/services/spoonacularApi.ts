@@ -4,7 +4,13 @@ import { transformRecipe, transformSearchResult } from './spoonacularTransform';
 async function spoonacularFetch(path: string): Promise<any> {
   const res = await fetch(`/api/spoonacular?path=${encodeURIComponent(path)}`);
   if (!res.ok) return null;
-  return res.json();
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) return null;
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
 }
 
 export const spoonacularApi = {
@@ -31,7 +37,7 @@ export const spoonacularApi = {
     return data?.results ? data.results.map(transformSearchResult) : [];
   },
   getById: async (id: string): Promise<Recipe | null> => {
-    const data = await spoonacularFetch(`/recipes/${id.replace('sp-', '')}/information?includeNutrition=false`);
+    const data = await spoonacularFetch(`/recipes/${id.replace('sp-', '')}/information?includeNutrition=true`);
     return data ? transformRecipe(data) : null;
   },
   getRandom: async (number = 6, tags?: string): Promise<Recipe[]> => {

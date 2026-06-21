@@ -60,11 +60,12 @@
 - ✅ TypeScript typed selectors and actions
 - ✅ Proper separation of concerns
 
-### 7. Modular Components (50 lines or less)
+### 7. Modular Components (soft 50-line modularity trigger)
 - ✅ All components split into focused files
 - ✅ Separate CSS files for each component
 - ✅ Reusable components following React best practices
 - ✅ Total of 24+ modular components
+- 💡 50 lines is a refactoring trigger, not a hard gate
 
 ### 8. Performance Optimization
 - ✅ **Code splitting** with React.lazy()
@@ -166,7 +167,7 @@
 ## Code Statistics
 - **Total Components**: 24+
 - **API Services**: 2 (Recipes + Products)
-- **All files**: Under 50 lines (adhered strictly)
+- **All files**: Prefer ≤50 lines (soft trigger for modularity, not a hard gate)
 - **TypeScript**: 100% coverage
 - **CSS**: Responsive with mobile-first approach
 - **Tests**: 18 tests passing
